@@ -1,150 +1,165 @@
 // animation d'entrée et configuration des effets au scroll
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   //enregistrer les plugins nécessaires
   gsap.registerPlugin(ScrollTrigger);
 
   //créer l'animation d'entrée pour le hero
   const heroTimeline = gsap.timeline();
-  heroTimeline.from('.hero-title', { y: 40, opacity: 0, duration: 1.2, ease: 'power3.out' });
-  heroTimeline.from('#cta-visiter', { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.6');
+  heroTimeline.from(".hero-title", {
+    y: 40,
+    opacity: 0,
+    duration: 1.2,
+    ease: "power3.out",
+  });
+  heroTimeline.from(
+    "#cta-visiter",
+    { y: 20, opacity: 0, duration: 0.8, ease: "power3.out" },
+    "-=0.6"
+  );
 
   //ajouter le scroll smooth pour le bouton "Visiter"
-  const cta = document.getElementById('cta-visiter');
+  const cta = document.getElementById("cta-visiter");
   if (cta) {
-    cta.addEventListener('click', () => {
-      const target = document.getElementById('histoire');
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    cta.addEventListener("click", () => {
+      const target = document.getElementById("histoire");
+      if (target) target.scrollIntoView({ behavior: "smooth" });
     });
   }
 
   //créer les animations au scroll pour chaque élément marqué
-  gsap.utils.toArray('[data-animate]').forEach((el) => {
+  gsap.utils.toArray("[data-animate]").forEach((el) => {
     gsap.from(el, {
       y: 40,
       opacity: 0,
       duration: 0.8,
-      ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 80%' }
+      ease: "power2.out",
+      scrollTrigger: { trigger: el, start: "top 80%" },
     });
   });
-
-  //initialiser le carousel des articles
-  setupArticlesCarousel();
-
-  //initialiser la galerie d'images auto-défilante
-  setupImageTrack();
 });
 
-//mettre en place le carousel des articles avec un effet "pile" et auto-play
-function setupArticlesCarousel() {
-  //récupérer le conteneur du carousel
-  const container = document.getElementById('articles-carousel');
-  if (!container) return;
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-  //récupérer et ordonner les cartes
-  const cards = Array.from(container.querySelectorAll('.article-card'));
-  if (cards.length === 0) return;
+let tl = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".cards",
+    pin: true,
+    pinSpacing: true,
+    markers: false,
+    start: "top-=50px top", // when the top of the trigger hits the top of the viewport
+    end: "+=2000", // end after scrolling 1000px beyond the start
+    scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
+  },
+});
 
-  //fonction de mise en page des cartes (pile)
-  function layout(animate = false) {
-    const config = {
-      y: (i) => i * 30,
-      scale: (i) => Math.max(0.86, 1 - i * 0.06),
-      opacity: (i) => (i < 4 ? 1 : 0),
-      zIndex: (i) => cards.length - i,
-      filter: (i) => (i === 0 ? 'none' : 'blur(1px)'),
-      duration: 0.6,
-      ease: 'power2.out'
-    };
+// Animation for card 1
+tl.addLabel("card1");
+tl.to(".card1", {
+  yPercent: 0,
+  opacity: 1,
+});
 
-    if (animate) {
-      gsap.to(cards, config);
-    } else {
-      gsap.set(cards, config);
-    }
-  }
+// Animation for card 2
+tl.from(".card2", {
+  yPercent: 75,
+  opacity: 0,
+});
+tl.addLabel("card2");
+tl.add(() => setActiveNav(tl.scrollTrigger.direction > 0 ? 1 : 0), "-=0.15");
+tl.to(
+  ".card1",
+  {
+    scale: 0.925,
+    yPercent: -0.75,
+    opacity: 1,
+  },
+  "-=0.3"
+);
+tl.to(".card2", {
+  yPercent: 0,
+  opacity: 1,
+});
 
-  //appliquer la mise en page initiale
-  layout(false);
+// Animation for card 3
+tl.from(".card3", {
+  yPercent: 75,
+  opacity: 0,
+});
+tl.addLabel("card3");
+tl.add(() => setActiveNav(tl.scrollTrigger.direction > 0 ? 2 : 1), "-=0.15");
+tl.to(
+  ".card2",
+  {
+    scale: 0.95,
+    yPercent: -0.5,
+    opacity: 1,
+  },
+  "-=0.3"
+);
+tl.to(".card3", {
+  yPercent: 0,
+  opacity: 1,
+});
 
-  //définir l'action d'avance/recul
-  function advance(dir = 1) {
-    if (dir > 0) {
-      cards.push(cards.shift());
-    } else {
-      cards.unshift(cards.pop());
-    }
-    layout(true);
-  }
+// Animation for card 4
+tl.from(".card4", {
+  yPercent: 75,
+  opacity: 0,
+});
+tl.addLabel("card4");
+tl.add(() => setActiveNav(tl.scrollTrigger.direction > 0 ? 3 : 2), "-=0.15");
+tl.to(
+  ".card3",
+  {
+    scale: 0.98,
+    yPercent: -0.4,
+    opacity: 1,
+  },
+  "-=0.3"
+);
+tl.to(".card4", {
+  yPercent: 0,
+  opacity: 1,
+});
 
-  //ajouter les boutons de navigation
-  const nextBtn = document.getElementById('articles-next');
-  const prevBtn = document.getElementById('articles-prev');
-  const nextBtnMobile = document.getElementById('articles-next-mobile');
-  const prevBtnMobile = document.getElementById('articles-prev-mobile');
-  
-  if (nextBtn) nextBtn.addEventListener('click', () => advance(1));
-  if (prevBtn) prevBtn.addEventListener('click', () => advance(-1));
-  if (nextBtnMobile) nextBtnMobile.addEventListener('click', () => advance(1));
-  if (prevBtnMobile) prevBtnMobile.addEventListener('click', () => advance(-1));
+// Additional animations for scaling down previous cards
+tl.to(
+  ".card1",
+  {
+    scale: 0.925,
+    yPercent: -1.5,
+    opacity: 0.9,
+  },
+  "-=0.3"
+);
 
-  //définir l'auto-play contrôlé par la visibilité de la section
-  let autoId = null;
-  function startAuto() {
-    if (autoId) return;
-    autoId = setInterval(() => advance(1), 2500);
-  }
-  function stopAuto() {
-    if (!autoId) return;
-    clearInterval(autoId);
-    autoId = null;
-  }
+tl.to(
+  ".card2",
+  {
+    scale: 0.95,
+    yPercent: -1.125,
+    opacity: 0.9,
+  },
+  "-=0.3"
+);
 
-  //configurer ScrollTrigger pour lancer/arrêter l'auto-play
-  ScrollTrigger.create({
-    trigger: container,
-    start: 'top 80%',
-    end: 'bottom top',
-    onEnter: startAuto,
-    onEnterBack: startAuto,
-    onLeave: stopAuto,
-    onLeaveBack: stopAuto
-  });
+tl.to(
+  ".card3",
+  {
+    scale: 0.98,
+    yPercent: -0.85,
+    opacity: 0.9,
+  },
+  "-=0.3"
+);
 
-  //permettre d'avancer en cliquant sur la pile
-  container.addEventListener('click', (e) => {
-    const node = e.target;
-    if (node.closest && node.closest('.article-card')) advance(1);
-  });
+// Without the .nav .circle elements, we don't need to handle setActiveNav function
+/* gsap.utils.toArray(".nav .circle").forEach((circle, i) => {
+  circle.classList[i === index ? "add" : "remove"]("active");
+}); */
+
+function labelToScroll(timeline, label) {
+  let st = timeline.scrollTrigger,
+    progress = timeline.labels[label] / timeline.duration();
+  return st.start + (st.end - st.start) * progress;
 }
-
-//mettre en place la galerie d'images en défilement horizontal continu
-function setupImageTrack() {
-  //récupérer le "rail" d'images
-  const track = document.getElementById('image-track');
-  if (!track) return;
-
-  //dupliquer les images pour boucler proprement
-  const items = Array.from(track.children);
-  items.forEach((node) => {
-    const clone = node.cloneNode(true);
-    track.appendChild(clone);
-  });
-
-  //calculer la largeur totale du contenu
-  const total = track.scrollWidth;
-
-  //animer le déplacement horizontal en boucle
-  const tween = gsap.to(track, {
-    x: -total / 2,
-    duration: 40,
-    ease: 'none',
-    repeat: -1
-  });
-
-  //mettre en pause/reprendre au survol
-  track.addEventListener('mouseenter', () => tween.pause());
-  track.addEventListener('mouseleave', () => tween.play());
-}
-
-
