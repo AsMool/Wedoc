@@ -1,0 +1,11 @@
+/* régler des petits détails globaux sans surcharger Tailwind */
+html, body {
+  height: 100%;
+}
+
+/* améliorer l'apparence de la sélection de texte (complément à Tailwind) */
+::selection {
+  background: rgba(192, 168, 163, 0.25);
+}
+
+

@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="fr" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Le Monde de l’Urbex</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Config Tailwind inline pour les couleurs du projet
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brandBg: '#6A5B4E',
+              brandText: '#C0A8A3',
+              brandStroke: '#988574'
+            },
+            boxShadow: {
+              soft: '0 10px 40px rgba(0,0,0,0.35)'
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body class="bg-neutral-900 text-brandText antialiased selection:bg-brandText/20">
+    <!-- Navbar fixe et centrée en forme de pilule -->
+    <header class="fixed top-4 left-1/2 -translate-x-1/2 z-50">
+      <nav class="flex gap-4 rounded-full border border-brandStroke/60 bg-brandText/10 px-4 py-2 backdrop-blur-md transition-all duration-500 hover:border-2">
+        <a href="#hero" class="px-4 py-1 rounded-full text-sm md:text-base hover:bg-brandText/20">Accueil</a>
+        <a href="#histoire" class="px-4 py-1 rounded-full text-sm md:text-base hover:bg-brandText/20">Histoire</a>
+        <a href="#interview" class="px-4 py-1 rounded-full text-sm md:text-base hover:bg-brandText/20">Interview</a>
+        <a href="#articles" class="px-4 py-1 rounded-full text-sm md:text-base hover:bg-brandText/20">Articles</a>
+        <a href="#images" class="px-4 py-1 rounded-full text-sm md:text-base hover:bg-brandText/20">Images</a>
+      </nav>
+    </header>
+
+    <!-- Section Hero -->
+    <section id="hero" class="relative min-h-[88vh] grid place-items-center overflow-hidden">
+      <img src="./img/placeholder.png" alt="" class="absolute inset-0 w-full h-full object-cover opacity-40">
+      <div class="relative z-10 text-center px-6">
+        <h1 class="hero-title text-4xl md:text-6xl tracking-widest font-semibold drop-shadow-lg">
+          LE MONDE DE L’URBEX
+        </h1>
+        <p class="mt-6 max-w-2xl mx-auto opacity-80">Exploration urbaine, histoires et témoignages.</p>
+        <button id="cta-visiter" class="mt-10 inline-flex items-center gap-2 rounded-2xl border border-brandStroke bg-brandBg px-6 py-3 text-brandText shadow-soft transition-colors duration-300 hover:bg-brandBg/90">
+          Visiter >
+        </button>
+      </div>
+      <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-neutral-900"></div>
+    </section>
+
+    <!-- Section Histoire -->
+    <section id="histoire" class="relative py-24">
+      <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+        <div class="rounded-3xl border border-brandStroke bg-brandBg p-8 shadow-soft" data-animate>
+          <h2 class="text-2xl md:text-3xl mb-4">Histoire de l’Urbex (Exploration Urbaine)</h2>
+          <p class="leading-relaxed opacity-90">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac ligula at magna volutpat
+            tempor. Sed vitae urna id arcu porttitor tristique. Curabitur sed enim dictum, volutpat leo quis,
+            posuere augue. Donec suscipit neque vitae lorem posuere, quis ullamcorper lorem varius.
+          </p>
+        </div>
+        <div class="rounded-3xl border border-brandStroke bg-black/20 p-2 shadow-soft" data-animate>
+          <img src="./img/placeholder.png" alt="Urbex" class="w-full h-[380px] object-cover rounded-2xl">
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Interview -->
+    <section id="interview" class="relative py-24">
+      <div class="container mx-auto px-6">
+        <div class="rounded-full mx-auto w-max px-6 py-2 border border-brandStroke bg-black/20 text-brandText mb-10" data-animate>
+          Interview d’un professionnel
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+          <div class="rounded-3xl border border-brandStroke bg-black/30 p-2 shadow-soft" data-animate>
+            <div class="relative w-full overflow-hidden rounded-2xl" style="padding-top: 56.25%;">
+              <iframe class="absolute top-0 left-0 h-full w-full rounded-2xl" src="https://www.youtube.com/embed/q0_5JIEMozg" title="Interview" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="rounded-3xl border border-brandStroke bg-brandBg p-8 shadow-soft" data-animate>
+            <h3 class="text-xl md:text-2xl mb-3">Article lié à cette vidéo</h3>
+            <p class="opacity-90">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti. Integer nec urna facilisis, aliquet nibh in, ultricies velit.</p>
+            <button class="mt-6 inline-flex items-center gap-2 rounded-full border-2 border-brandStroke bg-black/20 px-5 py-2 text-brandText transition-colors duration-500 hover:bg-black/40">Voir plus</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Articles avec carousel GSAP -->
+    <section id="articles" class="relative py-24">
+      <div class="container mx-auto px-6">
+        <div class="mx-auto w-max rounded-full px-6 py-2 border border-brandStroke bg-black/20 text-brandText mb-10" data-animate>
+          Articles
+        </div>
+        <div id="articles-carousel" class="relative h-[520px]">
+          <div class="article-card absolute left-1/2 top-1/2 w-[90%] md:w-[680px] -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-brandStroke bg-brandBg p-8 shadow-soft">
+            <h4 class="text-2xl mb-4">Article 1</h4>
+            <p class="opacity-90">Introduction à l’exploration urbaine et bonnes pratiques de sécurité.</p>
+          </div>
+          <div class="article-card absolute left-1/2 top-1/2 w-[90%] md:w-[680px] -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-brandStroke bg-brandBg p-8 shadow-soft">
+            <h4 class="text-2xl mb-4">Article 2</h4>
+            <p class="opacity-90">Trouver des lieux, préparer son matériel et organiser la sortie.</p>
+          </div>
+          <div class="article-card absolute left-1/2 top-1/2 w-[90%] md:w-[680px] -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-brandStroke bg-brandBg p-8 shadow-soft">
+            <h4 class="text-2xl mb-4">Article 3</h4>
+            <p class="opacity-90">Photographier les lieux : cadrage, lumière et narration visuelle.</p>
+          </div>
+          <div class="article-card absolute left-1/2 top-1/2 w-[90%] md:w-[680px] -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-brandStroke bg-brandBg p-8 shadow-soft">
+            <h4 class="text-2xl mb-4">Article 4</h4>
+            <p class="opacity-90">Éthique, respect des lieux et points légaux essentiels.</p>
+          </div>
+          <button id="articles-prev" class="absolute left-4 top-1/2 -translate-y-1/2 rounded-full border border-brandStroke bg-black/30 px-4 py-2 text-sm shadow-soft hover:bg-black/50 hidden md:block">Précédent</button>
+          <button id="articles-next" class="absolute right-4 top-1/2 -translate-y-1/2 rounded-full border border-brandStroke bg-black/30 px-4 py-2 text-sm shadow-soft hover:bg-black/50 hidden md:block">Suivant</button>
+          
+          <!-- Boutons mobiles en bas -->
+          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-4 md:hidden">
+            <button id="articles-prev-mobile" class="rounded-full border border-brandStroke bg-black/30 px-4 py-2 text-sm shadow-soft hover:bg-black/50">Précédent</button>
+            <button id="articles-next-mobile" class="rounded-full border border-brandStroke bg-black/30 px-4 py-2 text-sm shadow-soft hover:bg-black/50">Suivant</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Images auto-défilante -->
+    <section id="images" class="relative py-24">
+      <div class="container mx-auto px-6">
+        <div class="mx-auto w-max rounded-full px-6 py-2 border border-brandStroke bg-black/20 text-brandText mb-10" data-animate>
+          Images
+        </div>
+
+        <div class="overflow-hidden rounded-3xl border border-brandStroke bg-black/20">
+          <div id="image-track" class="flex gap-6 p-6">
+            <img src="./img/placeholder.png" alt="" class="image-item h-40 w-56 object-cover rounded-2xl">
+            <img src="./img/placeholder.png" alt="" class="image-item h-40 w-56 object-cover rounded-2xl">
+            <img src="./img/placeholder.png" alt="" class="image-item h-40 w-56 object-cover rounded-2xl">
+            <img src="./img/placeholder.png" alt="" class="image-item h-40 w-56 object-cover rounded-2xl">
+            <img src="./img/placeholder.png" alt="" class="image-item h-40 w-56 object-cover rounded-2xl">
+            <img src="./img/placeholder.png" alt="" class="image-item h-40 w-56 object-cover rounded-2xl">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="py-12 text-center text-xs opacity-60">
+      © 2025 Urbex
+    </footer>
+
+    <!-- GSAP Core and Plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="./script.js"></script>
+  </body>
+  </html>
+
+
