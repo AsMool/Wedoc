@@ -12,31 +12,30 @@ body {
 
 .cards {
   position: relative;
-  display: flex;
   justify-content: center;
   align-items: center;
   height: 70vh;
-  margin-bottom: 90px;
+  margin: auto;
 }
 .custom-card {
   position: absolute;
-  width: 80%;
+  width: 100%;
   top: 0px;
   height: 70vh;
   background: -webkit-linear-gradient(
     130deg,
-    #d754ad 0%,
-    #f96785 67%,
-    #fe7333 100%
+    #c0a8a3 0%,
+    #6a5b4e 67%,
+    #c0a8a3 100%
   );
-  background: linear-gradient(-40deg, #d754ad 0%, #f96785 67%, #fe7333 100%);
+  background: linear-gradient(-40deg, #6a5b4e 0%, #6a5b4e, #c0a8a3);
   color: #fff;
   margin-bottom: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 50px;
-  box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 0 20px 0 rgba(106, 91, 78, 1);
 }
 .card2 {
   top: 30px;
@@ -48,7 +47,7 @@ body {
   top: 90px;
 }
 .opacity {
-  -moz-transition: 0.4s ease;
+  -moz-transition: 0.9s ease;
   -ms-transition: 0.4s ease;
   -o-transition: 0.4s ease;
   transition: 0.4s ease;
