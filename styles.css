@@ -100,8 +100,8 @@ body {
   transform: translate(-50%, -50%);
   width: 90%;
   max-width: 800px;
-  height: 70vh;
-  max-height: 600px;
+  height: 80vh;
+  max-height: 720px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -115,7 +115,7 @@ body {
 @media (max-width: 768px) {
   .stacked-article {
     width: 95%;
-    height: 60vh;
+    height: 72vh;
   }
   
   .articles-stack-container {
