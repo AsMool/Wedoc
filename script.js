@@ -47,7 +47,10 @@ document.addEventListener("DOMContentLoaded", () => {
       gsap.set(article, {
         zIndex: stackedArticles.length - index,
         scale: 1 - (index * 0.05),
-        opacity: 0.3 + ((stackedArticles.length - index) * 0.15)
+        opacity: 0.3 + ((stackedArticles.length - index) * 0.15),
+        
+        //faire venir chaque carte par le bas
+        y: 120
       });
     });
 
@@ -75,7 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
               gsap.set(article, {
                 scale: 1 - ((stackedArticles.length - index) * 0.05),
                 opacity: 0.3,
-                zIndex: stackedArticles.length - index
+                zIndex: stackedArticles.length - index,
+                
+                //position au repos en bas
+                y: 120
               });
             } else if (progress >= startProgress && progress < endProgress) {
               //pendant que cet article est actif
@@ -83,7 +89,10 @@ document.addEventListener("DOMContentLoaded", () => {
               gsap.set(article, {
                 scale: 1,
                 opacity: 1,
-                zIndex: stackedArticles.length + index
+                zIndex: stackedArticles.length + index,
+                
+                //interpolation de y: de 120 (bas) à 0 (centre)
+                y: 120 * (1 - localProgress)
               });
             } else {
               //après que cet article soit actif
@@ -91,7 +100,10 @@ document.addEventListener("DOMContentLoaded", () => {
               gsap.set(article, {
                 scale: 1 - (fadeProgress * 0.1),
                 opacity: Math.max(1 - (fadeProgress * 1.5), 0),
-                zIndex: index
+                zIndex: index,
+                
+                //sortie vers le haut
+                y: -120 * fadeProgress
               });
             }
           }

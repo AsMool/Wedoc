@@ -78,7 +78,7 @@ body {
 .articles-stack-container {
   position: relative;
   width: 100%;
-  height: 200vh;
+  height: 260vh;
   margin: 0 auto;
 }
 
@@ -119,7 +119,7 @@ body {
   }
   
   .articles-stack-container {
-    height: 180vh;
+    height: 220vh;
   }
 }
 
