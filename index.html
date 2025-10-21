@@ -29,38 +29,89 @@
   <body
     class="bg-neutral-900 text-white antialiased selection:bg-brandText/20"
   >
-    <!-- Navbar fixe et centrée en forme de pilule -->
-    <header class="fixed top-4 left-1/2 -translate-x-1/2 z-50">
-      <nav
-        class="flex gap-4 rounded-full border border-brandStroke/60 bg-brandText/10 px-4 py-2 backdrop-blur-md transition-all duration-500 hover:border-2"
-      >
+    <!-- Navbar fixe avec menu hamburger sur mobile -->
+    <header class="fixed top-4 right-4 z-50">
+      <div class="flex items-center justify-end">
+        <button
+          id="menu-toggle"
+          class="md:hidden inline-flex items-center gap-2 rounded-full border border-brandStroke/60 bg-brandText/10 px-4 py-2 backdrop-blur-md transition-all duration-300 hover:border-2"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+        >
+          <span class="sr-only">Ouvrir le menu</span>
+          <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
+            <path fill-rule="evenodd" d="M3.75 6.75A.75.75 0 0 1 4.5 6h15a.75.75 0 0 1 0 1.5h-15a.75.75 0 0 1-.75-.75Zm0 5.25a.75.75 0 0 1 .75-.75h15a.75.75 0 0 1 0 1.5h-15a.75.75 0 0 1-.75-.75Zm0 5.25a.75.75 0 0 1 .75-.75h15a.75.75 0 0 1 0 1.5h-15a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
+          </svg>
+          <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6 hidden">
+            <path fill-rule="evenodd" d="M6.225 4.811a.75.75 0 0 1 1.06 0L12 9.525l4.715-4.714a.75.75 0 0 1 1.06 1.06L13.06 10.586l4.715 4.714a.75.75 0 1 1-1.06 1.061L12 11.646l-4.715 4.715a.75.75 0 1 1-1.06-1.061l4.714-4.714-4.714-4.715a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+          </svg>
+          <span class="text-sm">Menu</span>
+        </button>
+
+        <nav
+          class="hidden md:flex gap-4 rounded-full border border-brandStroke/60 bg-brandText/10 px-4 py-2 backdrop-blur-md transition-all duration-500 hover:border-2"
+        >
+          <a
+            href="#hero"
+            class="px-4 py-1 rounded-full text-sm md:text-base hover:bg-brandText/20"
+            >Accueil</a
+          >
+          <a
+            href="#histoire"
+            class="px-4 py-1 rounded-full text-sm md:text-base hover:bg-brandText/20"
+            >Histoire</a
+          >
+          <a
+            href="#interview"
+            class="px-4 py-1 rounded-full text-sm md:text-base hover:bg-brandText/20"
+            >Interview</a
+          >
+          <a
+            href="#articles"
+            class="px-4 py-1 rounded-full text-sm md:text-base hover:bg-brandText/20"
+            >Articles</a
+          >
+          <a
+            href="#images"
+            class="px-4 py-1 rounded-full text-sm md:text-base hover:bg-brandText/20"
+            >Images</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <div
+      id="mobile-menu"
+      class="fixed right-4 top-16 z-50 md:hidden hidden rounded-2xl border border-brandStroke/60 bg-neutral-900/95 backdrop-blur-md p-2 shadow-soft w-64"
+    >
+      <div class="flex flex-col">
         <a
           href="#hero"
-          class="px-4 py-1 rounded-full text-sm md:text-base hover:bg-brandText/20"
+          class="px-4 py-3 rounded-xl text-sm hover:bg-brandText/10"
           >Accueil</a
         >
         <a
           href="#histoire"
-          class="px-4 py-1 rounded-full text-sm md:text-base hover:bg-brandText/20"
+          class="px-4 py-3 rounded-xl text-sm hover:bg-brandText/10"
           >Histoire</a
         >
         <a
           href="#interview"
-          class="px-4 py-1 rounded-full text-sm md:text-base hover:bg-brandText/20"
+          class="px-4 py-3 rounded-xl text-sm hover:bg-brandText/10"
           >Interview</a
         >
         <a
           href="#articles"
-          class="px-4 py-1 rounded-full text-sm md:text-base hover:bg-brandText/20"
+          class="px-4 py-3 rounded-xl text-sm hover:bg-brandText/10"
           >Articles</a
         >
         <a
           href="#images"
-          class="px-4 py-1 rounded-full text-sm md:text-base hover:bg-brandText/20"
+          class="px-4 py-3 rounded-xl text-sm hover:bg-brandText/10"
           >Images</a
         >
-      </nav>
-    </header>
+      </div>
+    </div>
 
     <!-- Section Hero -->
     <section
@@ -262,38 +313,38 @@
         </div>
 
         <div
-          class="overflow-hidden rounded-3xl border border-brandStroke bg-black/20"
+          class="overflow-x-auto overflow-y-hidden rounded-3xl border border-brandStroke bg-black/20 scrollbar-thin scrollbar-thumb-brandText/30 scrollbar-track-transparent"
         >
-          <div id="image-track" class="flex gap-6 p-6">
+          <div id="image-track" class="flex gap-6 p-6 w-max">
             <img
               src="./img/placeholder.png"
               alt=""
-              class="image-item h-40 w-56 object-cover rounded-2xl"
+              class="image-item h-40 w-56 object-cover rounded-2xl flex-none"
             />
             <img
               src="./img/placeholder.png"
               alt=""
-              class="image-item h-40 w-56 object-cover rounded-2xl"
+              class="image-item h-40 w-56 object-cover rounded-2xl flex-none"
             />
             <img
               src="./img/placeholder.png"
               alt=""
-              class="image-item h-40 w-56 object-cover rounded-2xl"
+              class="image-item h-40 w-56 object-cover rounded-2xl flex-none"
             />
             <img
               src="./img/placeholder.png"
               alt=""
-              class="image-item h-40 w-56 object-cover rounded-2xl"
+              class="image-item h-40 w-56 object-cover rounded-2xl flex-none"
             />
             <img
               src="./img/placeholder.png"
               alt=""
-              class="image-item h-40 w-56 object-cover rounded-2xl"
+              class="image-item h-40 w-56 object-cover rounded-2xl flex-none"
             />
             <img
               src="./img/placeholder.png"
               alt=""
-              class="image-item h-40 w-56 object-cover rounded-2xl"
+              class="image-item h-40 w-56 object-cover rounded-2xl flex-none"
             />
           </div>
         </div>
