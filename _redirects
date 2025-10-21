@@ -1,0 +1,9 @@
+# Redirect rules for Cloudflare Pages
+# This file is used to define URL redirects
+
+# Example redirects (uncomment and modify as needed):
+# /old-page /new-page 301
+# /temp/* /permanent/:splat 302
+
+# SPA fallback - redirect all routes to index.html for client-side routing
+/* /index.html 200
