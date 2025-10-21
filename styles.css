@@ -7,7 +7,7 @@ body {
 
 /* améliorer l'apparence de la sélection de texte (complément à Tailwind) */
 ::selection {
-  background: rgba(192, 168, 163, 0.25);
+  background: rgba(249, 249, 249, 0.25);
 }
 
 .cards {
@@ -16,6 +16,18 @@ body {
   align-items: center;
   height: 70vh;
   margin: auto;
+  width: 100%;
+  max-width: 600px;
+}
+.cards-pin {
+  /* centrer verticalement le carrousel pendant le pin */
+  display: grid;
+  place-items: center;
+  min-height: 90vh;
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  width: 100%;
 }
 .custom-card {
   position: absolute;
@@ -25,10 +37,10 @@ body {
   background: -webkit-linear-gradient(
     130deg,
     #c0a8a3 0%,
-    #6a5b4e 67%,
+    #6A734C 67%,
     #c0a8a3 100%
   );
-  background: linear-gradient(-40deg, #6a5b4e 0%, #6a5b4e, #c0a8a3);
+  background: linear-gradient(-40deg, #6A734C 0%, #6A734C, #c0a8a3);
   color: #fff;
   margin-bottom: 50px;
   display: flex;
@@ -60,4 +72,116 @@ body {
   transition: 0.4s ease;
   -webkit-transition: 0.4s ease;
   width: 95%;
+}
+
+/* Styles pour l'effet d'articles empilés */
+.articles-stack-container {
+  position: relative;
+  width: 100%;
+  height: 200vh;
+  margin: 0 auto;
+}
+
+.articles-stack-wrapper {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.stacked-article {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 800px;
+  height: 70vh;
+  max-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 300;
+  letter-spacing: 1px;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 768px) {
+  .stacked-article {
+    width: 95%;
+    height: 60vh;
+  }
+  
+  .articles-stack-container {
+    height: 180vh;
+  }
+}
+
+.article-content {
+  text-align: center;
+  z-index: 2;
+  padding: 2rem;
+}
+
+.article-title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.article-subtitle {
+  font-size: 1.25rem;
+  font-weight: 400;
+  opacity: 0.9;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.article-bg-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  background-image: 
+    repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px);
+  z-index: 1;
+  border-radius: 20px;
+}
+
+.article-number {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  font-size: 5rem;
+  opacity: 0.15;
+  font-weight: 700;
+  color: #fff;
+}
+
+.article-1 {
+  background: linear-gradient(135deg, #6A734C 0%, #5a623f 100%);
+  z-index: 4;
+}
+
+.article-2 {
+  background: linear-gradient(135deg, #7a845c 0%, #6a734c 100%);
+  z-index: 3;
+}
+
+.article-3 {
+  background: linear-gradient(135deg, #8a946c 0%, #7a845c 100%);
+  z-index: 2;
+}
+
+.article-4 {
+  background: linear-gradient(135deg, #9aa47c 0%, #8a946c 100%);
+  z-index: 1;
 }

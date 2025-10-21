@@ -13,9 +13,9 @@
         theme: {
           extend: {
             colors: {
-              brandBg: "#6A5B4E",
+              brandBg: "#6A734C",
               brandText: "#C0A8A3",
-              brandStroke: "#988574",
+              brandStroke: "#374018",
             },
             boxShadow: {
               soft: "0 10px 40px rgba(0,0,0,0.35)",
@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body
-    class="bg-neutral-900 text-brandText antialiased selection:bg-brandText/20"
+    class="bg-neutral-900 text-white antialiased selection:bg-brandText/20"
   >
     <!-- Navbar fixe et centrée en forme de pilule -->
     <header class="fixed top-4 left-1/2 -translate-x-1/2 z-50">
@@ -199,26 +199,53 @@
       </div>
     </section>
 
-    <!-- Section Articles avec carousel GSAP -->
+    <!-- Section Articles avec effet empilé GSAP -->
     <section id="articles" class="relative py-24">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <div class="cards">
-              <div class="custom-card card1" id="1" style="z-index: 2">
-                <h1>Slide 1</h1>
-              </div>
-              <div class="custom-card card2" id="2" style="z-index: 3">
-                <h1>Slide 2</h1>
-              </div>
-              <div class="custom-card card3" id="3" style="z-index: 4">
-                <h1>Slide 3</h1>
-              </div>
+      <div class="container mx-auto px-6">
+        <div
+          class="mx-auto w-max rounded-full px-6 py-2 border border-brandStroke bg-black/20 text-brandText mb-10"
+          data-animate
+        >
+          Articles
+        </div>
 
-              <div class="custom-card card4" id="4" style="z-index: 5">
-                <h1>Slide 4</h1>
+        <div class="articles-stack-container">
+          <div class="articles-stack-wrapper">
+            <article class="stacked-article article-1">
+              <div class="article-bg-pattern"></div>
+              <div class="article-number">01</div>
+              <div class="article-content">
+                <h2 class="article-title">Slide 1</h2>
+                <p class="article-subtitle">Premier article de la série</p>
               </div>
-            </div>
+            </article>
+
+            <article class="stacked-article article-2">
+              <div class="article-bg-pattern"></div>
+              <div class="article-number">02</div>
+              <div class="article-content">
+                <h2 class="article-title">Slide 2</h2>
+                <p class="article-subtitle">Deuxième article de la série</p>
+              </div>
+            </article>
+
+            <article class="stacked-article article-3">
+              <div class="article-bg-pattern"></div>
+              <div class="article-number">03</div>
+              <div class="article-content">
+                <h2 class="article-title">Slide 3</h2>
+                <p class="article-subtitle">Troisième article de la série</p>
+              </div>
+            </article>
+
+            <article class="stacked-article article-4">
+              <div class="article-bg-pattern"></div>
+              <div class="article-number">04</div>
+              <div class="article-content">
+                <h2 class="article-title">Slide 4</h2>
+                <p class="article-subtitle">Quatrième article de la série</p>
+              </div>
+            </article>
           </div>
         </div>
       </div>

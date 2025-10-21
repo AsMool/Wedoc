@@ -36,130 +36,67 @@ document.addEventListener("DOMContentLoaded", () => {
       scrollTrigger: { trigger: el, start: "top 80%" },
     });
   });
+
+  //logique pour l'effet d'articles empilés avec scroll
+  const stackedArticles = gsap.utils.toArray('.stacked-article');
+  const articlesContainer = document.querySelector('.articles-stack-container');
+
+  if (stackedArticles.length > 0 && articlesContainer) {
+    //définir les positions initiales pour chaque article
+    stackedArticles.forEach((article, index) => {
+      gsap.set(article, {
+        zIndex: stackedArticles.length - index,
+        scale: 1 - (index * 0.05),
+        opacity: 0.3 + ((stackedArticles.length - index) * 0.15)
+      });
+    });
+
+    //créer une animation pour chaque article
+    stackedArticles.forEach((article, index) => {
+      //calculer le début et la fin du scroll pour chaque article
+      const startProgress = index / stackedArticles.length;
+      const endProgress = (index + 1) / stackedArticles.length;
+
+      gsap.to(article, {
+        scale: 1,
+        opacity: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: articlesContainer,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1,
+          onUpdate: (self) => {
+            const progress = self.progress;
+            
+            //calculer l'opacité et le scale basés sur la progression
+            if (progress < startProgress) {
+              //avant que cet article soit actif
+              gsap.set(article, {
+                scale: 1 - ((stackedArticles.length - index) * 0.05),
+                opacity: 0.3,
+                zIndex: stackedArticles.length - index
+              });
+            } else if (progress >= startProgress && progress < endProgress) {
+              //pendant que cet article est actif
+              const localProgress = (progress - startProgress) / (endProgress - startProgress);
+              gsap.set(article, {
+                scale: 1,
+                opacity: 1,
+                zIndex: stackedArticles.length + index
+              });
+            } else {
+              //après que cet article soit actif
+              const fadeProgress = Math.min((progress - endProgress) / 0.15, 1);
+              gsap.set(article, {
+                scale: 1 - (fadeProgress * 0.1),
+                opacity: Math.max(1 - (fadeProgress * 1.5), 0),
+                zIndex: index
+              });
+            }
+          }
+        }
+      });
+    });
+  }
 });
-
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-
-let tl = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".cards",
-    pin: true,
-    pinSpacing: true,
-    markers: false,
-    start: "top-=50px top", // when the top of the trigger hits the top of the viewport
-    end: "+=2000", // end after scrolling 1000px beyond the start
-    scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
-  },
-});
-
-// Animation for card 1
-tl.addLabel("card1");
-tl.to(".card1", {
-  yPercent: 0,
-  opacity: 1,
-});
-
-// Animation for card 2
-tl.from(".card2", {
-  yPercent: 75,
-  opacity: 0,
-});
-tl.addLabel("card2");
-tl.add(() => setActiveNav(tl.scrollTrigger.direction > 0 ? 1 : 0), "-=0.15");
-tl.to(
-  ".card1",
-  {
-    scale: 0.925,
-    yPercent: -0.75,
-    opacity: 1,
-  },
-  "-=0.3"
-);
-tl.to(".card2", {
-  yPercent: 0,
-  opacity: 1,
-});
-
-// Animation for card 3
-tl.from(".card3", {
-  yPercent: 75,
-  opacity: 0,
-});
-tl.addLabel("card3");
-tl.add(() => setActiveNav(tl.scrollTrigger.direction > 0 ? 2 : 1), "-=0.15");
-tl.to(
-  ".card2",
-  {
-    scale: 0.95,
-    yPercent: -0.5,
-    opacity: 1,
-  },
-  "-=0.3"
-);
-tl.to(".card3", {
-  yPercent: 0,
-  opacity: 1,
-});
-
-// Animation for card 4
-tl.from(".card4", {
-  yPercent: 75,
-  opacity: 0,
-});
-tl.addLabel("card4");
-tl.add(() => setActiveNav(tl.scrollTrigger.direction > 0 ? 3 : 2), "-=0.15");
-tl.to(
-  ".card3",
-  {
-    scale: 0.98,
-    yPercent: -0.4,
-    opacity: 1,
-  },
-  "-=0.3"
-);
-tl.to(".card4", {
-  yPercent: 0,
-  opacity: 1,
-});
-
-// Additional animations for scaling down previous cards
-tl.to(
-  ".card1",
-  {
-    scale: 0.925,
-    yPercent: -1.5,
-    opacity: 0.9,
-  },
-  "-=0.3"
-);
-
-tl.to(
-  ".card2",
-  {
-    scale: 0.95,
-    yPercent: -1.125,
-    opacity: 0.9,
-  },
-  "-=0.3"
-);
-
-tl.to(
-  ".card3",
-  {
-    scale: 0.98,
-    yPercent: -0.85,
-    opacity: 0.9,
-  },
-  "-=0.3"
-);
-
-// Without the .nav .circle elements, we don't need to handle setActiveNav function
-/* gsap.utils.toArray(".nav .circle").forEach((circle, i) => {
-  circle.classList[i === index ? "add" : "remove"]("active");
-}); */
-
-function labelToScroll(timeline, label) {
-  let st = timeline.scrollTrigger,
-    progress = timeline.labels[label] / timeline.duration();
-  return st.start + (st.end - st.start) * progress;
-}
