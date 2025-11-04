@@ -36,18 +36,18 @@ body {
   height: 70vh;
   background: -webkit-linear-gradient(
     130deg,
-    #c0a8a3 0%,
-    #6A734C 67%,
-    #c0a8a3 100%
+    #8D6E71 0%,
+    #594748 67%,
+    #8D6E71 100%
   );
-  background: linear-gradient(-40deg, #6A734C 0%, #6A734C, #c0a8a3);
+  background: linear-gradient(-40deg, #594748 0%, #594748, #8D6E71);
   color: #fff;
   margin-bottom: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 20px;
-  box-shadow: 0 0 20px 0 rgba(106, 91, 78, 1);
+  box-shadow: 0 0 20px 0 rgba(89, 71, 72, 1);
 }
 .card2 {
   top: 30px;
@@ -167,21 +167,21 @@ body {
 }
 
 .article-1 {
-  background: linear-gradient(135deg, #6A734C 0%, #5a623f 100%);
+  background: linear-gradient(135deg, #594748 0%, #453839 100%);
   z-index: 4;
 }
 
 .article-2 {
-  background: linear-gradient(135deg, #7a845c 0%, #6a734c 100%);
+  background: linear-gradient(135deg, #71585A 0%, #594748 100%);
   z-index: 3;
 }
 
 .article-3 {
-  background: linear-gradient(135deg, #8a946c 0%, #7a845c 100%);
+  background: linear-gradient(135deg, #8D6E71 0%, #71585A 100%);
   z-index: 2;
 }
 
 .article-4 {
-  background: linear-gradient(135deg, #9aa47c 0%, #8a946c 100%);
+  background: linear-gradient(135deg, #8D6E71 0%, #8D6E71 100%);
   z-index: 1;
 }
