@@ -125,7 +125,7 @@
       />
       <div class="relative z-10 text-center px-6">
         <h1
-          class="hero-title text-4xl md:text-6xl tracking-widest font-semibold drop-shadow-lg"
+          class="hero-title text-4xl md:text-6xl tracking-widest font-semibold"
         >
           LE MONDE DE L’URBEX
         </h1>
@@ -169,24 +169,7 @@
             adipiscing elit. Integer ac ligula at magna volutpat tempor. Sed
             vitae urna id arcu porttitor tristique. Curabitur sed enim dictum,
             volutpat leo quis, posuere augue. Donec suscipit neque vitae lorem
-            posuere, quis ullamcorper lorem varius.Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Integer ac ligula at magna volutpat
-            tempor. Sed vitae urna id arcu porttitor tristique. Curabitur sed
-            enim dictum, volutpat leo quis, posuere augue. Donec suscipit neque
-            vitae lorem posuere, quis ullamcorper lorem varius.Lorem ipsum dolor
-            sit amet, consectetur adipiscing elit. Integer ac ligula at magna
-            volutpat tempor. Sed vitae urna id arcu porttitor tristique.
-            Curabitur sed enim dictum, volutpat leo quis, posuere augue. Donec
-            suscipit neque vitae lorem posuere, quis ullamcorper lorem
-            varius.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Integer ac ligula at magna volutpat tempor. Sed vitae urna id arcu
-            porttitor tristique. Curabitur sed enim dictum, volutpat leo quis,
-            posuere augue. Donec suscipit neque vitae lorem posuere, quis
-            ullamcorper lorem varius.Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit. Integer ac ligula at magna volutpat tempor. Sed
-            vitae urna id arcu porttitor tristique. Curabitur sed enim dictum,
-            volutpat leo quis, posuere augue. Donec suscipit neque vitae lorem
-            posuere, quis ullamcorper lorem varius.
+            posuere
           </p>
         </div>
         <div
@@ -260,43 +243,47 @@
           Articles
         </div>
 
-        <div class="articles-stack-container">
-          <div class="articles-stack-wrapper">
-            <article class="stacked-article article-1">
-              <div class="article-bg-pattern"></div>
-              <div class="article-number">01</div>
-              <div class="article-content">
-                <h2 class="article-title">Slide 1</h2>
-                <p class="article-subtitle">Premier article de la série</p>
+        <div class="articles-book-container">
+          <div class="articles-book-wrapper">
+            <div class="book" id="articles-book">
+              <div class="book-spread book-spread-1">
+                <article class="book-page book-page-left">
+                  <div class="page-pattern"></div>
+                  <div class="page-number">01</div>
+                  <div class="article-content">
+                    <h2 class="article-title">Slide 1</h2>
+                    <p class="article-subtitle">Premier article de la série</p>
+                  </div>
+                </article>
+                <article class="book-page book-page-right">
+                  <div class="page-pattern"></div>
+                  <div class="page-number">02</div>
+                  <div class="article-content">
+                    <h2 class="article-title">Slide 2</h2>
+                    <p class="article-subtitle">Deuxième article de la série</p>
+                  </div>
+                </article>
               </div>
-            </article>
 
-            <article class="stacked-article article-2">
-              <div class="article-bg-pattern"></div>
-              <div class="article-number">02</div>
-              <div class="article-content">
-                <h2 class="article-title">Slide 2</h2>
-                <p class="article-subtitle">Deuxième article de la série</p>
+              <div class="book-spread book-spread-2">
+                <article class="book-page book-page-left">
+                  <div class="page-pattern"></div>
+                  <div class="page-number">03</div>
+                  <div class="article-content">
+                    <h2 class="article-title">Slide 3</h2>
+                    <p class="article-subtitle">Troisième article de la série</p>
+                  </div>
+                </article>
+                <article class="book-page book-page-right">
+                  <div class="page-pattern"></div>
+                  <div class="page-number">04</div>
+                  <div class="article-content">
+                    <h2 class="article-title">Slide 4</h2>
+                    <p class="article-subtitle">Quatrième article de la série</p>
+                  </div>
+                </article>
               </div>
-            </article>
-
-            <article class="stacked-article article-3">
-              <div class="article-bg-pattern"></div>
-              <div class="article-number">03</div>
-              <div class="article-content">
-                <h2 class="article-title">Slide 3</h2>
-                <p class="article-subtitle">Troisième article de la série</p>
-              </div>
-            </article>
-
-            <article class="stacked-article article-4">
-              <div class="article-bg-pattern"></div>
-              <div class="article-number">04</div>
-              <div class="article-content">
-                <h2 class="article-title">Slide 4</h2>
-                <p class="article-subtitle">Quatrième article de la série</p>
-              </div>
-            </article>
+            </div>
           </div>
         </div>
       </div>
@@ -313,18 +300,19 @@
         </div>
 
         <div
-          class="overflow-x-auto overflow-y-hidden rounded-3xl border border-brandStroke bg-black/20 scrollbar-thin scrollbar-thumb-brandText/30 scrollbar-track-transparent"
+          id="image-carousel"
+          class="overflow-x-auto overflow-y-hidden rounded-3xl border border-brandStroke bg-black/20 scrollbar-thin scrollbar-thumb-brandText/30 scrollbar-track-transparent cursor-grab"
         >
-          <div id="image-track" class="flex gap-6 p-6 w-max">
+          <div id="image-track" class="flex gap-6 p-6 w-max select-none">
             <img
-              src="./img/placeholder.png"
+              src="./img/morceauabandonne.webp"
               alt=""
-              class="image-item h-40 w-56 object-cover rounded-2xl flex-none"
+              class="image-item h-40 w-56 object-cover rounded-2xl flex-none rotate-90"
             />
             <img
-              src="./img/placeholder.png"
+              src="./img/morceaubatiment1.webp"
               alt=""
-              class="image-item h-40 w-56 object-cover rounded-2xl flex-none"
+              class="image-item h-40 w-56 object-cover rounded-2xl flex-none rotate-90"
             />
             <img
               src="./img/placeholder.png"

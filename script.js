@@ -37,80 +37,78 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  //logique pour l'effet d'articles empilés avec scroll
-  const stackedArticles = gsap.utils.toArray('.stacked-article');
-  const articlesContainer = document.querySelector('.articles-stack-container');
+  //logique pour l'effet livre des articles
+  const bookContainer = document.querySelector('.articles-book-container');
+  const bookWrapper = document.querySelector('.articles-book-wrapper');
+  const bookSpreads = gsap.utils.toArray('.book-spread');
 
-  if (stackedArticles.length > 0 && articlesContainer) {
-    //définir les positions initiales pour chaque article
-    stackedArticles.forEach((article, index) => {
-      gsap.set(article, {
-        zIndex: stackedArticles.length - index,
-        scale: 1 - (index * 0.05),
-        opacity: 0.3 + ((stackedArticles.length - index) * 0.15),
-        
-        //faire venir chaque carte par le bas
-        y: 120
+  ScrollTrigger.matchMedia({
+    '(min-width: 768px)': () => {
+      if (!bookContainer || !bookWrapper || bookSpreads.length < 2) return;
+
+      const totalSpreads = bookSpreads.length;
+
+      gsap.set(bookSpreads, {
+        zIndex: (index) => totalSpreads - index,
+        rotateY: 0,
+        '--flip-progress': 0,
       });
-    });
 
-    //créer une animation pour chaque article
-    stackedArticles.forEach((article, index) => {
-      //calculer le début et la fin du scroll pour chaque article
-      const startProgress = index / stackedArticles.length;
-      const endProgress = (index + 1) / stackedArticles.length;
+      const flipTrigger = ScrollTrigger.create({
+        trigger: bookContainer,
+        start: 'top top',
+        end: () => '+=' + Math.max((totalSpreads - 1) * 900, 600),
+        scrub: true,
+        pin: bookWrapper,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
 
-      gsap.to(article, {
-        scale: 1,
-        opacity: 1,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: articlesContainer,
-          start: 'top top',
-          end: 'bottom bottom',
-          scrub: 1,
-          onUpdate: (self) => {
-            const progress = self.progress;
-            
-            //calculer l'opacité et le scale basés sur la progression
-            if (progress < startProgress) {
-              //avant que cet article soit actif
-              gsap.set(article, {
-                scale: 1 - ((stackedArticles.length - index) * 0.05),
-                opacity: 0.3,
-                zIndex: stackedArticles.length - index,
-                
-                //position au repos en bas
-                y: 120
-              });
-            } else if (progress >= startProgress && progress < endProgress) {
-              //pendant que cet article est actif
-              const localProgress = (progress - startProgress) / (endProgress - startProgress);
-              gsap.set(article, {
-                scale: 1,
-                opacity: 1,
-                zIndex: stackedArticles.length + index,
-                
-                //interpolation de y: de 120 (bas) à 0 (centre)
-                y: 120 * (1 - localProgress)
-              });
+          bookSpreads.forEach((spread, index) => {
+            const start = index / (totalSpreads - 1);
+            const end = (index + 1) / (totalSpreads - 1);
+
+            let localProgress;
+            if (progress <= start) {
+              localProgress = 0;
+            } else if (progress >= end) {
+              localProgress = 1;
             } else {
-              //après que cet article soit actif
-              const fadeProgress = Math.min((progress - endProgress) / 0.15, 1);
-              gsap.set(article, {
-                scale: 1 - (fadeProgress * 0.1),
-                opacity: Math.max(1 - (fadeProgress * 1.5), 0),
-                zIndex: index,
-                
-                //sortie vers le haut
-                y: -120 * fadeProgress
-              });
+              localProgress = (progress - start) / (end - start);
             }
-          }
-        }
+
+            const rotation = gsap.utils.mapRange(0, 1, 0, -180, localProgress);
+            const isActive = progress > start && progress < end;
+            const isPast = progress >= end;
+            let zIndexValue;
+
+            if (isActive) {
+              zIndexValue = totalSpreads + index;
+            } else if (isPast) {
+              zIndexValue = index;
+            } else {
+              zIndexValue = totalSpreads - index;
+            }
+
+            gsap.set(spread, {
+              rotateY: rotation,
+              '--flip-progress': localProgress,
+              zIndex: zIndexValue,
+            });
+          });
+        },
       });
-    });
-  }
+
+      return () => {
+        flipTrigger.kill();
+      };
+    },
+
+    '(max-width: 767px)': () => {
+      if (!bookSpreads.length) return;
+      gsap.set(bookSpreads, { clearProps: 'all' });
+    },
+  });
 
   //ajouter la logique du menu mobile (hamburger)
   const menuToggleButton = document.getElementById('menu-toggle');
@@ -180,4 +178,106 @@ document.addEventListener("DOMContentLoaded", () => {
     const isOpen = mobileMenu && !mobileMenu.classList.contains('hidden');
     if (isOpen && evt.key === 'Escape') setMenuOpen(false);
   });
+
+  //ajouter la navigation souris pour le carrousel d images
+  const imageCarousel = document.getElementById('image-carousel');
+
+  if (imageCarousel) {
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragScrollLeft = 0;
+    let storedScrollBehavior = '';
+    let activePointerId = null;
+
+    const enableInstantScroll = () => {
+      storedScrollBehavior = imageCarousel.style.scrollBehavior;
+      imageCarousel.style.scrollBehavior = 'auto';
+    };
+
+    const restoreScrollBehavior = () => {
+      imageCarousel.style.scrollBehavior = storedScrollBehavior;
+      storedScrollBehavior = '';
+    };
+
+    const endDrag = () => {
+      if (!isDragging) return;
+      isDragging = false;
+      imageCarousel.classList.remove('is-dragging');
+      restoreScrollBehavior();
+
+      if (activePointerId !== null) {
+        try {
+          if (imageCarousel.hasPointerCapture(activePointerId)) {
+            imageCarousel.releasePointerCapture(activePointerId);
+          }
+        } catch (error) {
+          //ignore si le navigateur ne supporte pas cette verification
+        }
+      }
+
+      activePointerId = null;
+    };
+
+    imageCarousel.addEventListener('pointerdown', (evt) => {
+      if (evt.pointerType !== 'mouse' && evt.pointerType !== 'pen') return;
+      if (evt.button !== 0) return;
+
+      isDragging = true;
+      dragStartX = evt.clientX;
+      dragScrollLeft = imageCarousel.scrollLeft;
+      activePointerId = evt.pointerId;
+      imageCarousel.classList.add('is-dragging');
+      enableInstantScroll();
+
+      try {
+        imageCarousel.setPointerCapture(activePointerId);
+      } catch (error) {
+        //ignore si le navigateur ne supporte pas cette operation
+      }
+    });
+
+    imageCarousel.addEventListener('pointermove', (evt) => {
+      if (!isDragging) return;
+      if (evt.pointerId !== activePointerId) return;
+
+      evt.preventDefault();
+      const deltaX = evt.clientX - dragStartX;
+      // multiplier deltaX pour rendre le glissement un peu plus long
+      imageCarousel.scrollLeft = dragScrollLeft - deltaX * 1.2;
+    });
+
+    imageCarousel.addEventListener('pointerup', (evt) => {
+      if (evt.pointerId !== activePointerId) return;
+      endDrag();
+    });
+
+    imageCarousel.addEventListener('pointercancel', (evt) => {
+      if (evt.pointerId !== activePointerId) return;
+      endDrag();
+    });
+
+    imageCarousel.addEventListener('pointerleave', () => {
+      endDrag();
+    });
+
+    imageCarousel.addEventListener(
+      'wheel',
+      (evt) => {
+        const verticalScroll = Math.abs(evt.deltaY) > Math.abs(evt.deltaX);
+        if (!verticalScroll) return;
+
+        const atStart = imageCarousel.scrollLeft <= 0;
+        const atEnd =
+          Math.ceil(imageCarousel.scrollLeft + imageCarousel.clientWidth) >=
+          imageCarousel.scrollWidth;
+
+        if ((atStart && evt.deltaY < 0) || (atEnd && evt.deltaY > 0)) return;
+
+        evt.preventDefault();
+        // augmenter légèrement l'effet de la molette pour un défilement plus long
+        imageCarousel.scrollLeft += evt.deltaY * 1.5;
+      },
+      { passive: false }
+    );
+  }
 });
