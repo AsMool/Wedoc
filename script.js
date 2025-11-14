@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const computeScrollDistance = () => {
         const viewportHeight = window.innerHeight;
         const distance = Math.max(
-          (totalSpreads - 1) * viewportHeight * 0.55,
+          (totalSpreads - 1) * viewportHeight * 0.45,
           viewportHeight * 0.45,
           420
         );
@@ -75,45 +75,61 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const articlesFlipTrigger = ScrollTrigger.create({
         trigger: articlesBookContainer,
-        start: 'top top',
+        start: 'top top+=80',
         end: () => '+=' + computeScrollDistance(),
         scrub: true,
         pin: articlesBookWrapper,
+        pinSpacing: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           const progress = self.progress;
+          const totalSpreads = articlesBookSpreads.length;
 
           articlesBookSpreads.forEach((spread, index) => {
-            const start = index / (totalSpreads - 1);
-            const end = (index + 1) / (totalSpreads - 1);
+            const spreadStartProgress = index / totalSpreads;
+            const spreadEndProgress = (index + 1) / totalSpreads;
 
-            let localProgress;
-            if (progress <= start) {
-              localProgress = 0;
-            } else if (progress >= end) {
-              localProgress = 1;
-            } else {
-              localProgress = (progress - start) / (end - start);
-            }
+            const isCurrent = progress >= spreadStartProgress && progress < spreadEndProgress;
+            const isPast = progress >= spreadEndProgress;
 
-            const rotation = gsap.utils.mapRange(0, 1, 0, -180, localProgress);
-            const isActive = progress > start && progress < end;
-            const isPast = progress >= end;
-            let zIndexValue;
-
-            if (isActive) {
-              zIndexValue = totalSpreads + index;
+            let zIndexValue = totalSpreads - index;
+            if (isCurrent) {
+              zIndexValue = totalSpreads + 1;
             } else if (isPast) {
               zIndexValue = index;
-            } else {
-              zIndexValue = totalSpreads - index;
             }
 
+            const page = spread.querySelector('.book-page-right');
+            if (!page) return;
+
+            // Prevent the last page from flipping
+            if (index === totalSpreads - 1) {
+              gsap.set(spread, {
+                zIndex: zIndexValue,
+                '--flip-progress': 0,
+              });
+              gsap.set(page, {
+                rotationY: 0,
+                z: 0,
+              });
+              return;
+            }
+
+            const pageProgress = (progress - spreadStartProgress) / (spreadEndProgress - spreadStartProgress);
+            const rotation = Math.max(0, Math.min(180, 180 * pageProgress));
+            
+            // Add some z movement to make it look like the page is lifting
+            const z = pageProgress < 0.5 ? pageProgress * 40 : (1 - pageProgress) * 40;
+
             gsap.set(spread, {
-              rotateY: rotation,
-              '--flip-progress': localProgress,
               zIndex: zIndexValue,
+              '--flip-progress': pageProgress,
+            });
+
+            gsap.set(page, {
+              rotationY: -rotation,
+              z: z,
             });
           });
         },
@@ -134,6 +150,129 @@ document.addEventListener("DOMContentLoaded", () => {
       gsap.set(articlesBookSpreads, { clearProps: 'all' });
     },
   });
+
+  //progression dans les articles détaillés
+  const articleProgressNav = document.querySelector('.article-progress');
+  if (articleProgressNav) {
+    const progressLinks = Array.from(articleProgressNav.querySelectorAll('a[href^="#"]'));
+    const sections = progressLinks
+      .map((link) => {
+        const targetId = link.getAttribute('href').slice(1);
+        return document.getElementById(targetId);
+      })
+      .filter(Boolean);
+
+    if (progressLinks.length && sections.length) {
+      const sectionPositions = new Map();
+      const visibleSections = new Set();
+      let activeId = null;
+
+      const updateSectionPositions = () => {
+        sections.forEach((section) => {
+          sectionPositions.set(section.id, section.getBoundingClientRect().top + window.scrollY);
+        });
+      };
+
+      const setActiveLink = (id) => {
+        if (activeId === id) return;
+        activeId = id;
+        progressLinks.forEach((link) => {
+          const hrefId = link.getAttribute('href').slice(1);
+          const isActive = hrefId === id;
+          link.classList.toggle('is-active', isActive);
+          if (isActive) {
+            link.setAttribute('aria-current', 'true');
+          } else {
+            link.removeAttribute('aria-current');
+          }
+        });
+      };
+
+      const updateFromVisibleSections = () => {
+        if (!visibleSections.size) return;
+        const ordered = Array.from(visibleSections).sort((a, b) => {
+          return (sectionPositions.get(a) || 0) - (sectionPositions.get(b) || 0);
+        });
+        const lastId = ordered[ordered.length - 1];
+        if (lastId) setActiveLink(lastId);
+      };
+
+      updateSectionPositions();
+
+      const observerOptions = {
+        root: null,
+        rootMargin: '-45% 0px -45% 0px',
+        threshold: [0, 0.15, 0.35],
+      };
+
+      const intersectionObserver = new IntersectionObserver((entries) => {
+        let changed = false;
+        entries.forEach((entry) => {
+          const { id } = entry.target;
+          if (entry.isIntersecting) {
+            if (!visibleSections.has(id)) {
+              visibleSections.add(id);
+              changed = true;
+            }
+          } else if (visibleSections.has(id)) {
+            visibleSections.delete(id);
+            changed = true;
+          }
+        });
+
+        if (changed) updateFromVisibleSections();
+      }, observerOptions);
+
+      sections.forEach((section) => intersectionObserver.observe(section));
+
+      const handleScrollEnd = () => {
+        if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+          const lastSection = sections[sections.length - 1];
+          if (lastSection) setActiveLink(lastSection.id);
+        }
+      };
+
+      const handleResize = () => {
+        updateSectionPositions();
+        updateFromVisibleSections();
+      };
+
+      window.addEventListener('scroll', handleScrollEnd, { passive: true });
+      window.addEventListener('resize', handleResize);
+
+      const scrollToSection = (targetSection) => {
+        const desktopOffset = 120;
+        const mobileOffset = 80;
+        const offset = window.innerWidth >= 1024 ? desktopOffset : mobileOffset;
+        const targetTop = targetSection.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: Math.max(targetTop, 0), behavior: 'smooth' });
+      };
+
+      progressLinks.forEach((link) => {
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
+          const targetId = link.getAttribute('href').slice(1);
+          const targetSection = sections.find((section) => section.id === targetId);
+          if (!targetSection) return;
+          scrollToSection(targetSection);
+          setActiveLink(targetId);
+        });
+      });
+
+      const initialHash = window.location.hash.replace('#', '');
+      if (initialHash && sections.some((section) => section.id === initialHash)) {
+        setActiveLink(initialHash);
+      } else {
+        setActiveLink(sections[0].id);
+      }
+
+      window.addEventListener('pagehide', () => {
+        intersectionObserver.disconnect();
+        window.removeEventListener('scroll', handleScrollEnd);
+        window.removeEventListener('resize', handleResize);
+      });
+    }
+  }
 
   // Slider functionality for the stacked image showcase
   const sliderRoot = document.querySelector('#images .slider');

@@ -3,6 +3,7 @@ html,
 body {
   height: 100%;
   font-family: minion-pro, serif;
+  background-color: black;
 }
 
 /* améliorer l'apparence de la sélection de texte (complément à Tailwind) */
@@ -125,6 +126,12 @@ body {
   text-decoration: none;
   color: inherit;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.book-page-right {
+  transform-origin: left center;
 }
 
 .book-page:hover {
@@ -290,6 +297,73 @@ body {
   .page-number {
     left: clamp(1.3rem, 6vw, 2rem);
     right: auto;
+  }
+}
+
+/* Article progress navigation */
+.article-progress {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.1rem;
+  padding-right: 0.8rem;
+}
+
+.article-progress::before {
+  content: "";
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  right: 0.55rem;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    rgba(141, 110, 113, 0.45),
+    rgba(141, 110, 113, 0.15)
+  );
+  pointer-events: none;
+}
+
+.article-progress a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 999px;
+  text-decoration: none;
+  position: relative;
+}
+
+.article-progress .progress-dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 999px;
+  border: 2px solid rgba(141, 110, 113, 0.7);
+  background: rgba(141, 110, 113, 0.3);
+  transition: all 0.25s ease;
+}
+
+.article-progress a.is-active .progress-dot,
+.article-progress a:focus-visible .progress-dot,
+.article-progress a:hover .progress-dot {
+  background: #8d6e71;
+  border-color: #8d6e71;
+  box-shadow: 0 0 0 4px rgba(141, 110, 113, 0.18);
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .article-progress {
+    align-items: center;
+    padding-right: 0;
+  }
+
+  .article-progress::before {
+    left: 50%;
+    right: auto;
+    transform: translateX(-0.5px);
   }
 }
 
