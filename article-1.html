@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Article 1 - Le Monde de l'Urbex</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brandBg: "#594748",
+              brandText: "#8D6E71",
+              brandStroke: "#33292A",
+            },
+            boxShadow: {
+              soft: "0 10px 40px rgba(0,0,0,0.35)",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="./styles.css" />
+    <style>
+      /* Progress indicator styles */
+      .progress-nav {
+        position: fixed;
+        right: 2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        z-index: 40;
+      }
+
+      .progress-line {
+        position: absolute;
+        right: 0.625rem;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(
+          to bottom,
+          rgba(141, 110, 113, 0.3),
+          rgba(141, 110, 113, 0.1)
+        );
+      }
+
+      .progress-item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.75rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .progress-dot {
+        width: 0.75rem;
+        height: 0.75rem;
+        border-radius: 50%;
+        background: rgba(141, 110, 113, 0.4);
+        border: 2px solid rgba(141, 110, 113, 0.6);
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 1;
+      }
+
+      .progress-item.active .progress-dot {
+        background: #8D6E71;
+        border-color: #8D6E71;
+        box-shadow: 0 0 10px rgba(141, 110, 113, 0.5);
+        width: 1rem;
+        height: 1rem;
+      }
+
+      .progress-label {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.5);
+        opacity: 0;
+        transform: translateX(10px);
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        pointer-events: none;
+      }
+
+      .progress-item:hover .progress-label,
+      .progress-item.active .progress-label {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .progress-item.active .progress-label {
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      @media (max-width: 768px) {
+        .progress-nav {
+          right: 1rem;
+        }
+
+        .progress-label {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-neutral-900 text-white antialiased selection:bg-brandText/20">
+    <!-- Navbar -->
+    <header class="fixed top-4 left-4 z-50">
+      <a
+        href="index.html#articles"
+        class="inline-flex items-center gap-2 rounded-full border border-brandStroke/60 bg-brandText/10 px-4 py-2 backdrop-blur-md transition-all duration-300 hover:border-2"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+          <path fill-rule="evenodd" d="M11.03 3.97a.75.75 0 0 1 0 1.06l-6.22 6.22H21a.75.75 0 0 1 0 1.5H4.81l6.22 6.22a.75.75 0 1 1-1.06 1.06l-7.5-7.5a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
+        </svg>
+        <span class="text-sm">Retour</span>
+      </a>
+    </header>
+
+    <!-- Progress Navigation -->
+    <nav class="progress-nav" aria-label="Article progress">
+      <div class="progress-line"></div>
+      <a href="#introduction" class="progress-item active" data-section="introduction">
+        <span class="progress-label">Introduction</span>
+        <div class="progress-dot"></div>
+      </a>
+      <a href="#histoire" class="progress-item" data-section="histoire">
+        <span class="progress-label">Histoire</span>
+        <div class="progress-dot"></div>
+      </a>
+      <a href="#exploration" class="progress-item" data-section="exploration">
+        <span class="progress-label">Exploration</span>
+        <div class="progress-dot"></div>
+      </a>
+      <a href="#conclusion" class="progress-item" data-section="conclusion">
+        <span class="progress-label">Conclusion</span>
+        <div class="progress-dot"></div>
+      </a>
+    </nav>
+
+    <!-- Article Content -->
+    <article class="container mx-auto px-6 py-24 max-w-4xl">
+      <!-- Header -->
+      <header class="mb-16 text-center">
+        <h1 class="text-4xl md:text-5xl font-semibold mb-4 tracking-wide">
+          Slide 1: L'Exploration Urbaine
+        </h1>
+        <p class="text-lg text-brandText opacity-90">
+          Premier article de la série
+        </p>
+        <div class="mt-6 text-sm opacity-60">
+          Publié le 14 novembre 2025
+        </div>
+      </header>
+
+      <!-- Introduction -->
+      <section id="introduction" class="article-section mb-16">
+        <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">
+          Introduction
+        </h2>
+        <div class="prose prose-invert max-w-none">
+          <p class="mb-4 leading-relaxed">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac
+            ligula at magna volutpat tempor. Sed vitae urna id arcu porttitor
+            tristique. Curabitur sed enim dictum, volutpat leo quis, posuere
+            augue. Donec suscipit neque vitae lorem posuere, quis ullamcorper
+            lorem varius.
+          </p>
+          <p class="mb-4 leading-relaxed">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac
+            ligula at magna volutpat tempor. Sed vitae urna id arcu porttitor
+            tristique. Curabitur sed enim dictum, volutpat leo quis, posuere
+            augue. Donec suscipit neque vitae lorem posuere, quis ullamcorper
+            lorem varius.
+          </p>
+        </div>
+      </section>
+
+      <!-- Histoire -->
+      <section id="histoire" class="article-section mb-16">
+        <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">
+          Histoire de l'Urbex
+        </h2>
+        <div class="prose prose-invert max-w-none">
+          <p class="mb-4 leading-relaxed">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac
+            ligula at magna volutpat tempor. Sed vitae urna id arcu porttitor
+            tristique. Curabitur sed enim dictum, volutpat leo quis, posuere
+            augue. Donec suscipit neque vitae lorem posuere, quis ullamcorper
+            lorem varius. Lorem ipsum dolor sit amet, consectetur adipiscing
+            elit.
+          </p>
+          <p class="mb-4 leading-relaxed">
+            Integer ac ligula at magna volutpat tempor. Sed vitae urna id arcu
+            porttitor tristique. Curabitur sed enim dictum, volutpat leo quis,
+            posuere augue. Donec suscipit neque vitae lorem posuere, quis
+            ullamcorper lorem varius. Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit. Integer ac ligula at magna volutpat tempor.
+          </p>
+          <p class="mb-4 leading-relaxed">
+            Sed vitae urna id arcu porttitor tristique. Curabitur sed enim
+            dictum, volutpat leo quis, posuere augue. Donec suscipit neque vitae
+            lorem posuere, quis ullamcorper lorem varius.
+          </p>
+        </div>
+      </section>
+
+      <!-- Exploration -->
+      <section id="exploration" class="article-section mb-16">
+        <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">
+          Techniques d'Exploration
+        </h2>
+        <div class="prose prose-invert max-w-none">
+          <p class="mb-4 leading-relaxed">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac
+            ligula at magna volutpat tempor. Sed vitae urna id arcu porttitor
+            tristique. Curabitur sed enim dictum, volutpat leo quis, posuere
+            augue. Donec suscipit neque vitae lorem posuere, quis ullamcorper
+            lorem varius.
+          </p>
+          <p class="mb-4 leading-relaxed">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac
+            ligula at magna volutpat tempor. Sed vitae urna id arcu porttitor
+            tristique. Curabitur sed enim dictum, volutpat leo quis, posuere
+            augue.
+          </p>
+          <p class="mb-4 leading-relaxed">
+            Donec suscipit neque vitae lorem posuere, quis ullamcorper lorem
+            varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Integer ac ligula at magna volutpat tempor. Sed vitae urna id arcu
+            porttitor tristique.
+          </p>
+        </div>
+      </section>
+
+      <!-- Conclusion -->
+      <section id="conclusion" class="article-section mb-16">
+        <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">
+          Conclusion
+        </h2>
+        <div class="prose prose-invert max-w-none">
+          <p class="mb-4 leading-relaxed">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac
+            ligula at magna volutpat tempor. Sed vitae urna id arcu porttitor
+            tristique. Curabitur sed enim dictum, volutpat leo quis, posuere
+            augue. Donec suscipit neque vitae lorem posuere, quis ullamcorper
+            lorem varius.
+          </p>
+          <p class="mb-4 leading-relaxed">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac
+            ligula at magna volutpat tempor. Sed vitae urna id arcu porttitor
+            tristique. Curabitur sed enim dictum, volutpat leo quis, posuere
+            augue.
+          </p>
+        </div>
+      </section>
+    </article>
+
+    <footer class="py-12 text-center text-xs opacity-60">© 2025 Urbex</footer>
+
+    <script>
+      // Progress navigation active state
+      document.addEventListener('DOMContentLoaded', () => {
+        const progressItems = document.querySelectorAll('.progress-item');
+        const sections = document.querySelectorAll('.article-section');
+
+        // Intersection Observer for scroll-based activation
+        const observerOptions = {
+          root: null,
+          rootMargin: '-50% 0px -50% 0px',
+          threshold: 0,
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const sectionId = entry.target.id;
+              progressItems.forEach((item) => {
+                if (item.dataset.section === sectionId) {
+                  progressItems.forEach((i) => i.classList.remove('active'));
+                  item.classList.add('active');
+                }
+              });
+            }
+          });
+        }, observerOptions);
+
+        sections.forEach((section) => observer.observe(section));
+
+        // Smooth scroll on click
+        progressItems.forEach((item) => {
+          item.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = item.getAttribute('href').substring(1);
+            const target = document.getElementById(targetId);
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
