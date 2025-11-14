@@ -289,7 +289,7 @@
       </div>
     </section>
 
-    <!-- Section Images auto-défilante -->
+    <!-- Section Images carousel with book styling -->
     <section id="images" class="relative py-24">
       <div class="container mx-auto px-6">
         <div
@@ -300,41 +300,73 @@
         </div>
 
         <div
-          id="image-carousel"
-          class="overflow-x-auto overflow-y-hidden rounded-3xl border border-brandStroke bg-black/20 scrollbar-thin scrollbar-thumb-brandText/30 scrollbar-track-transparent cursor-grab"
+          class="images-slider relative rounded-3xl border border-brandStroke bg-black/20 overflow-hidden"
+          data-animate
         >
-          <div id="image-track" class="flex gap-6 p-6 w-max select-none">
-            <img
-              src="./img/morceauabandonne.webp"
-              alt=""
-              class="image-item h-40 w-56 object-cover rounded-2xl flex-none rotate-90"
-            />
-            <img
-              src="./img/morceaubatiment1.webp"
-              alt=""
-              class="image-item h-40 w-56 object-cover rounded-2xl flex-none rotate-90"
-            />
-            <img
-              src="./img/placeholder.png"
-              alt=""
-              class="image-item h-40 w-56 object-cover rounded-2xl flex-none"
-            />
-            <img
-              src="./img/placeholder.png"
-              alt=""
-              class="image-item h-40 w-56 object-cover rounded-2xl flex-none"
-            />
-            <img
-              src="./img/placeholder.png"
-              alt=""
-              class="image-item h-40 w-56 object-cover rounded-2xl flex-none"
-            />
-            <img
-              src="./img/placeholder.png"
-              alt=""
-              class="image-item h-40 w-56 object-cover rounded-2xl flex-none"
-            />
-          </div>
+          <ul class="slider">
+            <li class="item" style="background-image: url('./img/morceauabandonne.webp')">
+              <div class="content">
+                <h3 class="title">"Lossless Youths"</h3>
+                <p class="description">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
+                </p>
+                <button type="button">Read More</button>
+              </div>
+            </li>
+            <li class="item" style="background-image: url('./img/morceaubatiment1.webp')">
+              <div class="content">
+                <h3 class="title">"Estrange Bond"</h3>
+                <p class="description">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
+                </p>
+                <button type="button">Read More</button>
+              </div>
+            </li>
+            <li class="item" style="background-image: url('./img/backdark.webp')">
+              <div class="content">
+                <h3 class="title">"The Gate Keeper"</h3>
+                <p class="description">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
+                </p>
+                <button type="button">Read More</button>
+              </div>
+            </li>
+            <li class="item" style="background-image: url('./img/backlight.webp')" >
+              <div class="content">
+                <h3 class="title">"Last Trace Of Us"</h3>
+                <p class="description">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
+                </p>
+                <button type="button">Read More</button>
+              </div>
+            </li>
+            <li class="item" style="background-image: url('./img/placeholder.png')">
+              <div class="content">
+                <h3 class="title">"Urban Decay"</h3>
+                <p class="description">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
+                </p>
+                <button type="button">Read More</button>
+              </div>
+            </li>
+            <li class="item" style="background-image: url('./img/morceauabandonne.webp')">
+              <div class="content">
+                <h3 class="title">"The Migration"</h3>
+                <p class="description">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
+                </p>
+                <button type="button">Read More</button>
+              </div>
+            </li>
+          </ul>
+          <nav class="slider-nav" aria-label="Navigation du carrousel">
+            <button type="button" class="btn prev" aria-label="Image précédente">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </button>
+            <button type="button" class="btn next" aria-label="Image suivante">
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </button>
+          </nav>
         </div>
       </div>
     </section>
@@ -372,6 +404,8 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/CustomBounce.min.js"></script>
     <!-- CustomWiggle requires CustomEase -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/CustomWiggle.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="./script.js"></script>
   </body>
 </html>

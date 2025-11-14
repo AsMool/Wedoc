@@ -38,33 +38,53 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   //logique pour l'effet livre des articles
-  const bookContainer = document.querySelector('.articles-book-container');
-  const bookWrapper = document.querySelector('.articles-book-wrapper');
-  const bookSpreads = gsap.utils.toArray('.book-spread');
+  const articlesBookContainer = document.querySelector('#articles .articles-book-container');
+  const articlesBookWrapper = document.querySelector('#articles .articles-book-wrapper');
+  const articlesBookSpreads = gsap.utils.toArray('#articles .book-spread');
 
   ScrollTrigger.matchMedia({
     '(min-width: 768px)': () => {
-      if (!bookContainer || !bookWrapper || bookSpreads.length < 2) return;
+      if (!articlesBookContainer || !articlesBookWrapper || articlesBookSpreads.length < 2) return;
 
-      const totalSpreads = bookSpreads.length;
+      const totalSpreads = articlesBookSpreads.length;
 
-      gsap.set(bookSpreads, {
+      const computeScrollDistance = () => {
+        const viewportHeight = window.innerHeight;
+        const distance = Math.max(
+          (totalSpreads - 1) * viewportHeight * 0.55,
+          viewportHeight * 0.45,
+          420
+        );
+
+        articlesBookContainer.style.setProperty('--book-scroll-distance', `${distance}px`);
+        return distance;
+      };
+
+      const refreshHandler = () => {
+        computeScrollDistance();
+      };
+
+      gsap.set(articlesBookSpreads, {
         zIndex: (index) => totalSpreads - index,
         rotateY: 0,
         '--flip-progress': 0,
       });
 
-      const flipTrigger = ScrollTrigger.create({
-        trigger: bookContainer,
+      computeScrollDistance();
+      ScrollTrigger.addEventListener('refreshInit', refreshHandler);
+
+      const articlesFlipTrigger = ScrollTrigger.create({
+        trigger: articlesBookContainer,
         start: 'top top',
-        end: () => '+=' + Math.max((totalSpreads - 1) * 900, 600),
+        end: () => '+=' + computeScrollDistance(),
         scrub: true,
-        pin: bookWrapper,
+        pin: articlesBookWrapper,
         anticipatePin: 1,
+        invalidateOnRefresh: true,
         onUpdate: (self) => {
           const progress = self.progress;
 
-          bookSpreads.forEach((spread, index) => {
+          articlesBookSpreads.forEach((spread, index) => {
             const start = index / (totalSpreads - 1);
             const end = (index + 1) / (totalSpreads - 1);
 
@@ -100,14 +120,145 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       return () => {
-        flipTrigger.kill();
+        articlesFlipTrigger.kill();
+        ScrollTrigger.removeEventListener('refreshInit', refreshHandler);
+        articlesBookContainer.style.removeProperty('--book-scroll-distance');
       };
     },
 
     '(max-width: 767px)': () => {
-      if (!bookSpreads.length) return;
-      gsap.set(bookSpreads, { clearProps: 'all' });
+      if (!articlesBookSpreads.length) return;
+      if (articlesBookContainer) {
+        articlesBookContainer.style.removeProperty('--book-scroll-distance');
+      }
+      gsap.set(articlesBookSpreads, { clearProps: 'all' });
     },
+  });
+
+  // Slider functionality for the stacked image showcase
+  const sliderRoot = document.querySelector('#images .slider');
+  const prevButton = document.querySelector('#images .btn.prev');
+  const nextButton = document.querySelector('#images .btn.next');
+
+  if (sliderRoot && prevButton && nextButton) {
+    const moveNext = () => {
+      const items = sliderRoot.querySelectorAll('.item');
+      if (items.length > 1) {
+        sliderRoot.append(items[0]);
+      }
+    };
+
+    const movePrev = () => {
+      const items = sliderRoot.querySelectorAll('.item');
+      if (items.length > 1) {
+        sliderRoot.prepend(items[items.length - 1]);
+      }
+    };
+
+    nextButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      moveNext();
+    });
+
+    prevButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      movePrev();
+    });
+
+    // Allow keyboard navigation when the slider has focus
+    sliderRoot.setAttribute('tabindex', '0');
+    sliderRoot.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        moveNext();
+      } else if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        movePrev();
+      }
+    });
+  }
+  
+  // Mobile swipe animation for the articles book section
+  ScrollTrigger.matchMedia({
+    '(max-width: 767px)': () => {
+      const bookContainer = document.querySelector('#articles .articles-book-container');
+      const bookWrapper = document.querySelector('#articles .articles-book-wrapper');
+      const book = document.getElementById('articles-book');
+      const bookSpreads = gsap.utils.toArray('#articles .book-spread');
+      
+      if (!bookSpreads.length) return;
+      
+      let currentIndex = 0;
+      const totalSpreads = bookSpreads.length;
+      
+      // Set up initial positions for mobile layout
+      gsap.set(bookSpreads, {
+        position: 'relative',
+        zIndex: (i) => totalSpreads - i,
+        opacity: (i) => i === 0 ? 1 : 0,
+        scale: (i) => i === 0 ? 1 : 0.8,
+      });
+      
+      // Create Draggable for swipe functionality
+      if (bookSpreads.length > 1) {
+        Draggable.create(book, {
+          type: "x",
+          edgeResistance: 0.65,
+          throwProps: true,
+          snap: {
+            x: (endValue) => {
+              // Calculate which spread we're closest to
+              const spreadWidth = window.innerWidth;
+              const targetIndex = gsap.utils.snap(1, endValue / spreadWidth);
+              let clampedIndex = gsap.utils.clamp(-(totalSpreads - 1), 0, targetIndex);
+              return clampedIndex * spreadWidth;
+            }
+          },
+          onDrag: updateSpreadDisplay,
+          onThrowUpdate: updateSpreadDisplay,
+          onPress: () => {
+            gsap.killTweensOf(bookSpreads); // Prevent conflicts with scroll animations
+          },
+          onRelease: animateToSpread,
+          onThrowComplete: animateToSpread
+        });
+      }
+      
+      function updateSpreadDisplay() {
+        const spreadWidth = window.innerWidth;
+        const currentPos = this.x || 0;
+        const spreadIndex = Math.round(currentPos / spreadWidth);
+        const clampedIndex = gsap.utils.clamp(-(totalSpreads - 1), 0, spreadIndex);
+        
+        bookSpreads.forEach((spread, i) => {
+          const distance = Math.abs(i + clampedIndex);
+          const opacity = distance === 0 ? 1 : Math.max(0, 1 - distance * 0.4);
+          const scale = distance === 0 ? 1 : Math.max(0.8, 1 - distance * 0.2);
+          
+          gsap.to(spread, {
+            opacity: opacity,
+            scale: scale,
+            zIndex: totalSpreads - i,
+            duration: 0.2,
+            ease: "power2.out"
+          });
+        });
+      }
+      
+      function animateToSpread() {
+        const spreadWidth = window.innerWidth;
+        const currentPos = this.x || 0;
+        const targetIndex = Math.round(currentPos / spreadWidth);
+        const clampedIndex = gsap.utils.clamp(-(totalSpreads - 1), 0, targetIndex);
+        
+        gsap.to(book, {
+          x: clampedIndex * spreadWidth,
+          duration: 0.6,
+          ease: "power2.inOut",
+          onUpdate: updateSpreadDisplay.bind(this)
+        });
+      }
+    }
   });
 
   //ajouter la logique du menu mobile (hamburger)
@@ -179,105 +330,5 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isOpen && evt.key === 'Escape') setMenuOpen(false);
   });
 
-  //ajouter la navigation souris pour le carrousel d images
-  const imageCarousel = document.getElementById('image-carousel');
 
-  if (imageCarousel) {
-    let isDragging = false;
-    let dragStartX = 0;
-    let dragScrollLeft = 0;
-    let storedScrollBehavior = '';
-    let activePointerId = null;
-
-    const enableInstantScroll = () => {
-      storedScrollBehavior = imageCarousel.style.scrollBehavior;
-      imageCarousel.style.scrollBehavior = 'auto';
-    };
-
-    const restoreScrollBehavior = () => {
-      imageCarousel.style.scrollBehavior = storedScrollBehavior;
-      storedScrollBehavior = '';
-    };
-
-    const endDrag = () => {
-      if (!isDragging) return;
-      isDragging = false;
-      imageCarousel.classList.remove('is-dragging');
-      restoreScrollBehavior();
-
-      if (activePointerId !== null) {
-        try {
-          if (imageCarousel.hasPointerCapture(activePointerId)) {
-            imageCarousel.releasePointerCapture(activePointerId);
-          }
-        } catch (error) {
-          //ignore si le navigateur ne supporte pas cette verification
-        }
-      }
-
-      activePointerId = null;
-    };
-
-    imageCarousel.addEventListener('pointerdown', (evt) => {
-      if (evt.pointerType !== 'mouse' && evt.pointerType !== 'pen') return;
-      if (evt.button !== 0) return;
-
-      isDragging = true;
-      dragStartX = evt.clientX;
-      dragScrollLeft = imageCarousel.scrollLeft;
-      activePointerId = evt.pointerId;
-      imageCarousel.classList.add('is-dragging');
-      enableInstantScroll();
-
-      try {
-        imageCarousel.setPointerCapture(activePointerId);
-      } catch (error) {
-        //ignore si le navigateur ne supporte pas cette operation
-      }
-    });
-
-    imageCarousel.addEventListener('pointermove', (evt) => {
-      if (!isDragging) return;
-      if (evt.pointerId !== activePointerId) return;
-
-      evt.preventDefault();
-      const deltaX = evt.clientX - dragStartX;
-      // multiplier deltaX pour rendre le glissement un peu plus long
-      imageCarousel.scrollLeft = dragScrollLeft - deltaX * 1.2;
-    });
-
-    imageCarousel.addEventListener('pointerup', (evt) => {
-      if (evt.pointerId !== activePointerId) return;
-      endDrag();
-    });
-
-    imageCarousel.addEventListener('pointercancel', (evt) => {
-      if (evt.pointerId !== activePointerId) return;
-      endDrag();
-    });
-
-    imageCarousel.addEventListener('pointerleave', () => {
-      endDrag();
-    });
-
-    imageCarousel.addEventListener(
-      'wheel',
-      (evt) => {
-        const verticalScroll = Math.abs(evt.deltaY) > Math.abs(evt.deltaX);
-        if (!verticalScroll) return;
-
-        const atStart = imageCarousel.scrollLeft <= 0;
-        const atEnd =
-          Math.ceil(imageCarousel.scrollLeft + imageCarousel.clientWidth) >=
-          imageCarousel.scrollWidth;
-
-        if ((atStart && evt.deltaY < 0) || (atEnd && evt.deltaY > 0)) return;
-
-        evt.preventDefault();
-        // augmenter légèrement l'effet de la molette pour un défilement plus long
-        imageCarousel.scrollLeft += evt.deltaY * 1.5;
-      },
-      { passive: false }
-    );
-  }
 });

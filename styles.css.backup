@@ -1,0 +1,308 @@
+/* régler des petits détails globaux sans surcharger Tailwind */
+html,
+body {
+  height: 100%;
+  font-family: minion-pro, serif;
+}
+
+/* améliorer l'apparence de la sélection de texte (complément à Tailwind) */
+::selection {
+  background: rgba(249, 249, 249, 0.25);
+}
+
+
+/* Effet livre pour la section articles */
+.articles-book-container {
+  position: relative;
+  width: 100%;
+  height: 260vh;
+  margin: 0 auto;
+}
+
+.articles-book-wrapper {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  perspective: 1800px;
+  perspective-origin: 50% 50%;
+  padding-inline: clamp(1rem, 4vw, 3rem);
+  box-sizing: border-box;
+}
+
+.book {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  height: clamp(420px, 70vh, 640px);
+  transform-style: preserve-3d;
+}
+
+.book::before {
+  content: "";
+  position: absolute;
+  inset: clamp(0.9rem, 3vw, 1.6rem);
+  border-radius: clamp(1.4rem, 3vw, 2.1rem);
+  background: rgba(10, 10, 10, 0.45);
+  filter: blur(55px);
+  opacity: 0.75;
+  transform: translateZ(-2px);
+  pointer-events: none;
+}
+
+.book::after {
+  content: "";
+  position: absolute;
+  top: clamp(1.2rem, 3vw, 2rem);
+  bottom: clamp(1.2rem, 3vw, 2rem);
+  left: 50%;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0.05) 40%,
+    rgba(0, 0, 0, 0.35) 60%,
+    rgba(0, 0, 0, 0.65)
+  );
+  opacity: 0.8;
+  transform: translateX(-50%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.book-spread {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.85rem, 2vw, 1.5rem);
+  padding: clamp(1.15rem, 2.4vw, 2rem);
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  border-radius: clamp(1.6rem, 3.5vw, 2.6rem);
+  will-change: transform;
+  --flip-progress: 0;
+}
+
+.book-spread::before {
+  content: "";
+  position: absolute;
+  inset: clamp(0.65rem, 2vw, 1.3rem);
+  border-radius: inherit;
+  background: radial-gradient(120% 140% at 0% 50%, rgba(255, 255, 255, 0.16) 0%, transparent 62%);
+  opacity: calc(0.45 + var(--flip-progress) * 0.35);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.book-spread::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.45), transparent 58%);
+  opacity: calc(0.35 + (1 - var(--flip-progress)) * 0.4);
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+.book-page {
+  position: relative;
+  border-radius: clamp(1.2rem, 3vw, 2.1rem);
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(89, 71, 72, 0.92), rgba(51, 41, 42, 0.92));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(2rem, 3.5vw, 3rem);
+  isolation: isolate;
+}
+
+.book-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, 0.12), transparent 65%);
+  opacity: 0.7;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.page-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.25;
+  background-image: repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.065) 0px,
+      rgba(255, 255, 255, 0.065) 2px,
+      transparent 2px,
+      transparent 18px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.045) 0px,
+      rgba(255, 255, 255, 0.045) 1px,
+      transparent 1px,
+      transparent 12px
+    );
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  z-index: 0;
+}
+
+.article-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.book-page-right .article-content {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.book-page-left .article-content {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.article-title {
+  font-size: clamp(2.2rem, 4vw, 3.1rem);
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.08em;
+}
+
+.article-subtitle {
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  font-weight: 400;
+  opacity: 0.85;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 18ch;
+}
+
+.book-page-right .article-subtitle {
+  align-self: flex-end;
+}
+
+.page-number {
+  position: absolute;
+  top: clamp(1.4rem, 3vw, 2.4rem);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: rgba(255, 255, 255, 0.18);
+  z-index: 1;
+}
+
+.book-page-left .page-number {
+  left: clamp(1.5rem, 3vw, 2.4rem);
+}
+
+.book-page-right .page-number {
+  right: clamp(1.5rem, 3vw, 2.4rem);
+}
+
+@media (max-width: 1100px) {
+  .articles-book-container {
+    height: 220vh;
+  }
+
+  .book {
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .articles-book-container {
+    height: 200vh;
+  }
+
+  .book {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .articles-book-container {
+    height: auto;
+  }
+
+  .articles-book-wrapper {
+    position: static;
+    width: 100%;
+    margin-left: 0;
+    height: auto;
+    perspective: none;
+    padding-inline: 0;
+  }
+
+  .book {
+    width: 100%;
+    height: auto;
+  }
+
+  .book::before,
+  .book::after {
+    display: none;
+  }
+
+  .book-spread {
+    position: relative;
+    transform: none !important;
+    padding: 0;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+    margin-bottom: 2.5rem;
+  }
+
+  .book-page {
+    min-height: 320px;
+  }
+
+  .book-page-right .article-content,
+  .book-page-left .article-content {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .book-page-right .article-subtitle {
+    align-self: flex-start;
+  }
+
+  .page-number {
+    left: clamp(1.3rem, 6vw, 2rem);
+    right: auto;
+  }
+}
+
+#image-carousel.is-dragging {
+  cursor: grabbing;
+}
+
+/* Hide scrollbar for carousel */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+}
+
+/* Carousel dot styling */
+.carousel-dot {
+  transition: all 0.3s ease;
+}
+
+.carousel-dot:hover {
+  transform: scale(1.2);
+  background-color: rgba(255, 255, 255, 0.5);
+}
