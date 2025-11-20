@@ -239,48 +239,62 @@
           Articles
         </div>
 
-        <div class="articles-book-container">
-          <div class="articles-book-wrapper">
-            <div class="book" id="articles-book">
-              <div class="book-spread book-spread-1">
-                <a href="articles/article-1.html" class="book-page book-page-left" style="cursor: pointer; background-image: linear-gradient(135deg, rgba(89, 71, 72, 0.92), rgba(51, 41, 42, 0.92)), url('./img/morceauabandonne.webp'); background-size: cover; background-position: center;">
-                  <div class="page-pattern"></div>
-                  <div class="page-number">01</div>
-                  <div class="article-content">
-                    <h2 class="article-title">Slide 1</h2>
-                    <p class="article-subtitle">Premier article de la série</p>
+        <div class="articles-slider">
+          <div class="head">
+            <h2>Explorez nos articles phares</h2>
+          </div>
+          <div class="slider">
+            <div class="track" id="articles-track">
+              <article class="project-card" active>
+                <img class="project-card__bg" src="./img/placeholder.png" alt="Designers en studio créatif" />
+                <div class="project-card__content">
+                  <img class="project-card__thumb" src="./img/morceauabandonne.webp" alt="Article 1" />
+                  <div>
+                    <h3 class="project-card__title">Vestiges oubliés</h3>
+                    <p class="project-card__desc">Un regard immersif sur les usines abandonnées à travers l’Europe.</p>
+                    <a class="project-card__btn" href="articles/article-1.html">Voir l'article</a>
                   </div>
-                </a>
-                <a href="articles/article-2.html" class="book-page book-page-right" style="cursor: pointer; background-image: linear-gradient(135deg, rgba(89, 71, 72, 0.92), rgba(51, 41, 42, 0.92)), url('./img/morceaubatiment1.webp'); background-size: cover; background-position: center;">
-                  <div class="page-pattern"></div>
-                  <div class="page-number">02</div>
-                  <div class="article-content">
-                    <h2 class="article-title">Slide 2</h2>
-                    <p class="article-subtitle">Deuxième article de la série</p>
-                  </div>
-                </a>
-              </div>
+                </div>
+              </article>
 
-              <div class="book-spread book-spread-2">
-                <a href="articles/article-3.html" class="book-page book-page-left" style="cursor: pointer; background-image: linear-gradient(135deg, rgba(89, 71, 72, 0.92), rgba(51, 41, 42, 0.92)), url('./img/backdark.webp'); background-size: cover; background-position: center;">
-                  <div class="page-pattern"></div>
-                  <div class="page-number">03</div>
-                  <div class="article-content">
-                    <h2 class="article-title">Slide 3</h2>
-                    <p class="article-subtitle">Troisième article de la série</p>
+              <article class="project-card">
+                <img class="project-card__bg" src="./img/placeholder.png" alt="Marketeurs collaborant" />
+                <div class="project-card__content">
+                  <img class="project-card__thumb" src="./img/morceaubatiment1.webp" alt="Article 2" />
+                  <div>
+                    <h3 class="project-card__title">Lieux fantômes</h3>
+                    <p class="project-card__desc">Plongée dans les couloirs désertés d’un ancien hôpital marin.</p>
+                    <a class="project-card__btn" href="articles/article-2.html">Voir l'article</a>
                   </div>
-                </a>
-                <a href="articles/article-4.html" class="book-page book-page-right" style="cursor: pointer; background-image: linear-gradient(135deg, rgba(89, 71, 72, 0.92), rgba(51, 41, 42, 0.92)), url('./img/backlight.webp'); background-size: cover; background-position: center;">
-                  <div class="page-pattern"></div>
-                  <div class="page-number">04</div>
-                  <div class="article-content">
-                    <h2 class="article-title">Slide 4</h2>
-                    <p class="article-subtitle">Quatrième article de la série</p>
+                </div>
+              </article>
+
+              <article class="project-card">
+                <img class="project-card__bg" src="./img/placeholder.png" alt="Réalisateurs en plateau" />
+                <div class="project-card__content">
+                  <img class="project-card__thumb" src="./img/backdark.webp" alt="Article 3" />
+                  <div>
+                    <h3 class="project-card__title">Chroniques souterraines</h3>
+                    <p class="project-card__desc">Des catacombes aux tunnels oubliés, histoires d’une exploration nocturne.</p>
+                    <a class="project-card__btn" href="articles/article-3.html">Voir l'article</a>
                   </div>
-                </a>
-              </div>
+                </div>
+              </article>
+
+              <article class="project-card">
+                <img class="project-card__bg" src="./img/placeholder.png" alt="Directeurs artistiques" />
+                <div class="project-card__content">
+                  <img class="project-card__thumb" src="./img/backlight.webp" alt="Article 4" />
+                  <div>
+                    <h3 class="project-card__title">Fragments lumineux</h3>
+                    <p class="project-card__desc">Photographier les jeux de lumière dans une serre abandonnée.</p>
+                    <a class="project-card__btn" href="articles/article-4.html">Voir l'article</a>
+                  </div>
+                </div>
+              </article>
             </div>
           </div>
+          <div class="dots" id="articles-dots" aria-label="Pagination du carrousel"></div>
         </div>
       </div>
     </section>

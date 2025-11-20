@@ -37,119 +37,115 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  //logique pour l'effet livre des articles
-  const articlesBookContainer = document.querySelector('#articles .articles-book-container');
-  const articlesBookWrapper = document.querySelector('#articles .articles-book-wrapper');
-  const articlesBookSpreads = gsap.utils.toArray('#articles .book-spread');
+  // logique du carrousel des articles
+  const track = document.getElementById("articles-track");
+  if (track) {
+    const wrap = track.parentElement;
+    const cards = Array.from(track.children);
+    const dotsBox = document.getElementById("articles-dots");
+    const isMobile = () => matchMedia("(max-width:767px)").matches;
 
-  ScrollTrigger.matchMedia({
-    '(min-width: 768px)': () => {
-      if (!articlesBookContainer || !articlesBookWrapper || articlesBookSpreads.length < 2) return;
-
-      const totalSpreads = articlesBookSpreads.length;
-
-      const computeScrollDistance = () => {
-        const viewportHeight = window.innerHeight;
-        const distance = Math.max(
-          (totalSpreads - 1) * viewportHeight * 0.45,
-          viewportHeight * 0.45,
-          420
-        );
-
-        articlesBookContainer.style.setProperty('--book-scroll-distance', `${distance}px`);
-        return distance;
-      };
-
-      const refreshHandler = () => {
-        computeScrollDistance();
-      };
-
-      gsap.set(articlesBookSpreads, {
-        zIndex: (index) => totalSpreads - index,
-        rotateY: 0,
-        '--flip-progress': 0,
+    // creer les points de navigation
+    if (dotsBox) {
+      dotsBox.innerHTML = ''; // nettoyer au cas ou
+      cards.forEach((_, i) => {
+        const dot = document.createElement("span");
+        dot.className = "dot";
+        dot.onclick = () => activate(i, true);
+        dotsBox.appendChild(dot);
       });
+    }
 
-      computeScrollDistance();
-      ScrollTrigger.addEventListener('refreshInit', refreshHandler);
+    const dots = dotsBox ? Array.from(dotsBox.children) : [];
+    let current = 0;
 
-      const articlesFlipTrigger = ScrollTrigger.create({
-        trigger: articlesBookContainer,
-        start: 'top top+=80',
-        end: () => '+=' + computeScrollDistance(),
-        scrub: true,
-        pin: articlesBookWrapper,
-        pinSpacing: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          const totalSpreads = articlesBookSpreads.length;
-
-          articlesBookSpreads.forEach((spread, index) => {
-            const spreadStartProgress = index / totalSpreads;
-            const spreadEndProgress = (index + 1) / totalSpreads;
-
-            const isCurrent = progress >= spreadStartProgress && progress < spreadEndProgress;
-            const isPast = progress >= spreadEndProgress;
-
-            let zIndexValue = totalSpreads - index;
-            if (isCurrent) {
-              zIndexValue = totalSpreads + 1;
-            } else if (isPast) {
-              zIndexValue = index;
-            }
-
-            const page = spread.querySelector('.book-page-right');
-            if (!page) return;
-
-            // Prevent the last page from flipping
-            if (index === totalSpreads - 1) {
-              gsap.set(spread, {
-                zIndex: zIndexValue,
-                '--flip-progress': 0,
-              });
-              gsap.set(page, {
-                rotationY: 0,
-                z: 0,
-              });
-              return;
-            }
-
-            const pageProgress = (progress - spreadStartProgress) / (spreadEndProgress - spreadStartProgress);
-            const rotation = Math.max(0, Math.min(180, 180 * pageProgress));
-            
-            // Add some z movement to make it look like the page is lifting
-            const z = pageProgress < 0.5 ? pageProgress * 40 : (1 - pageProgress) * 40;
-
-            gsap.set(spread, {
-              zIndex: zIndexValue,
-              '--flip-progress': pageProgress,
-            });
-
-            gsap.set(page, {
-              rotationY: -rotation,
-              z: z,
-            });
-          });
-        },
+    function center(i) {
+      const card = cards[i];
+      if (!card) return;
+      const axis = isMobile() ? "top" : "left";
+      const size = isMobile() ? "clientHeight" : "clientWidth";
+      const start = isMobile() ? card.offsetTop : card.offsetLeft;
+      
+      wrap.scrollTo({
+        [axis]: start - (wrap[size] / 2 - card[size] / 2),
+        behavior: "smooth"
       });
+    }
 
-      return () => {
-        articlesFlipTrigger.kill();
-        ScrollTrigger.removeEventListener('refreshInit', refreshHandler);
-        articlesBookContainer.style.removeProperty('--book-scroll-distance');
-      };
-    },
+    function toggleUI(i) {
+      cards.forEach((c, k) => c.toggleAttribute("active", k === i));
+      dots.forEach((d, k) => d.classList.toggle("active", k === i));
+    }
 
-    '(max-width: 767px)': () => {
-      if (!articlesBookSpreads.length) return;
-      if (articlesBookContainer) {
-        articlesBookContainer.style.removeProperty('--book-scroll-distance');
-      }
-      gsap.set(articlesBookSpreads, { clearProps: 'all' });
-    },
-  });
+    function activate(i, scroll) {
+      // on permet la re-activation pour recentrer si besoin
+      current = i;
+      toggleUI(i);
+      if (scroll) center(i);
+    }
+
+    function go(step) {
+      activate(Math.min(Math.max(current + step, 0), cards.length - 1), true);
+    }
+
+    // navigation au clavier
+    window.addEventListener(
+      "keydown",
+      (e) => {
+        // seulement si la section est visible ou active pour eviter de scroll ailleurs ?
+        // pour l'instant global comme demande
+        if (["ArrowRight", "ArrowDown"].includes(e.key)) go(1);
+        if (["ArrowLeft", "ArrowUp"].includes(e.key)) go(-1);
+      },
+      { passive: true }
+    );
+
+    // clic sur les cartes
+    cards.forEach((card, i) => {
+      card.addEventListener(
+        "mouseenter",
+        () => matchMedia("(hover:hover)").matches && activate(i, true)
+      );
+      card.addEventListener("click", (e) => {
+        // si on clique sur un lien, on laisse le lien faire son travail
+        if (e.target.closest("a")) return;
+        // sinon on active la carte
+        activate(i, true);
+      });
+    });
+
+    // gestion du tactile
+    let sx = 0,
+      sy = 0;
+    track.addEventListener(
+      "touchstart",
+      (e) => {
+        sx = e.touches[0].clientX;
+        sy = e.touches[0].clientY;
+      },
+      { passive: true }
+    );
+
+    track.addEventListener(
+      "touchend",
+      (e) => {
+        const dx = e.changedTouches[0].clientX - sx;
+        const dy = e.changedTouches[0].clientY - sy;
+        if (isMobile() ? Math.abs(dy) > 60 : Math.abs(dx) > 60)
+          go((isMobile() ? dy : dx) > 0 ? -1 : 1);
+      },
+      { passive: true }
+    );
+
+    window.addEventListener("resize", () => center(current));
+
+    // initialisation
+    // attendre un peu que le layout soit stable
+    setTimeout(() => {
+        toggleUI(0);
+        center(0);
+    }, 100);
+  }
 
   //progression dans les articles détaillés
   const articleProgressNav = document.querySelector('.article-progress');
