@@ -102,6 +102,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // clic sur les cartes
     cards.forEach((card, i) => {
+      const link = card.querySelector("a.project-card__btn");
+      const cardLink = link ? link.getAttribute("href") : null;
+
       card.addEventListener(
         "mouseenter",
         () => matchMedia("(hover:hover)").matches && activate(i, true)
@@ -109,6 +112,14 @@ document.addEventListener("DOMContentLoaded", () => {
       card.addEventListener("click", (e) => {
         // si on clique sur un lien, on laisse le lien faire son travail
         if (e.target.closest("a")) return;
+        
+        // si la carte est deja active, naviguer vers l'article
+        if (card.hasAttribute("active") && cardLink) {
+          e.preventDefault();
+          window.location.href = cardLink;
+          return;
+        }
+        
         // sinon on active la carte
         activate(i, true);
       });
@@ -117,11 +128,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // gestion du tactile
     let sx = 0,
       sy = 0;
+    let touchStartTime = 0;
+    let touchTarget = null;
+    
     track.addEventListener(
       "touchstart",
       (e) => {
         sx = e.touches[0].clientX;
         sy = e.touches[0].clientY;
+        touchStartTime = Date.now();
+        touchTarget = e.target;
       },
       { passive: true }
     );
@@ -129,12 +145,46 @@ document.addEventListener("DOMContentLoaded", () => {
     track.addEventListener(
       "touchend",
       (e) => {
+        // si on touche un lien, on laisse le navigateur gerer
+        if (e.target.closest("a")) return;
+        
         const dx = e.changedTouches[0].clientX - sx;
         const dy = e.changedTouches[0].clientY - sy;
-        if (isMobile() ? Math.abs(dy) > 60 : Math.abs(dx) > 60)
+        const distance = isMobile() ? Math.abs(dy) : Math.abs(dx);
+        const touchDuration = Date.now() - touchStartTime;
+        
+        // si c'est un vrai swipe (distance > 60px)
+        if (distance > 60) {
+          e.preventDefault();
           go((isMobile() ? dy : dx) > 0 ? -1 : 1);
+          return;
+        }
+        
+        // si c'est un tap rapide sur mobile (< 500ms et distance < 30px)
+        if (isMobile() && touchDuration < 500 && distance < 30) {
+          const card = touchTarget?.closest(".project-card");
+          if (card) {
+            const cardIndex = cards.indexOf(card);
+            if (cardIndex !== -1) {
+              const link = card.querySelector("a.project-card__btn");
+              const cardLink = link ? link.getAttribute("href") : null;
+              
+              // si la carte est deja active, naviguer vers l'article
+              if (card.hasAttribute("active") && cardLink) {
+                e.preventDefault();
+                window.location.href = cardLink;
+                return;
+              }
+              
+              // sinon activer la carte (premier tap)
+              e.preventDefault();
+              activate(cardIndex, true);
+              return;
+            }
+          }
+        }
       },
-      { passive: true }
+      { passive: false }
     );
 
     window.addEventListener("resize", () => center(current));

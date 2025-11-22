@@ -262,6 +262,8 @@ body {
     flex: 0 0 auto;
     width: 100%;
     scroll-snap-align: start;
+    -webkit-tap-highlight-color: rgba(141, 110, 113, 0.3);
+    touch-action: pan-y;
   }
 
   .articles-slider .project-card[active] {
@@ -303,8 +305,8 @@ body {
   }
 
   .articles-slider .project-card[active] .project-card__thumb {
-    width: 200px;
-    height: 267px;
+    width: 140px;
+    height: 180px;
     border-radius: 0.35rem;
     margin-bottom: 1rem;
   }
@@ -316,10 +318,7 @@ body {
   }
 
   .articles-slider .project-card[active] .project-card__btn {
-    align-self: center;
-    width: 100%;
-    text-align: center;
-    padding: 0.7rem;
+    display: none;
   }
 
   .articles-slider .dots {
