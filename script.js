@@ -361,6 +361,124 @@ document.addEventListener("DOMContentLoaded", () => {
         movePrev();
       }
     });
+
+    // modal pour afficher l'image en grand
+    const imageModal = document.getElementById('image-modal');
+    const modalImage = document.getElementById('modal-image');
+    const modalClose = imageModal?.querySelector('.image-modal-close');
+    const modalOverlay = imageModal?.querySelector('.image-modal-overlay');
+
+    function openModal(imageUrl) {
+      if (!imageModal || !modalImage) return;
+      modalImage.src = imageUrl;
+      imageModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      if (!imageModal) return;
+      imageModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    // initialiser les event listeners du modal
+    if (imageModal && modalImage) {
+      // fermer le modal avec le bouton
+      if (modalClose) {
+        modalClose.addEventListener('click', (e) => {
+          e.stopPropagation();
+          closeModal();
+        });
+      }
+      
+      // fermer si on clique sur l'overlay
+      if (modalOverlay) {
+        modalOverlay.addEventListener('click', closeModal);
+      }
+      
+      // fermer si on clique n'importe où sur le modal sauf sur l'image
+      const modalContent = imageModal.querySelector('.image-modal-content');
+      if (modalContent) {
+        modalContent.addEventListener('click', (e) => {
+          // si on clique directement sur l'image, ne pas fermer
+          if (e.target === modalImage) {
+            e.stopPropagation();
+            return;
+          }
+          // sinon fermer (clic sur le conteneur vide autour de l'image)
+          closeModal();
+        });
+      }
+      
+      // aussi écouter sur le modal entier comme fallback
+      imageModal.addEventListener('click', (e) => {
+        // si on clique directement sur l'image, ne pas fermer
+        if (e.target === modalImage) {
+          return;
+        }
+        // si on clique sur le conteneur, laisser son handler gérer
+        if (e.target === modalContent || e.target.closest('.image-modal-content')) {
+          return;
+        }
+        // pour tout le reste (overlay, etc.), fermer
+        closeModal();
+      });
+      
+      // empêcher la propagation du clic sur l'image pour qu'elle ne ferme pas
+      modalImage.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+      
+      // fermer avec escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !imageModal.classList.contains('hidden')) {
+          closeModal();
+        }
+      });
+    }
+
+    // clic sur l'image active (le deuxieme item)
+    let activeItemClickHandler = null;
+    let previousActiveItem = null;
+    
+    function setupImageClick() {
+      const items = sliderRoot.querySelectorAll('.item');
+      if (items.length > 1) {
+        const activeItem = items[1];
+        
+        // retirer l'ancien handler de l'ancien element si il existe
+        if (previousActiveItem && activeItemClickHandler) {
+          previousActiveItem.removeEventListener('click', activeItemClickHandler);
+          previousActiveItem.style.cursor = '';
+        }
+        
+        // creer un nouveau handler
+        activeItemClickHandler = (e) => {
+          // ne pas ouvrir si on clique sur le bouton ou la navigation
+          if (e.target.closest('button') || e.target.closest('.slider-nav')) return;
+          
+          const bgImage = window.getComputedStyle(activeItem).backgroundImage;
+          const imageUrl = bgImage.replace(/url\(['"]?(.+?)['"]?\)/i, '$1');
+          if (imageUrl) {
+            openModal(imageUrl);
+          }
+        };
+        
+        activeItem.style.cursor = 'pointer';
+        activeItem.addEventListener('click', activeItemClickHandler);
+        previousActiveItem = activeItem;
+      }
+    }
+
+    // observer pour detecter quand l'image active change
+    const observer = new MutationObserver(() => {
+      setupImageClick();
+    });
+
+    observer.observe(sliderRoot, { childList: true, subtree: false });
+
+    // initialiser le clic sur l'image active
+    setupImageClick();
   }
   //ajouter la logique du menu mobile (hamburger)
   const menuToggleButton = document.getElementById('menu-toggle');
