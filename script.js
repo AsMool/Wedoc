@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
       opacity: 0,
       duration: 0.8,
       ease: "power2.out",
-      scrollTrigger: { trigger: el, start: "top 80%" },
+      scrollTrigger: { trigger: el, start: "top 95%" },
     });
   });
 
@@ -247,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const observerOptions = {
         root: null,
-        rootMargin: '-45% 0px -45% 0px',
+        rootMargin: '200px 0px -20% 0px',
         threshold: [0, 0.15, 0.35],
       };
 

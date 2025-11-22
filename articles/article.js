@@ -6,7 +6,7 @@
         // Intersection Observer for scroll-based activation
         const observerOptions = {
           root: null,
-          rootMargin: '-50% 0px -50% 0px',
+          rootMargin: '200px 0px -20% 0px',
           threshold: 0,
         };
 

@@ -176,6 +176,7 @@
             src="./img/placeholder.png"
             alt="Urbex"
             class="w-full h-[380px] object-cover rounded-2xl"
+            loading="eager"
           />
         </div>
       </div>
@@ -246,48 +247,44 @@
           <div class="slider">
             <div class="track" id="articles-track">
               <article class="project-card" active>
-                <img class="project-card__bg" src="./img/placeholder.png" alt="Designers en studio créatif" />
+                <img class="project-card__bg" src="./img/placeholder.png" alt="Designers en studio créatif" loading="eager" />
                 <div class="project-card__content">
-                  <img class="project-card__thumb" src="./img/morceauabandonne.webp" alt="Article 1" />
+                  <img class="project-card__thumb" src="./img/morceauabandonne.webp" alt="Article 1" loading="eager" />
                   <div>
                     <h3 class="project-card__title">L'Urbex : Entre fascination et dégradation</h3>
-                    <p class="project-card__desc">L'exploration urbaine face à ses dérives et aux risques qu'elle engendre.</p>
                     <a class="project-card__btn" href="articles/article-1.html">Voir l'article</a>
                   </div>
                 </div>
               </article>
 
               <article class="project-card">
-                <img class="project-card__bg" src="./img/placeholder.png" alt="Marketeurs collaborant" />
+                <img class="project-card__bg" src="./img/placeholder.png" alt="Marketeurs collaborant" loading="lazy" fetchpriority="high" />
                 <div class="project-card__content">
-                  <img class="project-card__thumb" src="./img/morceaubatiment1.webp" alt="Article 2" />
+                  <img class="project-card__thumb" src="./img/morceaubatiment1.webp" alt="Article 2" loading="lazy" fetchpriority="high" />
                   <div>
                     <h3 class="project-card__title">Lieux fantômes</h3>
-                    <p class="project-card__desc">Plongée dans les couloirs désertés d’un ancien hôpital marin.</p>
                     <a class="project-card__btn" href="articles/article-2.html">Voir l'article</a>
                   </div>
                 </div>
               </article>
 
               <article class="project-card">
-                <img class="project-card__bg" src="./img/placeholder.png" alt="Réalisateurs en plateau" />
+                <img class="project-card__bg" src="./img/placeholder.png" alt="Réalisateurs en plateau" loading="lazy" fetchpriority="high" />
                 <div class="project-card__content">
-                  <img class="project-card__thumb" src="./img/backdark.webp" alt="Article 3" />
+                  <img class="project-card__thumb" src="./img/backdark.webp" alt="Article 3" loading="lazy" fetchpriority="high" />
                   <div>
                     <h3 class="project-card__title">Chroniques souterraines</h3>
-                    <p class="project-card__desc">Des catacombes aux tunnels oubliés, histoires d’une exploration nocturne.</p>
                     <a class="project-card__btn" href="articles/article-3.html">Voir l'article</a>
                   </div>
                 </div>
               </article>
 
               <article class="project-card">
-                <img class="project-card__bg" src="./img/placeholder.png" alt="Directeurs artistiques" />
+                <img class="project-card__bg" src="./img/placeholder.png" alt="Directeurs artistiques" loading="lazy" fetchpriority="high" />
                 <div class="project-card__content">
-                  <img class="project-card__thumb" src="./img/backlight.webp" alt="Article 4" />
+                  <img class="project-card__thumb" src="./img/backlight.webp" alt="Article 4" loading="lazy" fetchpriority="high" />
                   <div>
                     <h3 class="project-card__title">Fragments lumineux</h3>
-                    <p class="project-card__desc">Photographier les jeux de lumière dans une serre abandonnée.</p>
                     <a class="project-card__btn" href="articles/article-4.html">Voir l'article</a>
                   </div>
                 </div>
