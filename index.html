@@ -296,84 +296,30 @@
       </div>
     </section>
 
-    <!-- Section Images carousel with book styling -->
+    <!-- Section Galerie (vignette vers la page galerie) -->
     <section id="images" class="relative py-24">
       <div class="container mx-auto px-6">
         <div
           class="mx-auto w-max rounded-full px-6 py-2 border border-brandStroke bg-black/20 text-brandText mb-10"
           data-animate
         >
-          Images
+          Galerie
         </div>
 
-        <div
-          class="images-slider relative rounded-3xl border border-brandStroke bg-black/20 overflow-hidden"
-          data-animate
-        >
-          <ul class="slider">
-            <li class="item" style="background-image: url('./img/morceauabandonne.webp')">
-              <div class="content">
-                <h3 class="title">"Lossless Youths"</h3>
-                <p class="description">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
-                </p>
-                <button type="button">Read More</button>
-              </div>
-            </li>
-            <li class="item" style="background-image: url('./img/morceaubatiment1.webp')">
-              <div class="content">
-                <h3 class="title">"Estrange Bond"</h3>
-                <p class="description">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
-                </p>
-                <button type="button">Read More</button>
-              </div>
-            </li>
-            <li class="item" style="background-image: url('./img/backdark.webp')">
-              <div class="content">
-                <h3 class="title">"The Gate Keeper"</h3>
-                <p class="description">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
-                </p>
-                <button type="button">Read More</button>
-              </div>
-            </li>
-            <li class="item" style="background-image: url('./img/backlight.webp')" >
-              <div class="content">
-                <h3 class="title">"Last Trace Of Us"</h3>
-                <p class="description">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
-                </p>
-                <button type="button">Read More</button>
-              </div>
-            </li>
-            <li class="item" style="background-image: url('./img/placeholder.png')">
-              <div class="content">
-                <h3 class="title">"Urban Decay"</h3>
-                <p class="description">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
-                </p>
-                <button type="button">Read More</button>
-              </div>
-            </li>
-            <li class="item" style="background-image: url('./img/morceauabandonne.webp')">
-              <div class="content">
-                <h3 class="title">"The Migration"</h3>
-                <p class="description">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
-                </p>
-                <button type="button">Read More</button>
-              </div>
-            </li>
-          </ul>
-          <nav class="slider-nav" aria-label="Navigation du carrousel">
-            <button type="button" class="btn prev" aria-label="Image précédente">
-              <ion-icon name="arrow-back-outline"></ion-icon>
-            </button>
-            <button type="button" class="btn next" aria-label="Image suivante">
-              <ion-icon name="arrow-forward-outline"></ion-icon>
-            </button>
-          </nav>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+          <a href="gallery.html#day" class="group block rounded-3xl overflow-hidden border border-brandStroke bg-black/20 shadow-soft">
+            <div class="relative h-64 md:h-96">
+              <img src="./img/photojours/20251031_163052.webp" alt="Photos Jour" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              <div class="absolute left-4 bottom-4 rounded-full px-4 py-2 bg-black/50 backdrop-blur text-brandText border border-brandStroke">Photos Jour</div>
+            </div>
+          </a>
+
+          <a href="gallery.html#night" class="group block rounded-3xl overflow-hidden border border-brandStroke bg-black/20 shadow-soft">
+            <div class="relative h-64 md:h-96">
+              <img src="./img/photonuit/169DBAA2-E100-4D23-91EE-991EB90BE0E5_1_105_c.webp" alt="Photos Nuit" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              <div class="absolute left-4 bottom-4 rounded-full px-4 py-2 bg-black/50 backdrop-blur text-brandText border border-brandStroke">Photos Nuit</div>
+            </div>
+          </a>
         </div>
       </div>
     </section>
