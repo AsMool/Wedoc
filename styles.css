@@ -611,6 +611,25 @@ body {
   transform: scale(1.1);
 }
 
+@media (max-width: 768px) {
+  .image-modal-content {
+    flex-direction: column;
+    gap: 1rem;
+    height: auto;
+    max-height: 90vh;
+  }
+
+  .image-modal-content img {
+    height: auto;
+    max-height: 65vh;
+  }
+
+  #modal-caption {
+    width: 100%;
+    text-align: center;
+  }
+}
+
 @media (max-width: 650px) {
   .image-modal {
     padding: 1rem;
