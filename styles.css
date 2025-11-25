@@ -480,31 +480,45 @@ body {
   }
 
   .articles-slider .project-card[active] .project-card__content {
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
     padding: 1.5rem;
+    text-align: center;
   }
 
-  .articles-slider .project-card[active] .project-card__title {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-    margin-top: 2rem;
+  .articles-slider .project-card[active] .project-card__content > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    order: 2;
   }
 
   .articles-slider .project-card[active] .project-card__thumb {
-    width: 140px;
+    display: block !important;
+    width: 100%;
+    max-width: 280px;
     height: 180px;
-    border-radius: 0.35rem;
+    border-radius: 0.5rem;
     margin-bottom: 1rem;
+    object-fit: cover;
+    order: 1;
+  }
+
+  .articles-slider .project-card[active] .project-card__title {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    margin-top: 0;
   }
 
   .articles-slider .project-card[active] .project-card__desc {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     max-width: 100%;
     margin-bottom: 1rem;
   }
 
   .articles-slider .project-card[active] .project-card__btn {
-    display: none;
+    display: inline-flex !important;
   }
 
   .articles-slider .dots {
@@ -759,18 +773,39 @@ body {
   width: 85vw;
   height: 85vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   pointer-events: auto;
 }
 
-.image-modal-content img {
+.image-modal-image-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  height: 100%;
+  min-height: 0;
+}
+
+.image-modal-content img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
   object-fit: contain;
   border-radius: 0.5rem;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   pointer-events: auto;
+}
+
+.image-modal-caption {
+  width: 100%;
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.875rem;
+  opacity: 0.9;
+  color: white;
 }
 
 .image-modal-close {
@@ -811,5 +846,10 @@ body {
     top: -3rem;
     width: 2rem;
     height: 2rem;
+  }
+
+  .image-modal-caption {
+    font-size: 0.75rem;
+    padding: 0.75rem 0;
   }
 }

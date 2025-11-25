@@ -40,13 +40,16 @@
       <div class="image-modal-overlay"></div>
       <div class="image-modal-content max-w-[1100px] w-full p-4">
         <button class="image-modal-close" aria-label="Fermer">✕</button>
-        <img id="modal-image" src="" alt="" />
-        <div id="modal-caption" class="mt-4 text-sm opacity-90"></div>
+        <div class="image-modal-image-wrapper">
+          <img id="modal-image" src="" alt="" />
+        </div>
+        <div id="modal-caption" class="image-modal-caption"></div>
       </div>
     </div>
 
     <footer class="py-12 text-center text-xs opacity-60">© 2025 Urbex</footer>
 
+    <script src="./gallery-data.js"></script>
     <script src="./gallery.js" defer></script>
   </body>
 </html>
