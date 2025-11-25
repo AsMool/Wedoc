@@ -1,21 +1,183 @@
 // animation d'entrée et configuration des effets au scroll
 document.addEventListener("DOMContentLoaded", () => {
   //enregistrer les plugins nécessaires
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger, SplitText);
 
-  //créer l'animation d'entrée pour le hero
-  const heroTimeline = gsap.timeline();
-  heroTimeline.from(".hero-title", {
-    y: 40,
-    opacity: 0,
-    duration: 1.2,
-    ease: "power3.out",
-  });
-  heroTimeline.from(
-    "#cta-visiter",
-    { y: 20, opacity: 0, duration: 0.8, ease: "power3.out" },
-    "-=0.6"
-  );
+  // Random fonts for the glitch effect
+  const glitchFonts = [
+    'Impact, sans-serif',
+    'Georgia, serif',
+    'Courier New, monospace',
+    'Arial Black, sans-serif',
+    'Times New Roman, serif',
+    'Trebuchet MS, sans-serif',
+    'Verdana, sans-serif',
+    'Comic Sans MS, cursive',
+    'Lucida Console, monospace',
+    'Palatino Linotype, serif',
+    'system-ui, sans-serif',
+    'monospace',
+    'serif',
+    'sans-serif'
+  ];
+
+  //créer l'animation d'entrée pour le hero avec effet glitch
+  const heroTitle = document.querySelector(".hero-title.glitch");
+  const heroSubtitle = document.querySelector(".hero-subtitle");
+  
+  if (heroTitle) {
+    // Split the text into individual characters for animation
+    const glitchText = heroTitle.querySelector('.glitch-text');
+    const split = new SplitText(glitchText, { 
+      type: "chars,words",
+      charsClass: "char"
+    });
+    
+    // Set random glitch offsets, fonts and sizes for each character
+    split.chars.forEach((char, i) => {
+      char.style.setProperty('--char-index', i);
+      char.style.setProperty('--glitch-x', `${(Math.random() - 0.5) * 20}px`);
+      char.style.setProperty('--glitch-y', `${(Math.random() - 0.5) * 15}px`);
+      char.style.setProperty('--glitch-r', `${(Math.random() - 0.5) * 8}deg`);
+      
+      // Store original styles for later
+      char.dataset.originalFont = 'inherit';
+      char.dataset.originalSize = '1em';
+      
+      // Random font and size for initial chaotic state
+      const randomFont = glitchFonts[Math.floor(Math.random() * glitchFonts.length)];
+      const randomSize = 0.5 + Math.random() * 1.2; // 0.5em to 1.7em
+      const randomWeight = Math.random() > 0.5 ? 'bold' : 'normal';
+      const randomStyle = Math.random() > 0.8 ? 'italic' : 'normal';
+      
+      char.style.fontFamily = randomFont;
+      char.style.fontSize = `${randomSize}em`;
+      char.style.fontWeight = randomWeight;
+      char.style.fontStyle = randomStyle;
+      char.style.verticalAlign = 'middle';
+      char.style.display = 'inline-block';
+    });
+
+    // Create the entrance timeline
+    const heroTimeline = gsap.timeline();
+    
+    // Initial state - scattered and glitched
+    gsap.set(split.chars, {
+      opacity: 0,
+      y: () => gsap.utils.random(-100, 100),
+      x: () => gsap.utils.random(-50, 50),
+      rotation: () => gsap.utils.random(-30, 30),
+      scale: () => gsap.utils.random(0.5, 1.5),
+      filter: "blur(10px)"
+    });
+    
+    // Make title visible
+    heroTimeline.set(heroTitle, { opacity: 1 });
+    
+    // Glitch flash effect before text appears
+    heroTimeline.fromTo(heroTitle, 
+      { 
+        clipPath: "inset(0 100% 0 0)" 
+      },
+      {
+        clipPath: "inset(0 0% 0 0)",
+        duration: 0.4,
+        ease: "steps(8)"
+      }
+    );
+    
+    // Characters fly in with stagger
+    heroTimeline.to(split.chars, {
+      opacity: 1,
+      y: 0,
+      x: 0,
+      rotation: 0,
+      scale: 1,
+      filter: "blur(0px)",
+      duration: 0.8,
+      stagger: {
+        each: 0.03,
+        from: "random"
+      },
+      ease: "back.out(1.2)"
+    }, "-=0.2");
+    
+    // Normalize fonts after flying in - transition to uniform look
+    heroTimeline.to(split.chars, {
+      fontSize: '1em',
+      fontWeight: '600',
+      fontStyle: 'normal',
+      duration: 0.6,
+      stagger: {
+        each: 0.02,
+        from: "random"
+      },
+      ease: "power2.inOut",
+      onComplete: () => {
+        // Reset all fonts to inherit after animation
+        split.chars.forEach(char => {
+          char.style.fontFamily = 'inherit';
+        });
+      }
+    }, "-=0.4");
+    
+    // Glitch flicker effect
+    heroTimeline.to(heroTitle, {
+      x: () => gsap.utils.random(-3, 3),
+      duration: 0.05,
+      repeat: 10,
+      yoyo: true,
+      ease: "none",
+      onComplete: () => gsap.set(heroTitle, { x: 0 })
+    }, "-=0.3");
+    
+    // Final glitch burst
+    heroTimeline.to(heroTitle, {
+      keyframes: [
+        { x: 5, duration: 0.05 },
+        { x: -5, duration: 0.05 },
+        { x: 3, duration: 0.05 },
+        { x: -2, duration: 0.05 },
+        { x: 0, duration: 0.05 }
+      ]
+    });
+    
+    // Fade in subtitle
+    if (heroSubtitle) {
+      heroTimeline.to(heroSubtitle, {
+        opacity: 0.8,
+        duration: 0.6,
+        ease: "power2.out"
+      }, "-=0.3");
+      
+      heroTimeline.from(heroSubtitle, {
+        y: 20,
+        duration: 0.6,
+        ease: "power3.out"
+      }, "<");
+    }
+    
+    // CTA button entrance
+    heroTimeline.from(
+      "#cta-visiter",
+      { y: 20, opacity: 0, duration: 0.8, ease: "power3.out" },
+      "-=0.4"
+    );
+  } else {
+    // Fallback if glitch title not found
+    const heroTimeline = gsap.timeline();
+    heroTimeline.from(".hero-title", {
+      y: 40,
+      opacity: 0,
+      duration: 1.2,
+      ease: "power3.out",
+    });
+    heroTimeline.from(
+      "#cta-visiter",
+      { y: 20, opacity: 0, duration: 0.8, ease: "power3.out" },
+      "-=0.6"
+    );
+  }
 
   //ajouter le scroll smooth pour le bouton "Visiter"
   const cta = document.getElementById("cta-visiter");
@@ -346,166 +508,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Slider functionality for the stacked image showcase
-  const sliderRoot = document.querySelector('#images .slider');
-  const prevButton = document.querySelector('#images .btn.prev');
-  const nextButton = document.querySelector('#images .btn.next');
-
-  if (sliderRoot && prevButton && nextButton) {
-    const moveNext = () => {
-      const items = sliderRoot.querySelectorAll('.item');
-      if (items.length > 1) {
-        sliderRoot.append(items[0]);
-      }
-    };
-
-    const movePrev = () => {
-      const items = sliderRoot.querySelectorAll('.item');
-      if (items.length > 1) {
-        sliderRoot.prepend(items[items.length - 1]);
-      }
-    };
-
-    nextButton.addEventListener('click', (event) => {
-      event.preventDefault();
-      moveNext();
-    });
-
-    prevButton.addEventListener('click', (event) => {
-      event.preventDefault();
-      movePrev();
-    });
-
-    // Allow keyboard navigation when the slider has focus
-    sliderRoot.setAttribute('tabindex', '0');
-    sliderRoot.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowRight') {
-        event.preventDefault();
-        moveNext();
-      } else if (event.key === 'ArrowLeft') {
-        event.preventDefault();
-        movePrev();
-      }
-    });
-
-    // modal pour afficher l'image en grand
-    const imageModal = document.getElementById('image-modal');
-    const modalImage = document.getElementById('modal-image');
-    const modalClose = imageModal?.querySelector('.image-modal-close');
-    const modalOverlay = imageModal?.querySelector('.image-modal-overlay');
-
-    function openModal(imageUrl) {
-      if (!imageModal || !modalImage) return;
-      modalImage.src = imageUrl;
-      imageModal.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      if (!imageModal) return;
-      imageModal.classList.add('hidden');
-      document.body.style.overflow = '';
-    }
-
-    // initialiser les event listeners du modal
-    if (imageModal && modalImage) {
-      // fermer le modal avec le bouton
-      if (modalClose) {
-        modalClose.addEventListener('click', (e) => {
-          e.stopPropagation();
-          closeModal();
-        });
-      }
-
-      // fermer si on clique sur l'overlay
-      if (modalOverlay) {
-        modalOverlay.addEventListener('click', closeModal);
-      }
-
-      // fermer si on clique n'importe où sur le modal sauf sur l'image
-      const modalContent = imageModal.querySelector('.image-modal-content');
-      if (modalContent) {
-        modalContent.addEventListener('click', (e) => {
-          // si on clique directement sur l'image, ne pas fermer
-          if (e.target === modalImage) {
-            e.stopPropagation();
-            return;
-          }
-          // sinon fermer (clic sur le conteneur vide autour de l'image)
-          closeModal();
-        });
-      }
-
-      // aussi écouter sur le modal entier comme fallback
-      imageModal.addEventListener('click', (e) => {
-        // si on clique directement sur l'image, ne pas fermer
-        if (e.target === modalImage) {
-          return;
-        }
-        // si on clique sur le conteneur, laisser son handler gérer
-        if (e.target === modalContent || e.target.closest('.image-modal-content')) {
-          return;
-        }
-        // pour tout le reste (overlay, etc.), fermer
-        closeModal();
-      });
-
-      // empêcher la propagation du clic sur l'image pour qu'elle ne ferme pas
-      modalImage.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
-
-      // fermer avec escape
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !imageModal.classList.contains('hidden')) {
-          closeModal();
-        }
-      });
-    }
-
-    // clic sur l'image active (le deuxieme item)
-    let activeItemClickHandler = null;
-    let previousActiveItem = null;
-
-    function setupImageClick() {
-      const items = sliderRoot.querySelectorAll('.item');
-      if (items.length > 1) {
-        const activeItem = items[1];
-
-        // retirer l'ancien handler de l'ancien element si il existe
-        if (previousActiveItem && activeItemClickHandler) {
-          previousActiveItem.removeEventListener('click', activeItemClickHandler);
-          previousActiveItem.style.cursor = '';
-        }
-
-        // creer un nouveau handler
-        activeItemClickHandler = (e) => {
-          // ne pas ouvrir si on clique sur le bouton ou la navigation
-          if (e.target.closest('button') || e.target.closest('.slider-nav')) return;
-
-          const bgImage = window.getComputedStyle(activeItem).backgroundImage;
-          const imageUrl = bgImage.replace(/url\(['"]?(.+?)['"]?\)/i, '$1');
-          if (imageUrl) {
-            openModal(imageUrl);
-          }
-        };
-
-        activeItem.style.cursor = 'pointer';
-        activeItem.addEventListener('click', activeItemClickHandler);
-        previousActiveItem = activeItem;
-      }
-    }
-
-    // observer pour detecter quand l'image active change
-    const observer = new MutationObserver(() => {
-      setupImageClick();
-    });
-
-    observer.observe(sliderRoot, { childList: true, subtree: false });
-
-    // initialiser le clic sur l'image active
-    setupImageClick();
-  }
   //ajouter la logique du menu mobile (hamburger)
   const menuToggleButton = document.getElementById('menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');

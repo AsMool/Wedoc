@@ -149,7 +149,17 @@ function filter(cat){
 document.addEventListener('DOMContentLoaded', ()=>{
   initFilters();
   buildGallery();
+  
+  // Check URL parameter first, then hash
+  const urlParams = new URLSearchParams(location.search);
+  const filterParam = urlParams.get('filter');
   const hash = location.hash.replace('#', '');
-  if(hash === 'day' || hash === 'night') filter(hash);
-  else filter('all');
+  
+  if(filterParam === 'day' || filterParam === 'night') {
+    filter(filterParam);
+  } else if(hash === 'day' || hash === 'night') {
+    filter(hash);
+  } else {
+    filter('all');
+  }
 });
