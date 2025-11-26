@@ -185,3 +185,5 @@ function initArticleSlider() {
         }, 100);
     }
 }
+
+document.addEventListener("DOMContentLoaded", initArticleSlider);
