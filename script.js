@@ -403,25 +403,64 @@ document.addEventListener("DOMContentLoaded", () => {
     if (menuToggleButton)
       menuToggleButton.setAttribute("aria-expanded", String(isOpen));
 
-    //afficher/cacher le menu
+    //afficher/cacher le menu avec animation discrète (scale + opacity)
     if (mobileMenu) {
       if (isOpen) {
+        // ensure visible first, then animate
         mobileMenu.classList.remove("hidden");
         mobileMenu.classList.add("block");
+        gsap.killTweensOf(mobileMenu);
+        gsap.fromTo(
+          mobileMenu,
+          { scale: 0.98, opacity: 0, transformOrigin: "top right" },
+          { scale: 1, opacity: 1, duration: 0.22, ease: "power2.out" }
+        );
       } else {
-        mobileMenu.classList.add("hidden");
-        mobileMenu.classList.remove("block");
+        gsap.killTweensOf(mobileMenu);
+        gsap.to(mobileMenu, {
+          scale: 0.98,
+          opacity: 0,
+          duration: 0.18,
+          ease: "power2.in",
+          onComplete: () => {
+            mobileMenu.classList.add("hidden");
+            mobileMenu.classList.remove("block");
+            // reset inline styles to avoid layout issues
+            mobileMenu.style.removeProperty("opacity");
+            mobileMenu.style.removeProperty("transform");
+          },
+        });
       }
     }
 
     //échanger les icônes
     if (iconOpen && iconClose) {
+      // animate icon transition for a discrete effect
+      gsap.killTweensOf([iconOpen, iconClose]);
       if (isOpen) {
-        iconOpen.classList.add("hidden");
-        iconClose.classList.remove("hidden");
+        gsap.to(iconOpen, {
+          opacity: 0,
+          rotation: 12,
+          duration: 0.14,
+          ease: "power2.out",
+          onComplete: () => {
+            iconOpen.classList.add("hidden");
+            iconClose.classList.remove("hidden");
+            gsap.fromTo(iconClose, { opacity: 0, rotation: -12 }, { opacity: 1, rotation: 0, duration: 0.16, ease: "power2.out" });
+          },
+        });
       } else {
-        iconOpen.classList.remove("hidden");
-        iconClose.classList.add("hidden");
+        gsap.to(iconClose, {
+          opacity: 0,
+          rotation: -12,
+          duration: 0.14,
+          ease: "power2.in",
+          onComplete: () => {
+            iconClose.classList.add("hidden");
+            iconOpen.classList.remove("hidden");
+            gsap.fromTo(iconOpen, { opacity: 0, rotation: 12 }, { opacity: 1, rotation: 0, duration: 0.16, ease: "power2.out" });
+          },
+        });
       }
     }
   }
