@@ -583,13 +583,11 @@ body {
 
 /*# sourceMappingURL=styles.css.map */
 
-/* Mobile menu: smoother opening animation origin + transitions */
 #mobile-menu {
   transform-origin: top right;
   will-change: transform, opacity;
 }
 
-/* Icon transitions for the hamburger */
 #menu-toggle svg {
   transition: transform 0.18s ease, opacity 0.12s ease;
   transform-origin: center;

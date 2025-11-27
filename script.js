@@ -403,10 +403,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (menuToggleButton)
       menuToggleButton.setAttribute("aria-expanded", String(isOpen));
 
-    //afficher/cacher le menu avec animation discrète (scale + opacity)
+    
     if (mobileMenu) {
       if (isOpen) {
-        // ensure visible first, then animate
+        
         mobileMenu.classList.remove("hidden");
         mobileMenu.classList.add("block");
         gsap.killTweensOf(mobileMenu);
@@ -425,7 +425,7 @@ document.addEventListener("DOMContentLoaded", () => {
           onComplete: () => {
             mobileMenu.classList.add("hidden");
             mobileMenu.classList.remove("block");
-            // reset inline styles to avoid layout issues
+            
             mobileMenu.style.removeProperty("opacity");
             mobileMenu.style.removeProperty("transform");
           },
@@ -435,7 +435,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //échanger les icônes
     if (iconOpen && iconClose) {
-      // animate icon transition for a discrete effect
+      
       gsap.killTweensOf([iconOpen, iconClose]);
       if (isOpen) {
         gsap.to(iconOpen, {
