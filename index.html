@@ -188,78 +188,107 @@
     </div>
   </section>
 
-  <!-- Section Articles avec effet empilé GSAP -->
+  <!-- Section Articles - Grille simple -->
   <section id="articles" class="relative py-24">
     <div class="container mx-auto px-6">
-      <div class="articles-slider">
-        <div class="rounded-full mx-auto w-max px-6 py-2 border border-brandStroke bg-black/20 text-brandText mb-10"
-          data-animate>
-          Explorez nos articles
-        </div>
-        <div class="slider">
-          <div class="track" id="articles-track">
-            <article class="project-card" active>
-              <img class="project-card__bg" src="./img/placeholder.png" alt="Designers en studio créatif"
-                loading="eager" />
-              <div class="project-card__content">
-                <img class="project-card__thumb" src="./img/morceauabandonne.webp" alt="Article 1" loading="eager" />
-                <div>
-                  <h3 class="project-card__title">
-                    L'Urbex : Entre fascination et dégradation
-                  </h3>
-                  <a class="project-card__btn" href="articles/article-1.html">Voir l'article</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="project-card">
-              <img class="project-card__bg" src="./img/placeholder.png" alt="Marketeurs collaborant" loading="lazy"
-                fetchpriority="high" />
-              <div class="project-card__content">
-                <img class="project-card__thumb" src="./img/morceaubatiment1.webp" alt="Article 2" loading="lazy"
-                  fetchpriority="high" />
-                <div>
-                  <h3 class="project-card__title">
-                    L’urbex : Quand le temps se fige
-                  </h3>
-                  <a class="project-card__btn" href="articles/article-2.html">Voir l'article</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="project-card">
-              <img class="project-card__bg" src="./img/placeholder.png" alt="Réalisateurs en plateau" loading="lazy"
-                fetchpriority="high" />
-              <div class="project-card__content">
-                <img class="project-card__thumb" src="./img/backdark.webp" alt="Article 3" loading="lazy"
-                  fetchpriority="high" />
-                <div>
-                  <h3 class="project-card__title">Chroniques souterraines</h3>
-                  <a class="project-card__btn" href="articles/article-3.html">Voir l'article</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="project-card">
-              <img class="project-card__bg" src="./img/placeholder.png" alt="Directeurs artistiques" loading="lazy"
-                fetchpriority="high" />
-              <div class="project-card__content">
-                <img class="project-card__thumb" src="./img/backlight.webp" alt="Article 4" loading="lazy"
-                  fetchpriority="high" />
-                <div>
-                  <h3 class="project-card__title">Fragments lumineux</h3>
-                  <a class="project-card__btn" href="articles/article-4.html">Voir l'article</a>
-                </div>
-              </div>
-            </article>
+      <div class="rounded-full mx-auto w-max px-6 py-2 border border-brandStroke bg-black/20 text-brandText mb-10"
+        data-animate>
+        Explorez nos articles
+      </div>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" data-animate>
+        <!-- Article 1 -->
+        <a href="articles/article-1.html"
+          class="group relative rounded-3xl border border-brandStroke bg-black/20 overflow-hidden aspect-[3/4] transition-all duration-500 hover:border-brandText/50 hover:shadow-soft">
+          <div class="absolute inset-0">
+            <img src="./img/morceauabandonne.webp" alt="L Urbex : Entre fascination et dégradation" 
+              class="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700" />
           </div>
-        </div>
-        <div class="dots" id="articles-dots" aria-label="Pagination du carrousel"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+          <div class="absolute inset-0 flex flex-col items-center justify-end text-center p-6">
+            <h3 class="text-lg md:text-xl font-semibold text-brandText mb-2">
+              L'Urbex : Entre fascination et dégradation
+            </h3>
+            <span class="mt-2 inline-flex items-center gap-2 text-sm text-brandText/80 group-hover:text-brandText transition-colors">
+              Lire l'article
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- Article 2 -->
+        <a href="articles/article-2.html"
+          class="group relative rounded-3xl border border-brandStroke bg-black/20 overflow-hidden aspect-[3/4] transition-all duration-500 hover:border-brandText/50 hover:shadow-soft">
+          <div class="absolute inset-0">
+            <img src="./img/morceaubatiment1.webp" alt="L urbex : Quand le temps se fige" 
+              class="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700" />
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+          <div class="absolute inset-0 flex flex-col items-center justify-end text-center p-6">
+            <h3 class="text-lg md:text-xl font-semibold text-brandText mb-2">
+              L'urbex : Quand le temps se fige
+            </h3>
+            <span class="mt-2 inline-flex items-center gap-2 text-sm text-brandText/80 group-hover:text-brandText transition-colors">
+              Lire l'article
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- Article 3 -->
+        <a href="articles/article-3.html"
+          class="group relative rounded-3xl border border-brandStroke bg-black/20 overflow-hidden aspect-[3/4] transition-all duration-500 hover:border-brandText/50 hover:shadow-soft">
+          <div class="absolute inset-0">
+            <img src="./img/backdark.webp" alt="Chroniques souterraines" 
+              class="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700" />
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+          <div class="absolute inset-0 flex flex-col items-center justify-end text-center p-6">
+            <h3 class="text-lg md:text-xl font-semibold text-brandText mb-2">
+              Chroniques souterraines
+            </h3>
+            <span class="mt-2 inline-flex items-center gap-2 text-sm text-brandText/80 group-hover:text-brandText transition-colors">
+              Lire l'article
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- Article 4 -->
+        <a href="articles/article-4.html"
+          class="group relative rounded-3xl border border-brandStroke bg-black/20 overflow-hidden aspect-[3/4] transition-all duration-500 hover:border-brandText/50 hover:shadow-soft">
+          <div class="absolute inset-0">
+            <img src="./img/backlight.webp" alt="Fragments lumineux" 
+              class="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700" />
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+          <div class="absolute inset-0 flex flex-col items-center justify-end text-center p-6">
+            <h3 class="text-lg md:text-xl font-semibold text-brandText mb-2">
+              Fragments lumineux
+            </h3>
+            <span class="mt-2 inline-flex items-center gap-2 text-sm text-brandText/80 group-hover:text-brandText transition-colors">
+              Lire l'article
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" class="w-4 h-4 group-hover:translate-x-1 transition-transform">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </span>
+          </div>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- Section Galerie -->
+  <--break-system-packages Section Galerie -->
   <section id="images" class="relative py-24">
     <div class="container mx-auto px-6">
       <div class="mx-auto w-max rounded-full px-6 py-2 border border-brandStroke bg-black/20 text-brandText mb-10"
