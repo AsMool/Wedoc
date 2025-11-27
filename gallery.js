@@ -15,7 +15,7 @@ function prettify(path) {
 }
 
 function createFigure(item) {
-  const { group, src, description, tags } = item;
+  const { group, src, description } = item;
   const figure = document.createElement('figure');
   figure.className = 'card card-figure';
   figure.dataset.category = group;
@@ -36,18 +36,6 @@ function createFigure(item) {
   desc.textContent = description || prettify(src);
   meta.appendChild(title);
   meta.appendChild(desc);
-
-  if (tags && tags.length > 0) {
-    const tagsContainer = document.createElement('div');
-    tagsContainer.className = 'tags';
-    tags.forEach(tag => {
-      const tagElement = document.createElement('span');
-      tagElement.className = 'tag';
-      tagElement.textContent = tag;
-      tagsContainer.appendChild(tagElement);
-    });
-    meta.appendChild(tagsContainer);
-  }
 
   figure.appendChild(img);
   figure.appendChild(badge);
