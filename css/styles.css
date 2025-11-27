@@ -632,14 +632,3 @@ body {
 }
 
 /*# sourceMappingURL=styles.css.map */
-
-#mobile-menu {
-  transform-origin: top right;
-  will-change: transform, opacity;
-}
-
-#menu-toggle svg {
-  transition: transform 0.18s ease, opacity 0.12s ease;
-  transform-origin: center;
-}
-
