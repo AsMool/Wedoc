@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Urbex en Chiffres</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&display=swap');
+
+        :root {
+            --yellow: #FFEA00;
+            --dark: #111;
+            --white: #ffffff;
+            --gray: #f8f9fa;
+            --text: #2c3e50;
+        }
+
+        /* SCALING DOWN EVERYTHING */
+        html {
+            font-size: 14px;
+            /* Reduced base size for compactness */
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--gray);
+            color: var(--text);
+            margin: 0;
+            padding: 30px;
+            /* Reduced padding */
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            /* Slightly tighter container */
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 40px;
+            /* Reduced margin */
+            border-left: 8px solid var(--yellow);
+            padding-left: 20px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            font-weight: 900;
+            margin: 0;
+            color: var(--dark);
+            line-height: 0.9;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #666;
+            margin-top: 5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* --- ARCHITECTURE: SECTIONS --- */
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--dark);
+            margin: 40px 0 20px 0;
+            /* Reduced margins */
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background-color: #ddd;
+        }
+
+        /* --- BENTO GRID LAYOUT --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            /* Reduced gap */
+            grid-auto-rows: minmax(180px, auto);
+            /* Reduced min-height */
+        }
+
+        /* --- CARD STYLES --- */
+        .card {
+            background-color: var(--white);
+            border-radius: 20px;
+            /* Slightly smaller radius */
+            padding: 25px;
+            /* Reduced padding */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Card Variants */
+        .card.yellow {
+            background-color: var(--yellow);
+            color: var(--dark);
+        }
+
+        .card.dark {
+            background-color: var(--dark);
+            color: var(--white);
+        }
+
+        /* Sizing Classes */
+        .col-1 {
+            grid-column: span 1;
+        }
+
+        .col-2 {
+            grid-column: span 2;
+        }
+
+        .col-3 {
+            grid-column: span 3;
+        }
+
+        .col-4 {
+            grid-column: span 4;
+        }
+
+        .row-2 {
+            grid-row: span 2;
+        }
+
+        /* Typography */
+        .number {
+            font-weight: 900;
+            line-height: 0.9;
+            color: var(--dark);
+        }
+
+        .card.dark .number {
+            color: var(--yellow);
+        }
+
+        /* MASSIVE 10K */
+        .number.huge {
+            font-size: 8rem;
+            letter-spacing: -4px;
+        }
+
+        /* Increased size */
+
+        .number.big {
+            font-size: 3.2rem;
+            letter-spacing: -2px;
+        }
+
+        .number.medium {
+            font-size: 2.2rem;
+            letter-spacing: -1px;
+        }
+
+        .number.small {
+            font-size: 1.8rem;
+        }
+
+        .label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: 8px;
+            opacity: 0.8;
+        }
+
+        .detail {
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-top: 4px;
+            color: #666;
+            line-height: 1.3;
+        }
+
+        .card.dark .detail {
+            color: #aaa;
+        }
+
+        .card.yellow .detail {
+            color: #333;
+        }
+
+        /* --- VISUALIZATIONS --- */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background-color: #eee;
+            border-radius: 3px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--dark);
+        }
+
+        .card.dark .progress-bar {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .card.dark .progress-fill {
+            background-color: var(--yellow);
+        }
+
+        .gender-split {
+            display: flex;
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        /* Source Link */
+        .source {
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #bbb;
+            text-decoration: none;
+            margin-top: auto;
+            padding-top: 10px;
+            display: block;
+            text-align: right;
+        }
+
+        .source:hover {
+            color: var(--dark);
+        }
+
+        .card.dark .source:hover {
+            color: var(--yellow);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .col-3,
+            .col-4 {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .col-1,
+            .col-2,
+            .col-3,
+            .col-4 {
+                grid-column: span 1;
+            }
+
+            .row-2 {
+                grid-row: span 1;
+            }
+
+            .number.huge {
+                font-size: 5rem;
+            }
+
+            body {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>L'Urbex<br>en France</h1>
+            <div class="subtitle">Analyse & Statistiques 2024</div>
+        </header>
+
+        <!-- SECTION 1: LA COMMUNAUTÉ (Who?) -->
+        <div class="section-title">01. La Communauté</div>
+        <div class="grid">
+
+            <!-- Hero Stat -->
+            <div class="card col-2 row-2 yellow">
+                <div>
+                    <div class="number huge">10k</div>
+                    <div class="label">Pratiquants Actifs en France</div>
+                    <div class="detail">Une communauté estimée à 10 000 explorateurs réguliers sur le territoire.</div>
+                </div>
+                <a href="https://generationvoyage.fr" target="_blank" class="source">GenerationVoyage</a>
+            </div>
+
+            <!-- Gender -->
+            <div class="card col-2">
+                <div>
+                    <div class="number big">70%</div>
+                    <div class="label">Hommes</div>
+                    <div class="gender-split">
+                        <div style="width: 70%; background: var(--dark);"></div>
+                        <div style="width: 30%; background: #fff;"></div>
+                    </div>
+                    <div class="detail">Contre 30% de femmes, une pratique encore majoritairement masculine.</div>
+                </div>
+                <a href="https://spot-urbex.com" target="_blank" class="source">Spot-Urbex</a>
+            </div>
+
+            <!-- Age -->
+            <div class="card col-1">
+                <div class="number medium">27</div>
+                <div class="label">Ans</div>
+                <div class="detail">Moyenne d'âge globale des pratiquants.</div>
+                <a href="https://dockinfos.fr" target="_blank" class="source">DockInfos</a>
+            </div>
+
+            <!-- Youth -->
+            <div class="card col-1">
+                <div class="number medium">30%</div>
+                <div class="label">&lt; 25 ans</div>
+                <div class="detail">Une forte proportion de jeunes adultes.</div>
+                <a href="https://senat.fr" target="_blank" class="source">Senat</a>
+            </div>
+
+        </div>
+
+        <!-- SECTION 2: IMPACT DIGITAL -->
+        <div class="section-title">02. Impact Digital</div>
+        <div class="grid">
+
+            <!-- Hashtag Hero -->
+            <div class="card col-2 dark">
+                <div>
+                    <div class="number big">9.2M</div>
+                    <div class="label">#Urbex</div>
+                    <div class="detail">Publications recensées sur Instagram, témoignant d'une viralité massive.</div>
+                </div>
+                <a href="https://dockinfos.fr" target="_blank" class="source">DockInfos</a>
+            </div>
+
+            <!-- Growth -->
+            <div class="card col-1">
+                <div class="number medium" style="color: #27ae60;">+300%</div>
+                <div class="label">Croissance</div>
+                <div class="detail">Explosion du contenu depuis 2020.</div>
+                <a href="https://sessionurbex.fr" target="_blank" class="source">SessionUrbex</a>
+            </div>
+
+            <!-- Photo Activity -->
+            <div class="card col-1">
+                <div class="number medium">40%</div>
+                <div class="label">Photo</div>
+                <div class="detail">Activité principale lors des visites.</div>
+                <a href="https://celsalab.fr" target="_blank" class="source">CelsaLab</a>
+            </div>
+
+        </div>
+
+        <!-- SECTION 3: LE TERRAIN -->
+        <div class="section-title">03. Le Terrain</div>
+        <div class="grid">
+
+            <!-- Spots Count -->
+            <div class="card col-2">
+                <div class="number big">6000+</div>
+                <div class="label">Lieux en France</div>
+                <div class="detail">Contre 20 000 cartographiés en Europe. La France est un terrain de jeu majeur.</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 30%;"></div>
+                </div>
+                <a href="https://sessionurbex.fr" target="_blank" class="source">SessionUrbex</a>
+            </div>
+
+            <!-- Urban Location -->
+            <div class="card col-1">
+                <div class="number medium">80%</div>
+                <div class="label">Urbain</div>
+                <div class="detail">Situés en ville ou zone périurbaine.</div>
+                <a href="https://wikipedia.org" target="_blank" class="source">Wiki</a>
+            </div>
+
+            <!-- Industrial -->
+            <div class="card col-1">
+                <div class="number medium">30%</div>
+                <div class="label">Friches</div>
+                <div class="detail">Anciens sites industriels à l'abandon.</div>
+                <a href="https://sessionurbex.fr" target="_blank" class="source">SessionUrbex</a>
+            </div>
+
+            <!-- Frequency -->
+            <div class="card col-1">
+                <div class="number small">5-10</div>
+                <div class="label">Visites / An</div>
+                <div class="detail">Fréquence moyenne par explorateur.</div>
+                <a href="https://dockinfos.fr" target="_blank" class="source">DockInfos</a>
+            </div>
+
+            <!-- Legality -->
+            <div class="card col-1">
+                <div class="number small">&lt; 5%</div>
+                <div class="label">Légal</div>
+                <div class="detail">L'immense majorité des accès est interdite.</div>
+                <a href="https://sessionurbex.fr" target="_blank" class="source">SessionUrbex</a>
+            </div>
+
+            <!-- Growth Practice -->
+            <div class="card col-2">
+                <div class="number medium">+25%</div>
+                <div class="label">Augmentation Pratique</div>
+                <div class="detail">Hausse constante du nombre de pratiquants entre 2015 et 2023.</div>
+                <a href="https://sessionurbex.fr" target="_blank" class="source">SessionUrbex</a>
+            </div>
+
+        </div>
+
+        <!-- SECTION 4: RISQUES & RÉALITÉ -->
+        <div class="section-title">04. Risques & Réalité</div>
+        <div class="grid">
+
+            <!-- Safety Hero -->
+            <div class="card col-2 row-2" style="background: #e8f5e9;">
+                <div>
+                    <div class="number big" style="color: #27ae60;">99%</div>
+                    <div class="label">Sans Poursuite</div>
+                    <div class="detail">Malgré l'illégalité, la quasi-totalité des explorations se termine sans suite
+                        judiciaire.</div>
+                </div>
+                <a href="https://dockinfos.fr" target="_blank" class="source">DockInfos</a>
+            </div>
+
+            <!-- Procedures -->
+            <div class="card col-1">
+                <div class="number medium">94</div>
+                <div class="label">Procédures</div>
+                <div class="detail">Judiciaires recensées en 2022.</div>
+                <a href="https://senat.fr" target="_blank" class="source">Senat</a>
+            </div>
+
+            <!-- Risks Assumed -->
+            <div class="card col-1 dark">
+                <div class="number medium">50%</div>
+                <div class="label">Risques</div>
+                <div class="detail">Des urbexeurs assument le danger.</div>
+                <a href="https://masselaw.fr" target="_blank" class="source">MasseLaw</a>
+            </div>
+
+            <!-- Injuries -->
+            <div class="card col-2">
+                <div style="display: flex; justify-content: space-between;">
+                    <div>
+                        <div class="number medium">15%</div>
+                        <div class="detail">Blessures mineures / an</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="number medium" style="color: #c0392b;">10%</div>
+                        <div class="detail">Hospitalisation (parmi blessés)</div>
+                    </div>
+                </div>
+                <div class="progress-bar" style="background: #eee;">
+                    <div class="progress-fill" style="width: 15%; background: #c0392b;"></div>
+                </div>
+                <a href="https://celsalab.fr" target="_blank" class="source">Celsa / MasseLaw</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
