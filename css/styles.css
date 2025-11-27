@@ -1,3 +1,24 @@
+@charset "UTF-8";
+:root {
+  --gap: 1.5rem;
+  --speed: 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --closed: 7rem;
+  --open: 38rem;
+  --accent: #CFB17B;
+  --accent-strong: #DCC396;
+  --brand-bg: #594748;
+  --brand-bg-dark: #33292a;
+  --brand-text: #f1dfd9;
+  --ig-gap: 0.6rem;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --closed: 100%;
+    --open: 100%;
+    --gap: 0.8rem;
+  }
+}
 /* régler des petits détails globaux sans surcharger Tailwind */
 html,
 body {
@@ -9,20 +30,6 @@ body {
 /* améliorer l'apparence de la sélection de texte (complément à Tailwind) */
 ::selection {
   background: rgba(249, 249, 249, 0.25);
-}
-
-
-/* carrousel articles */
-:root {
-  --gap: 1.5rem;
-  --speed: 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --closed: 7rem;
-  --open: 38rem;
-  --accent: #CFB17B;
-  --accent-strong: #DCC396;
-  --brand-bg: #594748;
-  --brand-bg-dark: #33292a;
-  --brand-text: #f1dfd9;
 }
 
 .articles-slider {
@@ -51,16 +58,12 @@ body {
     font-size: 2.25rem;
   }
 }
-
 .articles-slider .slider {
   width: 100%;
   margin: 0 auto;
   overflow: hidden;
   padding: 0 1rem;
-  background: linear-gradient(120deg,
-      rgba(51, 41, 42, 0.55),
-      rgba(0, 0, 0, 0) 45%,
-      rgba(51, 41, 42, 0.45));
+  background: linear-gradient(120deg, rgba(51, 41, 42, 0.55), rgba(0, 0, 0, 0) 45%, rgba(51, 41, 42, 0.45));
   border-radius: 1.5rem;
   position: relative;
 }
@@ -94,8 +97,7 @@ body {
 .articles-slider .project-card[active] {
   flex-basis: var(--open);
   transform: translateY(-6px);
-  box-shadow: 0 18px 55px rgba(17, 12, 13, 0.65),
-    0 0 0 1px rgba(207, 177, 123, 0.25);
+  box-shadow: 0 18px 55px rgba(17, 12, 13, 0.65), 0 0 0 1px rgba(207, 177, 123, 0.25);
 }
 
 .articles-slider .project-card__bg {
@@ -122,10 +124,7 @@ body {
   align-items: center;
   gap: 0.7rem;
   padding: 0;
-  background: linear-gradient(180deg,
-      rgba(12, 9, 10, 0.05),
-      rgba(12, 8, 9, 0.6)),
-    linear-gradient(0deg, rgba(12, 9, 10, 0.1), rgba(89, 71, 72, 0.8));
+  background: linear-gradient(180deg, rgba(12, 9, 10, 0.05), rgba(12, 8, 9, 0.6)), linear-gradient(0deg, rgba(12, 9, 10, 0.1), rgba(89, 71, 72, 0.8));
   z-index: 2;
 }
 
@@ -222,26 +221,12 @@ body {
 }
 
 @media (max-width: 767px) {
-  :root {
-    --closed: 4rem;
-    --open: 22rem;
-  }
-}
-
-@media (max-width: 767px) {
-  :root {
-    --closed: 100%;
-    --open: 100%;
-    --gap: 0.8rem;
-  }
-
   .articles-slider .head {
     padding: 30px 15px 20px;
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
   }
-
   .articles-slider .slider {
     padding: 0 15px;
     overflow-y: auto;
@@ -249,13 +234,11 @@ body {
     max-height: 80vh;
     /* Ensure it has a height to scroll */
   }
-
   .articles-slider .track {
     flex-direction: column;
     gap: 0.8rem;
     padding-bottom: 20px;
   }
-
   .articles-slider .project-card {
     height: auto;
     min-height: 80px;
@@ -265,13 +248,11 @@ body {
     -webkit-tap-highlight-color: rgba(207, 177, 123, 0.3);
     touch-action: pan-y;
   }
-
   .articles-slider .project-card[active] {
     min-height: 300px;
     transform: none;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
   }
-
   .articles-slider .project-card__content {
     flex-direction: row;
     justify-content: flex-start;
@@ -279,54 +260,44 @@ body {
     align-items: center;
     gap: 1rem;
   }
-
   .articles-slider .project-card__title {
     writing-mode: horizontal-tb;
     transform: none;
     font-size: 1.2rem;
     margin-right: auto;
   }
-
   .articles-slider .project-card__thumb,
   .articles-slider .project-card__desc,
   .articles-slider .project-card__btn {
     display: none;
   }
-
   .articles-slider .project-card[active] .project-card__content {
     align-items: flex-start;
     padding: 1.5rem;
   }
-
   .articles-slider .project-card[active] .project-card__title {
     font-size: 1.8rem;
     margin-bottom: 1rem;
     margin-top: 2rem;
   }
-
   .articles-slider .project-card[active] .project-card__thumb {
     width: 140px;
     height: 180px;
     border-radius: 0.35rem;
     margin-bottom: 1rem;
   }
-
   .articles-slider .project-card[active] .project-card__desc {
     font-size: 0.95rem;
     max-width: 100%;
     margin-bottom: 1rem;
   }
-
   .articles-slider .project-card[active] .project-card__btn {
     display: none;
   }
-
   .articles-slider .dots {
     display: none;
   }
 }
-
-
 /* Image slider */
 .images-slider {
   position: relative;
@@ -439,14 +410,12 @@ body {
     filter: blur(5px);
     transform: translateY(calc(-50% + 75px));
   }
-
   100% {
     opacity: 1;
     filter: blur(0);
     transform: translateY(-50%);
   }
 }
-
 .images-slider .slider-nav {
   position: absolute;
   bottom: 2rem;
@@ -484,66 +453,52 @@ body {
   .images-slider .content .title {
     font-size: 1rem;
   }
-
   .images-slider .content .description,
   .images-slider .content button {
     font-size: 0.7rem;
   }
-
   .images-slider .item {
     width: 160px;
     height: 270px;
   }
-
   .images-slider .item:nth-child(4) {
     left: calc(50% + 170px);
   }
-
   .images-slider .item:nth-child(5) {
     left: calc(50% + 340px);
   }
-
   .images-slider .item:nth-child(6) {
     left: calc(50% + 510px);
   }
 }
-
 @media (max-width: 650px) {
   .images-slider {
     height: clamp(380px, 65vh, 520px);
   }
-
   .images-slider .content .title {
     font-size: 0.9rem;
   }
-
   .images-slider .content .description,
   .images-slider .content button {
     font-size: 0.7rem;
   }
-
   .images-slider .item {
     width: 130px;
     height: 220px;
   }
-
   .images-slider .item:nth-child(4) {
     left: calc(50% + 140px);
   }
-
   .images-slider .item:nth-child(5) {
     left: calc(50% + 280px);
   }
-
   .images-slider .item:nth-child(6) {
     left: calc(50% + 420px);
   }
-
   .images-slider .slider-nav {
     bottom: 1.5rem;
   }
 }
-
 /* modal pour afficher l'image en grand */
 .image-modal {
   position: fixed;
@@ -615,15 +570,15 @@ body {
   .image-modal {
     padding: 1rem;
   }
-
   .image-modal-content {
     width: 85vw;
     height: 85vh;
   }
-
   .image-modal-close {
     top: -3rem;
     width: 2rem;
     height: 2rem;
   }
 }
+
+/*# sourceMappingURL=styles.css.map */

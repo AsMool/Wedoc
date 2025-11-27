@@ -5,9 +5,14 @@
   "type": "module",
   "main": "generate_descriptions.js",
   "scripts": {
-    "generate": "node generate_descriptions.js"
+    "generate": "node generate_descriptions.js",
+    "build:css": "sass css/styles.scss css/styles.css && sass css/gallery.scss css/gallery.css --no-source-map",
+    "watch:css": "sass --watch css/styles.scss:css/styles.css css/gallery.scss:css/gallery.css"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0"
+  },
+  "devDependencies": {
+    "sass": "^1.94.2"
   }
 }
