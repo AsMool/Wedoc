@@ -499,4 +499,112 @@ document.addEventListener("DOMContentLoaded", () => {
     const isOpen = mobileMenu && !mobileMenu.classList.contains("hidden");
     if (isOpen && evt.key === "Escape") setMenuOpen(false);
   });
+
+  // gestion du lecteur audio personnalise
+  const audioPlayer = document.getElementById("audio-player");
+  const playPauseBtn = document.getElementById("play-pause-btn");
+  const playIcon = document.getElementById("play-icon");
+  const pauseIcon = document.getElementById("pause-icon");
+  const progressBar = document.getElementById("progress-bar");
+  const progressSlider = document.getElementById("progress-slider");
+  const currentTimeSpan = document.getElementById("current-time");
+  const durationSpan = document.getElementById("duration");
+  const volumeBtn = document.getElementById("volume-btn");
+  const volumeOnIcon = document.getElementById("volume-on-icon");
+  const volumeOffIcon = document.getElementById("volume-off-icon");
+  const volumeSlider = document.getElementById("volume-slider");
+  const volumeValue = document.getElementById("volume-value");
+
+  if (audioPlayer && playPauseBtn) {
+    // formatage du temps
+    const formatTime = (seconds) => {
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs.toString().padStart(2, "0")}`;
+    };
+
+    // mise a jour de la duree
+    audioPlayer.addEventListener("loadedmetadata", () => {
+      if (durationSpan && audioPlayer.duration) {
+        durationSpan.textContent = formatTime(audioPlayer.duration);
+      }
+      if (progressSlider && audioPlayer.duration) {
+        progressSlider.max = audioPlayer.duration;
+      }
+    });
+
+    // lecture/pause
+    playPauseBtn.addEventListener("click", () => {
+      if (audioPlayer.paused) {
+        audioPlayer.play();
+        if (playIcon) playIcon.classList.add("hidden");
+        if (pauseIcon) pauseIcon.classList.remove("hidden");
+      } else {
+        audioPlayer.pause();
+        if (playIcon) playIcon.classList.remove("hidden");
+        if (pauseIcon) pauseIcon.classList.add("hidden");
+      }
+    });
+
+    // mise a jour de la progression
+    audioPlayer.addEventListener("timeupdate", () => {
+      if (audioPlayer.duration) {
+        const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        if (progressBar) {
+          progressBar.style.width = `${progress}%`;
+        }
+        if (progressSlider) {
+          progressSlider.value = audioPlayer.currentTime;
+        }
+        if (currentTimeSpan) {
+          currentTimeSpan.textContent = formatTime(audioPlayer.currentTime);
+        }
+      }
+    });
+
+    // changement de position via le slider
+    if (progressSlider) {
+      progressSlider.addEventListener("input", (e) => {
+        audioPlayer.currentTime = parseFloat(e.target.value);
+      });
+    }
+
+    // gestion du volume
+    if (volumeSlider) {
+      volumeSlider.addEventListener("input", (e) => {
+        const volume = e.target.value / 100;
+        audioPlayer.volume = volume;
+        if (volumeValue) {
+          volumeValue.textContent = `${Math.round(volume * 100)}%`;
+        }
+        if (volume === 0) {
+          if (volumeOnIcon) volumeOnIcon.classList.add("hidden");
+          if (volumeOffIcon) volumeOffIcon.classList.remove("hidden");
+        } else {
+          if (volumeOnIcon) volumeOnIcon.classList.remove("hidden");
+          if (volumeOffIcon) volumeOffIcon.classList.add("hidden");
+        }
+      });
+    }
+
+    // bouton mute/unmute
+    if (volumeBtn) {
+      volumeBtn.addEventListener("click", () => {
+        if (audioPlayer.volume > 0) {
+          audioPlayer.volume = 0;
+          if (volumeSlider) volumeSlider.value = 0;
+          if (volumeValue) volumeValue.textContent = "0%";
+          if (volumeOnIcon) volumeOnIcon.classList.add("hidden");
+          if (volumeOffIcon) volumeOffIcon.classList.remove("hidden");
+        } else {
+          audioPlayer.volume = 1;
+          if (volumeSlider) volumeSlider.value = 100;
+          if (volumeValue) volumeValue.textContent = "100%";
+          if (volumeOnIcon) volumeOnIcon.classList.remove("hidden");
+          if (volumeOffIcon) volumeOffIcon.classList.add("hidden");
+        }
+      });
+    }
+
+  }
 });
