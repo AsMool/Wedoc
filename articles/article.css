@@ -5,12 +5,6 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-.prose p {
-  font-size: 1.25rem;
-  line-height: 1.8;
-  max-width: 55ch;
-}
-
 /* degradé pour les titres */
 h2.text-brandText,
 h3.text-brandText {
