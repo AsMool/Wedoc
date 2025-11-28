@@ -36,16 +36,8 @@ const DAY_IMAGES = [
         description: 'Escalier délabré sans plafond.',
     },
     {
-        src: 'img/photojours/nouvelleimagejour2.webp',
-        description: 'L\'aile gauche vue de l\'extérieur.',
-    },
-    {
         src: 'img/photojours/nouvelleimagejour3.webp',
         description: 'Bâtiment a moitié effondré.',
-    },
-    {
-        src: 'img/photojours/nouvelleimagejour4.webp',
-        description: 'Annexe avec une piscine.',
     }
 ];
 
