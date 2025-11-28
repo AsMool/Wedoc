@@ -1,47 +1,63 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>L'Urbex en Chiffres</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBg: "#594748",
+                        brandText: "#CFB17B",
+                        brandStroke: "#33292A",
+                    },
+                    boxShadow: {
+                        soft: "0 10px 40px rgba(0,0,0,0.35)",
+                    },
+                },
+            },
+        };
+    </script>
+    <link rel="stylesheet" href="./css/styles.css" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&display=swap');
 
         :root {
-            --yellow: #FFEA00;
-            --dark: #111;
-            --white: #ffffff;
-            --gray: #f8f9fa;
-            --text: #2c3e50;
+            --accent: #CFB17B;
+            --accent-strong: #DCC396;
+            --dark: #0a0a0a;
+            --card-bg: #1a1515;
+            --card-bg-alt: #594748;
+            --white: #f1dfd9;
+            --text: #f1dfd9;
+            --stroke: #33292A;
         }
 
-        /* SCALING DOWN EVERYTHING */
         html {
             font-size: 14px;
-            /* Reduced base size for compactness */
         }
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--gray);
+            background-color: var(--dark);
             color: var(--text);
             margin: 0;
             padding: 30px;
-            /* Reduced padding */
             overflow-x: hidden;
         }
 
         .container {
             max-width: 1200px;
-            /* Slightly tighter container */
             margin: 0 auto;
         }
 
         header {
             margin-bottom: 40px;
-            /* Reduced margin */
-            border-left: 8px solid var(--yellow);
+            border-left: 8px solid var(--accent);
             padding-left: 20px;
         }
 
@@ -50,27 +66,25 @@
             text-transform: uppercase;
             font-weight: 900;
             margin: 0;
-            color: var(--dark);
+            color: var(--accent);
             line-height: 0.9;
         }
 
         .subtitle {
             font-size: 1.1rem;
             font-weight: 500;
-            color: #666;
+            color: rgba(241, 223, 217, 0.7);
             margin-top: 5px;
             letter-spacing: 2px;
             text-transform: uppercase;
         }
 
-        /* --- ARCHITECTURE: SECTIONS --- */
         .section-title {
             font-size: 1.3rem;
             font-weight: 900;
             text-transform: uppercase;
-            color: var(--dark);
+            color: var(--accent);
             margin: 40px 0 20px 0;
-            /* Reduced margins */
             display: flex;
             align-items: center;
             gap: 15px;
@@ -80,90 +94,67 @@
             content: '';
             flex: 1;
             height: 2px;
-            background-color: #ddd;
+            background-color: var(--stroke);
         }
 
-        /* --- BENTO GRID LAYOUT --- */
         .grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
-            /* Reduced gap */
             grid-auto-rows: minmax(180px, auto);
-            /* Reduced min-height */
         }
 
-        /* --- CARD STYLES --- */
         .card {
-            background-color: var(--white);
+            background-color: var(--card-bg);
             border-radius: 20px;
-            /* Slightly smaller radius */
             padding: 25px;
-            /* Reduced padding */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             position: relative;
             overflow: hidden;
+            border: 1px solid var(--stroke);
         }
 
         .card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent);
         }
 
-        /* Card Variants */
         .card.yellow {
-            background-color: var(--yellow);
-            color: var(--dark);
+            background-color: var(--card-bg-alt);
+            color: var(--white);
         }
 
         .card.dark {
             background-color: var(--dark);
             color: var(--white);
+            border: 1px solid var(--accent);
         }
 
-        /* Sizing Classes */
-        .col-1 {
-            grid-column: span 1;
-        }
+        .col-1 { grid-column: span 1; }
+        .col-2 { grid-column: span 2; }
+        .col-3 { grid-column: span 3; }
+        .col-4 { grid-column: span 4; }
+        .row-2 { grid-row: span 2; }
 
-        .col-2 {
-            grid-column: span 2;
-        }
-
-        .col-3 {
-            grid-column: span 3;
-        }
-
-        .col-4 {
-            grid-column: span 4;
-        }
-
-        .row-2 {
-            grid-row: span 2;
-        }
-
-        /* Typography */
         .number {
             font-weight: 900;
             line-height: 0.9;
-            color: var(--dark);
+            color: var(--accent);
         }
 
         .card.dark .number {
-            color: var(--yellow);
+            color: var(--accent);
         }
 
-        /* MASSIVE 10K */
         .number.huge {
             font-size: 8rem;
             letter-spacing: -4px;
         }
-
-        /* Increased size */
 
         .number.big {
             font-size: 3.2rem;
@@ -184,30 +175,30 @@
             font-weight: 700;
             text-transform: uppercase;
             margin-top: 8px;
-            opacity: 0.8;
+            opacity: 0.9;
+            color: var(--white);
         }
 
         .detail {
             font-size: 0.8rem;
             font-weight: 500;
             margin-top: 4px;
-            color: #666;
+            color: rgba(241, 223, 217, 0.7);
             line-height: 1.3;
         }
 
         .card.dark .detail {
-            color: #aaa;
+            color: rgba(241, 223, 217, 0.6);
         }
 
         .card.yellow .detail {
-            color: #333;
+            color: rgba(241, 223, 217, 0.8);
         }
 
-        /* --- VISUALIZATIONS --- */
         .progress-bar {
             width: 100%;
             height: 6px;
-            background-color: #eee;
+            background-color: rgba(255, 255, 255, 0.1);
             border-radius: 3px;
             margin-top: 10px;
             overflow: hidden;
@@ -215,15 +206,15 @@
 
         .progress-fill {
             height: 100%;
-            background-color: var(--dark);
+            background-color: var(--accent);
         }
 
         .card.dark .progress-bar {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.15);
         }
 
         .card.dark .progress-fill {
-            background-color: var(--yellow);
+            background-color: var(--accent);
         }
 
         .gender-split {
@@ -235,12 +226,11 @@
             margin-top: 10px;
         }
 
-        /* Source Link */
         .source {
             font-size: 0.55rem;
             text-transform: uppercase;
             font-weight: 700;
-            color: #bbb;
+            color: rgba(207, 177, 123, 0.5);
             text-decoration: none;
             margin-top: auto;
             padding-top: 10px;
@@ -249,21 +239,26 @@
         }
 
         .source:hover {
-            color: var(--dark);
+            color: var(--accent);
         }
 
         .card.dark .source:hover {
-            color: var(--yellow);
+            color: var(--accent-strong);
         }
 
-        /* Responsive */
+        .card.green {
+            background-color: rgba(39, 174, 96, 0.15);
+            border: 1px solid rgba(39, 174, 96, 0.4);
+        }
+        .card.green .number {
+            color: #27ae60;
+        }
+
         @media (max-width: 1024px) {
             .grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-
-            .col-3,
-            .col-4 {
+            .col-3, .col-4 {
                 grid-column: span 2;
             }
         }
@@ -272,25 +267,33 @@
             .grid {
                 grid-template-columns: 1fr;
             }
-
-            .col-1,
-            .col-2,
-            .col-3,
-            .col-4 {
+            .col-1, .col-2, .col-3, .col-4 {
                 grid-column: span 1;
             }
-
             .row-2 {
                 grid-row: span 1;
             }
-
             .number.huge {
                 font-size: 5rem;
             }
-
             body {
                 padding: 15px;
             }
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: opacity 0.3s;
+        }
+        .back-link:hover {
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -298,6 +301,12 @@
 <body>
 
     <div class="container">
+        <a href="index.html" class="back-link">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+            </svg>
+            Retour à l'accueil
+        </a>
         <header>
             <h1>L'Urbex<br>en France</h1>
             <div class="subtitle">Analyse & Statistiques 2024</div>
@@ -314,7 +323,7 @@
                     <div class="label">Pratiquants Actifs en France</div>
                     <div class="detail">Une communauté estimée à 10 000 explorateurs réguliers sur le territoire.</div>
                 </div>
-                <a href="https://generationvoyage.fr" target="_blank" class="source">GenerationVoyage</a>
+                <a href="https://generationvoyage.fr/urbex-exploration-urbaine/" target="_blank" class="source">GenerationVoyage</a>
             </div>
 
             <!-- Gender -->
@@ -323,12 +332,12 @@
                     <div class="number big">70%</div>
                     <div class="label">Hommes</div>
                     <div class="gender-split">
-                        <div style="width: 70%; background: var(--dark);"></div>
-                        <div style="width: 30%; background: #fff;"></div>
+                        <div style="width: 70%; background: var(--accent);"></div>
+                        <div style="width: 30%; background: rgba(241, 223, 217, 0.3);"></div>
                     </div>
                     <div class="detail">Contre 30% de femmes, une pratique encore majoritairement masculine.</div>
                 </div>
-                <a href="https://spot-urbex.com" target="_blank" class="source">Spot-Urbex</a>
+                <a href="https://www.spot-urbex.com/blogs/spot-urbex-blog/a-la-decouverte-des-urbexeurs" target="_blank" class="source">Spot-Urbex</a>
             </div>
 
             <!-- Age -->
@@ -336,7 +345,7 @@
                 <div class="number medium">27</div>
                 <div class="label">Ans</div>
                 <div class="detail">Moyenne d'âge globale des pratiquants.</div>
-                <a href="https://dockinfos.fr" target="_blank" class="source">DockInfos</a>
+                <a href="https://dockinfos.fr/alsace/lurbex-un-nouveau-sport-en-plein-essor/" target="_blank" class="source">DockInfos</a>
             </div>
 
             <!-- Youth -->
@@ -344,7 +353,7 @@
                 <div class="number medium">30%</div>
                 <div class="label">&lt; 25 ans</div>
                 <div class="detail">Une forte proportion de jeunes adultes.</div>
-                <a href="https://senat.fr" target="_blank" class="source">Senat</a>
+                <a href="https://www.senat.fr/questions/base/2023/qSEQ230607250.html" target="_blank" class="source">Senat</a>
             </div>
 
         </div>
@@ -360,15 +369,15 @@
                     <div class="label">#Urbex</div>
                     <div class="detail">Publications recensées sur Instagram, témoignant d'une viralité massive.</div>
                 </div>
-                <a href="https://dockinfos.fr" target="_blank" class="source">DockInfos</a>
+                <a href="https://dockinfos.fr/alsace/lurbex-un-nouveau-sport-en-plein-essor/" target="_blank" class="source">DockInfos</a>
             </div>
 
             <!-- Growth -->
             <div class="card col-1">
-                <div class="number medium" style="color: #27ae60;">+300%</div>
+                <div class="number medium" style="color: #4ade80;">+300%</div>
                 <div class="label">Croissance</div>
                 <div class="detail">Explosion du contenu depuis 2020.</div>
-                <a href="https://sessionurbex.fr" target="_blank" class="source">SessionUrbex</a>
+                <a href="https://www.sessionurbex.fr/lurbex-2025/" target="_blank" class="source">SessionUrbex</a>
             </div>
 
             <!-- Photo Activity -->
@@ -376,7 +385,7 @@
                 <div class="number medium">40%</div>
                 <div class="label">Photo</div>
                 <div class="detail">Activité principale lors des visites.</div>
-                <a href="https://celsalab.fr" target="_blank" class="source">CelsaLab</a>
+                <a href="https://celsalab.fr/category/urbex/" target="_blank" class="source">CelsaLab</a>
             </div>
 
         </div>
@@ -393,7 +402,7 @@
                 <div class="progress-bar">
                     <div class="progress-fill" style="width: 30%;"></div>
                 </div>
-                <a href="https://sessionurbex.fr" target="_blank" class="source">SessionUrbex</a>
+                <a href="https://www.sessionurbex.fr" target="_blank" class="source">SessionUrbex</a>
             </div>
 
             <!-- Urban Location -->
@@ -401,7 +410,7 @@
                 <div class="number medium">80%</div>
                 <div class="label">Urbain</div>
                 <div class="detail">Situés en ville ou zone périurbaine.</div>
-                <a href="https://wikipedia.org" target="_blank" class="source">Wiki</a>
+                <a href="https://fr.wikipedia.org/wiki/Exploration_urbaine" target="_blank" class="source">Wikipedia</a>
             </div>
 
             <!-- Industrial -->
@@ -409,7 +418,7 @@
                 <div class="number medium">30%</div>
                 <div class="label">Friches</div>
                 <div class="detail">Anciens sites industriels à l'abandon.</div>
-                <a href="https://sessionurbex.fr" target="_blank" class="source">SessionUrbex</a>
+                <a href="https://www.sessionurbex.fr" target="_blank" class="source">SessionUrbex</a>
             </div>
 
             <!-- Frequency -->
@@ -417,7 +426,7 @@
                 <div class="number small">5-10</div>
                 <div class="label">Visites / An</div>
                 <div class="detail">Fréquence moyenne par explorateur.</div>
-                <a href="https://dockinfos.fr" target="_blank" class="source">DockInfos</a>
+                <a href="https://dockinfos.fr/alsace/lurbex-un-nouveau-sport-en-plein-essor/" target="_blank" class="source">DockInfos</a>
             </div>
 
             <!-- Legality -->
@@ -425,7 +434,7 @@
                 <div class="number small">&lt; 5%</div>
                 <div class="label">Légal</div>
                 <div class="detail">L'immense majorité des accès est interdite.</div>
-                <a href="https://sessionurbex.fr" target="_blank" class="source">SessionUrbex</a>
+                <a href="https://www.sessionurbex.fr" target="_blank" class="source">SessionUrbex</a>
             </div>
 
             <!-- Growth Practice -->
@@ -433,7 +442,7 @@
                 <div class="number medium">+25%</div>
                 <div class="label">Augmentation Pratique</div>
                 <div class="detail">Hausse constante du nombre de pratiquants entre 2015 et 2023.</div>
-                <a href="https://sessionurbex.fr" target="_blank" class="source">SessionUrbex</a>
+                <a href="https://www.sessionurbex.fr/lurbex-2025/" target="_blank" class="source">SessionUrbex</a>
             </div>
 
         </div>
@@ -443,14 +452,14 @@
         <div class="grid">
 
             <!-- Safety Hero -->
-            <div class="card col-2 row-2" style="background: #e8f5e9;">
+            <div class="card col-2 row-2 green">
                 <div>
-                    <div class="number big" style="color: #27ae60;">99%</div>
+                    <div class="number big">99%</div>
                     <div class="label">Sans Poursuite</div>
                     <div class="detail">Malgré l'illégalité, la quasi-totalité des explorations se termine sans suite
                         judiciaire.</div>
                 </div>
-                <a href="https://dockinfos.fr" target="_blank" class="source">DockInfos</a>
+                <a href="https://dockinfos.fr/alsace/lurbex-un-nouveau-sport-en-plein-essor/" target="_blank" class="source">DockInfos</a>
             </div>
 
             <!-- Procedures -->
@@ -458,7 +467,7 @@
                 <div class="number medium">94</div>
                 <div class="label">Procédures</div>
                 <div class="detail">Judiciaires recensées en 2022.</div>
-                <a href="https://senat.fr" target="_blank" class="source">Senat</a>
+                <a href="https://www.senat.fr/questions/base/2023/qSEQ230607250.html" target="_blank" class="source">Senat</a>
             </div>
 
             <!-- Risks Assumed -->
@@ -466,7 +475,7 @@
                 <div class="number medium">50%</div>
                 <div class="label">Risques</div>
                 <div class="detail">Des urbexeurs assument le danger.</div>
-                <a href="https://masselaw.fr" target="_blank" class="source">MasseLaw</a>
+                <a href="https://masselaw.fr/blog/l-urbex-quels-sont-les-risques/" target="_blank" class="source">MasseLaw</a>
             </div>
 
             <!-- Injuries -->
@@ -477,14 +486,14 @@
                         <div class="detail">Blessures mineures / an</div>
                     </div>
                     <div style="text-align: right;">
-                        <div class="number medium" style="color: #c0392b;">10%</div>
+                        <div class="number medium" style="color: #f87171;">10%</div>
                         <div class="detail">Hospitalisation (parmi blessés)</div>
                     </div>
                 </div>
-                <div class="progress-bar" style="background: #eee;">
-                    <div class="progress-fill" style="width: 15%; background: #c0392b;"></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 15%; background: #f87171;"></div>
                 </div>
-                <a href="https://celsalab.fr" target="_blank" class="source">Celsa / MasseLaw</a>
+                <a href="https://celsalab.fr/category/urbex/" target="_blank" class="source">CelsaLab</a> / <a href="https://masselaw.fr/blog/l-urbex-quels-sont-les-risques/" target="_blank" class="source">MasseLaw</a>
             </div>
 
         </div>
