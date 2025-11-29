@@ -4,8 +4,8 @@
   --speed: 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --closed: 7rem;
   --open: 38rem;
-  --accent: #CFB17B;
-  --accent-strong: #DCC396;
+  --accent: #cfb17b;
+  --accent-strong: #dcc396;
   --brand-bg: #594748;
   --brand-bg-dark: #33292a;
   --brand-text: #f1dfd9;
@@ -55,7 +55,11 @@ body.gallery {
   overflow: hidden;
   border-radius: 0.75rem;
   border: 1px solid rgba(51, 41, 42, 0.6);
-  background: linear-gradient(180deg, rgba(12, 9, 10, 0.02), rgba(12, 8, 9, 0.3));
+  background: linear-gradient(
+    180deg,
+    rgba(12, 9, 10, 0.02),
+    rgba(12, 8, 9, 0.3)
+  );
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -142,7 +146,7 @@ body.gallery {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #CFB17B;
+  color: #cfb17b;
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 600;

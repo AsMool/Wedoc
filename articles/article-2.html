@@ -1,272 +1,372 @@
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Article 2 - Le Monde de l'Urbex</title>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Article 2 - Le Monde de l'Urbex</title>
-
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brandBg: "#594748",
-            brandText: "#CFB17B",
-            brandStroke: "#33292A",
-          },
-          boxShadow: {
-            soft: "0 10px 40px rgba(0,0,0,0.35)",
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brandBg: "#594748",
+              brandText: "#CFB17B",
+              brandStroke: "#33292A",
+            },
+            boxShadow: {
+              soft: "0 10px 40px rgba(0,0,0,0.35)",
+            },
           },
         },
-      },
-    };
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/styles.css" />
-  <link rel="stylesheet" href="article.css" />
-</head>
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="article.css" />
+  </head>
 
-<body class="bg-neutral-900 text-white antialiased selection:bg-brandText/20">
-  <!-- Navbar -->
-  <header class="fixed top-4 left-4 z-50">
-    <a href="../index.html#articles"
-      class="inline-flex items-center gap-2 rounded-full border border-brandStroke/60 bg-brandText/10 px-4 py-2 backdrop-blur-md transition-all duration-300 hover:border-2">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
-        <path fill-rule="evenodd"
-          d="M11.03 3.97a.75.75 0 0 1 0 1.06l-6.22 6.22H21a.75.75 0 0 1 0 1.5H4.81l6.22 6.22a.75.75 0 1 1-1.06 1.06l-7.5-7.5a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 0 1 1.06 0Z"
-          clip-rule="evenodd" />
-      </svg>
-      <span class="text-sm">Retour</span>
-    </a>
-  </header>
+  <body class="bg-neutral-900 text-white antialiased selection:bg-brandText/20">
+    <div class="back-button-fixed">
+      <a
+        href="../index.html#articles"
+        class="inline-flex items-center gap-2 rounded-full border border-brandStroke/60 bg-brandText/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-md transition-all duration-300 hover:border-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="h-5 w-5"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M11.03 3.97a.75.75 0 0 1 0 1.06l-6.22 6.22H21a.75.75 0 0 1 0 1.5H4.81l6.22 6.22a.75.75 0 1 1-1.06 1.06l-7.5-7.5a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 0 1 1.06 0Z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        <span class="text-sm">Retour</span>
+      </a>
+    </div>
 
-  <!-- Progress Navigation -->
-  <nav class="progress-nav" aria-label="Article progress">
-    <div class="progress-line"></div>
-    <a href="#introduction" class="progress-item active" data-section="introduction">
-      <span class="progress-label">Introduction</span>
-      <div class="progress-dot"></div>
-    </a>
-    <a href="#danger" class="progress-item" data-section="danger">
-      <span class="progress-label">Danger</span>
-      <div class="progress-dot"></div>
-    </a>
-    <a href="#beaute" class="progress-item" data-section="beaute">
-      <span class="progress-label">Beauté</span>
-      <div class="progress-dot"></div>
-    </a>
-    <a href="#silence" class="progress-item" data-section="silence">
-      <span class="progress-label">Silence</span>
-      <div class="progress-dot"></div>
-    </a>
-    <a href="#memoire" class="progress-item" data-section="memoire">
-      <span class="progress-label">Mémoire</span>
-      <div class="progress-dot"></div>
-    </a>
-    <a href="#lumiere" class="progress-item" data-section="lumiere">
-      <span class="progress-label">Lumière</span>
-      <div class="progress-dot"></div>
-    </a>
-    <a href="#esthetique" class="progress-item" data-section="esthetique">
-      <span class="progress-label">Esthétique</span>
-      <div class="progress-dot"></div>
-    </a>
-  </nav>
+    <!-- Progress Navigation -->
+    <nav class="progress-nav" aria-label="Article progress">
+      <div class="progress-line"></div>
+      <a
+        href="#introduction"
+        class="progress-item active"
+        data-section="introduction"
+      >
+        <span class="progress-label">Introduction</span>
+        <div class="progress-dot"></div>
+      </a>
+      <a href="#danger" class="progress-item" data-section="danger">
+        <span class="progress-label">Danger</span>
+        <div class="progress-dot"></div>
+      </a>
+      <a href="#beaute" class="progress-item" data-section="beaute">
+        <span class="progress-label">Beauté</span>
+        <div class="progress-dot"></div>
+      </a>
+      <a href="#silence" class="progress-item" data-section="silence">
+        <span class="progress-label">Silence</span>
+        <div class="progress-dot"></div>
+      </a>
+      <a href="#memoire" class="progress-item" data-section="memoire">
+        <span class="progress-label">Mémoire</span>
+        <div class="progress-dot"></div>
+      </a>
+      <a href="#lumiere" class="progress-item" data-section="lumiere">
+        <span class="progress-label">Lumière</span>
+        <div class="progress-dot"></div>
+      </a>
+      <a href="#esthetique" class="progress-item" data-section="esthetique">
+        <span class="progress-label">Esthétique</span>
+        <div class="progress-dot"></div>
+      </a>
+    </nav>
 
-  <!-- Article Content -->
-  <article class="container mx-auto px-6 py-24 max-w-4xl">
-    <!-- Article Urbex : Quand le temps se fige -->
-    <header class="mb-16 text-center">
-      <h1 class="text-4xl md:text-5xl font-semibold mb-4 tracking-wide">
-        L’urbex : Quand le temps se fige
-      </h1>
-      <div class="mt-6 text-sm opacity-60">Publié le 26 novembre 2025</div>
-    </header>
+    <!-- Article Content -->
+    <article class="container mx-auto px-6 py-24 max-w-4xl">
+      <!-- Article Urbex : Quand le temps se fige -->
+      <header class="mb-16 text-center">
+        <h1 class="text-4xl md:text-5xl font-semibold mb-4 tracking-wide">
+          L’urbex : Quand le temps se fige
+        </h1>
+        <div class="mt-6 text-sm opacity-60">Publié le 26 novembre 2025</div>
+      </header>
 
-    <section class="article-section mb-16">
-      <div class="prose prose-invert max-w-none">
+      <section class="article-section mb-16">
+        <div class="prose prose-invert max-w-none">
+          <p class="mb-4 leading-relaxed">
+            Pratique souvent privée, illégale et risquée, l’urbex — ou
+            exploration urbaine — attire un nombre croissant d’adeptes. Ils
+            décrivent une expérience singulière : immersion dans des lieux
+            abandonnés, confrontation au silence et parfois au danger,
+            redécouverte du passé à travers l’usure du temps. Pourquoi ce
+            mélange de risque, de nostalgie et d’esthétique exerce-t-il une
+            telle fascination ?
+          </p>
+        </div>
+      </section>
+
+      <section id="danger" class="article-section mb-16">
+        <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">
+          Une attirance pour le danger et l’interdit
+        </h2>
+        <div class="prose prose-invert max-w-none">
+          <div style="display: flex; align-items: flex-start; gap: 2rem">
+            <div style="flex: 2">
+              <p class="mb-4 leading-relaxed">
+                Pour beaucoup, la transgression fait partie intégrante de
+                l’expérience. Entrer sans autorisation dans des bâtiments pour
+                la plupart condamnés, progresser dans des couloirs sombres ou
+                escalader des structures en pleine dégradation crée une tension
+                qui intensifie exponentiellement la perception instable du lieu.
+                Le simple fait de savoir que l’on ne devrait pas être présent
+                dans ces lieues augmente drastiquement l’adrénaline, donnant à
+                chaque exploration une expérience unique.
+              </p>
+            </div>
+            <div style="flex: 1; min-width: 120px">
+              <img
+                src="articlemaxime/danger.png"
+                alt="Image urbex danger/interdit"
+                class="rounded-3xl"
+                style="
+                  width: 100%;
+                  aspect-ratio: 1/1;
+                  object-fit: cover;
+                  background: #ccc;
+                "
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="beaute" class="article-section mb-16">
+        <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">
+          La beauté d’une décomposition
+        </h2>
+        <div class="prose prose-invert max-w-none">
+          <div style="display: flex; align-items: flex-start; gap: 2rem">
+            <div style="flex: 1; min-width: 120px">
+              <img
+                src="articlemaxime/degradation.png"
+                alt="Image urbex décomposition"
+                class="rounded-3xl"
+                style="
+                  width: 100%;
+                  aspect-ratio: 1/1;
+                  object-fit: cover;
+                  background: #ccc;
+                "
+              />
+            </div>
+            <div style="flex: 2">
+              <p class="mb-4 leading-relaxed">
+                Dans ces espaces désertés, abandonnées, la dégradation devient
+                le seul langage vivant. Les vitres brisées, les objets laissés
+                sur place, les tags sur les murs et les composent un récit muet
+                dans un silence obscure où tout se dégrade à force d’avancer.
+                Les traces d’humidité, les poussière et la végétation
+                envahissant ces bâtiments transmettent à ces lieux une forme
+                d’élégance involontaire, fragile et éphémère.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="silence" class="article-section mb-16">
+        <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">
+          Le poids du silence
+        </h2>
+        <div class="prose prose-invert max-w-none">
+          <div style="display: flex; align-items: flex-start; gap: 2rem">
+            <div style="flex: 2">
+              <p class="mb-4 leading-relaxed">
+                L’absence totale d’activité crée un silence complet. Chaque pas
+                résonne avec une intensité disproportionnée, et le moindre bruit
+                extérieur semble étranger au lieu. Ce silence amplifié impose un
+                rapport plus attentif au reste : il oblige à écouter les
+                craquements des structures, les vibrations du vent ou le
+                froissement d’un objet abandonné. Cette perception accrue
+                transforme l’exploration en expérience sensorielle, où l’oreille
+                devient un outil d’analyse du lieu autant qu’un indicateur de sa
+                fragilité.
+              </p>
+            </div>
+            <div style="flex: 1; min-width: 120px">
+              <img
+                src="articlemaxime/silence.jpg"
+                alt="Image urbex silence"
+                class="rounded-3xl"
+                style="
+                  width: 100%;
+                  aspect-ratio: 1/1;
+                  object-fit: cover;
+                  background: #ccc;
+                "
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="memoire" class="article-section mb-16">
+        <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">
+          La mémoire des structures
+        </h2>
+        <div class="prose prose-invert max-w-none">
+          <p class="mb-4 leading-relaxed">
+            Les bâtiments abandonnés conservent des traces matérielles de leurs
+            anciennes fonctions. Les plans d’un hôpital laissé sur un bureau,
+            les vestiaires d’une usine, les salles de classe d’une école fermée
+            illustrent une activité effacée mais lisible. Ces vestiges
+            permettent d’identifier les usages passés, de comprendre
+            l’organisation des espaces et de reconstituer des fragments de
+            contexte historique. L’urbex devient alors une forme d’observation
+            documentaire, où l’explorateur interprète les restes pour saisir ce
+            que fut le lieu avant sa désertion.
+          </p>
+        </div>
+      </section>
+
+      <section id="lumiere" class="article-section mb-16">
+        <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">
+          Le basculement entre lumière et obscurité
+        </h2>
+        <div class="prose prose-invert max-w-none">
+          <div style="display: flex; align-items: flex-start; gap: 2rem">
+            <div style="flex: 2">
+              <p class="mb-4 leading-relaxed">
+                La transition entre le jour et la nuit modifie radicalement la
+                perception des lieux abandonnés. Sous la lumière naturelle, les
+                volumes se dévoilent, les détails sont lisibles et
+                l’environnement paraît plus tangible. À la tombée du soir, ces
+                repères disparaissent : les couloirs deviennent indéchiffrables,
+                les ombres se prolongent et les distances se brouillent. Cette
+                variation transforme la structure même du lieu, qui passe d’un
+                espace observable à un territoire incertain, où l’explorateur ne
+                se fie plus à la vision mais à l’intuition pour interpréter ce
+                qui l’entoure.
+              </p>
+            </div>
+            <div style="flex: 1; min-width: 120px">
+              <img
+                src="articlemaxime/journuit.png"
+                alt="Image urbex lumière/obscurité"
+                class="rounded-3xl"
+                style="
+                  width: 100%;
+                  aspect-ratio: 1/1;
+                  object-fit: cover;
+                  background: #ccc;
+                "
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="esthetique" class="article-section mb-16">
+        <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">
+          L’urbex : toute une esthétique
+        </h2>
+        <div class="prose prose-invert max-w-none">
+          <div style="display: flex; align-items: flex-start; gap: 2rem">
+            <div style="flex: 2">
+              <p class="mb-4 leading-relaxed">
+                Les ruines captivent, elles bouleversent touts repères. De jour,
+                elles offrent une lumière crue qui révèle chaque fissure et
+                dégradation des lieues. De nuit, elles changent radicalement de
+                dimension : les détails et les fissures se dissolvent dans
+                l’ombre, le silence s’épaissit, l’espace n’a pu aucuns repères.
+                Ce contraste entre clarté et obscurité crée une relation des
+                sens instable, où l’explorateur oscille entre observation et
+                projection imaginaire.
+              </p>
+            </div>
+            <div style="flex: 1; min-width: 120px">
+              <img
+                src="articlemaxime/liminalspaces.jpg"
+                alt="Image liminal spaces"
+                class="rounded-3xl"
+                style="
+                  width: 100%;
+                  aspect-ratio: 1/1;
+                  object-fit: cover;
+                  background: #ccc;
+                "
+              />
+            </div>
+          </div>
+          <p class="mb-7 leading-relaxed">
+            Cette atmosphère rejoint l’esthétique des liminal spaces, ces
+            environnements vides où l’absence devient le sujet principal.
+            Couloirs sans destination, pièces désertées, salles immenses
+            dépourvues de toute vie, qu’elles soient dégradé ou insalubre : tout
+            semble figé dans une transition permanente, ce qui crée une sorte de
+            nostalgie qui devient presque un malaise, une confusion pour notre
+            perception du temps et du réel. L’urbex exploite lui aussi
+            pleinement ce sentiment intense. Ces lieux ne sont ni vraiment morts
+            ni encore vivants, ils évoquent une époque révolue tout en restant
+            physiquement présents.
+          </p>
+          <p class="mb-4 leading-relaxed">
+            Dans ces espaces coupés du monde, les explorateurs observent un
+            passé en train de disparaître, en étant complètement impuissant. Une
+            beauté sobre, parfois inquiétante, mais toujours mémorable. vivants
+            ; ils évoquent une époque révolue tout en restant physiquement
+            présents. Cette ambiguïté nourrit un attrait puissant : la beauté
+            naît ici de la décomposition, de ce qui subsiste malgré l’abandon.
+          </p>
+          <div style="flex: 2">
+            <!-- Le texte du paragraphe est déjà au-dessus, donc rien ici -->
+          </div>
+        </div>
         <p class="mb-4 leading-relaxed">
-          Pratique souvent privée, illégale et risquée, l’urbex — ou
-          exploration urbaine — attire un nombre croissant d’adeptes. Ils
-          décrivent une expérience singulière : immersion dans des lieux
-          abandonnés, confrontation au silence et parfois au danger,
-          redécouverte du passé à travers l’usure du temps. Pourquoi ce
-          mélange de risque, de nostalgie et d’esthétique exerce-t-il une
-          telle fascination ?
+          Dans ces espaces coupés du monde, l’explorateur observe un passé en
+          train de disparaître tout en découvrant une esthétique propre à
+          l’érosion du réel. Une beauté sobre, parfois inquiétante, mais
+          toujours mémorable.
         </p>
-      </div>
-    </section>
-
-    <section id="danger" class="article-section mb-16">
-      <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">
-        Une attirance pour le danger et l’interdit
-      </h2>
-      <div class="prose prose-invert max-w-none">
-        <div style="display: flex; align-items: flex-start; gap: 2rem;">
-          <div style="flex: 2;">
-            <p class="mb-4 leading-relaxed">
-              Pour beaucoup, la transgression fait partie intégrante de l’expérience. Entrer sans autorisation dans des
-              bâtiments pour la plupart condamnés, progresser dans des couloirs sombres ou escalader des structures en
-              pleine dégradation crée une tension qui intensifie exponentiellement la perception instable du lieu. Le
-              simple fait de savoir que l’on ne devrait pas être présent dans ces lieues augmente drastiquement
-              l’adrénaline, donnant à chaque exploration une expérience unique.
-            </p>
-          </div>
-          <div style="flex: 1; min-width: 120px;">
-            <img src="articlemaxime/danger.png" alt="Image urbex danger/interdit" class="rounded-3xl"
-              style="width:100%; aspect-ratio: 1/1; object-fit: cover; background: #ccc;" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="beaute" class="article-section mb-16">
-      <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">
-        La beauté d’une décomposition
-      </h2>
-      <div class="prose prose-invert max-w-none">
-        <div style="display: flex; align-items: flex-start; gap: 2rem;">
-          <div style="flex: 1; min-width: 120px;">
-            <img src="articlemaxime/degradation.png" alt="Image urbex décomposition" class="rounded-3xl"
-              style="width:100%; aspect-ratio: 1/1; object-fit: cover; background: #ccc;" />
-          </div>
-          <div style="flex: 2;">
-            <p class="mb-4 leading-relaxed">
-              Dans ces espaces désertés, abandonnées, la dégradation devient le seul langage vivant. Les vitres brisées,
-              les objets laissés sur place, les tags sur les murs et les composent un récit muet dans un silence obscure
-              où tout se dégrade à force d’avancer. Les traces d’humidité, les poussière et la végétation envahissant
-              ces bâtiments transmettent à ces lieux une forme d’élégance involontaire, fragile et éphémère.
-            </p>
+        <div
+          style="
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+            margin-bottom: 2rem;
+          "
+        >
+          <div style="flex: 1; min-width: 220px">
+            <img
+              src="articlemaxime/resumecoupédumonde.png"
+              alt="Image lieu en dégradation"
+              class="rounded-3xl"
+              style="
+                width: 40%;
+                aspect-ratio: 1/1;
+                object-fit: cover;
+                background: #ccc;
+              "
+            />
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <p class="mt-6 text-right text-brandText">— Farruggia Maxime</p>
+    </article>
 
-    <section id="silence" class="article-section mb-16">
-      <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">
-        Le poids du silence
-      </h2>
-      <div class="prose prose-invert max-w-none">
-        <div style="display: flex; align-items: flex-start; gap: 2rem;">
-          <div style="flex: 2;">
-            <p class="mb-4 leading-relaxed">
-              L’absence totale d’activité crée un silence complet. Chaque pas résonne avec une intensité
-              disproportionnée, et le moindre bruit extérieur semble étranger au lieu. Ce silence amplifié impose un
-              rapport plus attentif au reste : il oblige à écouter les craquements des structures, les vibrations du
-              vent ou le froissement d’un objet abandonné. Cette perception accrue transforme l’exploration en
-              expérience sensorielle, où l’oreille devient un outil d’analyse du lieu autant qu’un indicateur de sa
-              fragilité.
-            </p>
-          </div>
-          <div style="flex: 1; min-width: 120px;">
-            <img src="articlemaxime/silence.jpg" alt="Image urbex silence" class="rounded-3xl"
-              style="width:100%; aspect-ratio: 1/1; object-fit: cover; background: #ccc;" />
-          </div>
-        </div>
-      </div>
-    </section>
+    <footer class="py-12 text-center text-xs opacity-60">© 2025 Urbex</footer>
 
-    <section id="memoire" class="article-section mb-16">
-      <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">
-        La mémoire des structures
-      </h2>
-      <div class="prose prose-invert max-w-none">
-        <p class="mb-4 leading-relaxed">
-          Les bâtiments abandonnés conservent des traces matérielles de leurs
-          anciennes fonctions. Les plans d’un hôpital laissé sur un bureau,
-          les vestiaires d’une usine, les salles de classe d’une école fermée
-          illustrent une activité effacée mais lisible. Ces vestiges
-          permettent d’identifier les usages passés, de comprendre
-          l’organisation des espaces et de reconstituer des fragments de
-          contexte historique. L’urbex devient alors une forme d’observation
-          documentaire, où l’explorateur interprète les restes pour saisir ce
-          que fut le lieu avant sa désertion.
-        </p>
-      </div>
-    </section>
-
-    <section id="lumiere" class="article-section mb-16">
-      <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">
-        Le basculement entre lumière et obscurité
-      </h2>
-      <div class="prose prose-invert max-w-none">
-        <div style="display: flex; align-items: flex-start; gap: 2rem;">
-          <div style="flex: 2;">
-            <p class="mb-4 leading-relaxed">
-              La transition entre le jour et la nuit modifie radicalement la perception des lieux abandonnés. Sous la
-              lumière naturelle, les volumes se dévoilent, les détails sont lisibles et l’environnement paraît plus
-              tangible. À la tombée du soir, ces repères disparaissent : les couloirs deviennent indéchiffrables, les
-              ombres se prolongent et les distances se brouillent. Cette variation transforme la structure même du lieu,
-              qui passe d’un espace observable à un territoire incertain, où l’explorateur ne se fie plus à la vision
-              mais à l’intuition pour interpréter ce qui l’entoure.
-            </p>
-          </div>
-          <div style="flex: 1; min-width: 120px;">
-            <img src="articlemaxime/journuit.png" alt="Image urbex lumière/obscurité" class="rounded-3xl"
-              style="width:100%; aspect-ratio: 1/1; object-fit: cover; background: #ccc;" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="esthetique" class="article-section mb-16">
-      <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">
-        L’urbex : toute une esthétique
-      </h2>
-      <div class="prose prose-invert max-w-none">
-        <div style="display: flex; align-items: flex-start; gap: 2rem;">
-          <div style="flex: 2;">
-            <p class="mb-4 leading-relaxed">
-              Les ruines captivent, elles bouleversent touts repères. De jour, elles offrent une lumière crue qui révèle
-              chaque fissure et dégradation des lieues. De nuit, elles changent radicalement de dimension : les détails
-              et les fissures se dissolvent dans l’ombre, le silence s’épaissit, l’espace n’a pu aucuns repères. Ce
-              contraste entre clarté et obscurité crée une relation des sens instable, où l’explorateur oscille entre
-              observation et projection imaginaire.
-            </p>
-          </div>
-          <div style="flex: 1; min-width: 120px;">
-            <img src="articlemaxime/liminalspaces.jpg" alt="Image liminal spaces" class="rounded-3xl"
-              style="width:100%; aspect-ratio: 1/1; object-fit: cover; background: #ccc;" />
-          </div>
-        </div>
-        <p class="mb-7 leading-relaxed">
-          Cette atmosphère rejoint l’esthétique des liminal spaces, ces environnements vides où l’absence devient le
-          sujet principal. Couloirs sans destination, pièces désertées, salles immenses dépourvues de toute vie,
-          qu’elles soient dégradé ou insalubre : tout semble figé dans une transition permanente, ce qui crée une sorte
-          de nostalgie qui devient presque un malaise, une confusion pour notre perception du temps et du réel. L’urbex
-          exploite lui aussi pleinement ce sentiment intense. Ces lieux ne sont ni vraiment morts ni encore vivants, ils
-          évoquent une époque révolue tout en restant physiquement présents.
-        </p>
-        <p class="mb-4 leading-relaxed">Dans ces espaces coupés du monde, les explorateurs observent un passé en train
-          de disparaître, en étant complètement impuissant. Une beauté sobre, parfois inquiétante, mais toujours
-          mémorable. vivants ; ils évoquent une époque révolue tout en restant physiquement présents. Cette ambiguïté
-          nourrit un attrait puissant : la beauté naît ici de la décomposition, de ce qui subsiste malgré l’abandon.
-
-        </p>
-        <div style="flex: 2;">
-          <!-- Le texte du paragraphe est déjà au-dessus, donc rien ici -->
-        </div>
-      </div>
-      <p class="mb-4 leading-relaxed">Dans ces espaces coupés du monde, l’explorateur observe un passé en train de
-        disparaître tout en découvrant une esthétique propre à l’érosion du réel. Une beauté sobre, parfois inquiétante,
-        mais toujours mémorable.</p>
-      <div style="display: flex; align-items: flex-start; gap: 2rem; margin-bottom: 2rem;">
-        <div style="flex: 1; min-width: 220px;">
-          <img src="articlemaxime/resumecoupédumonde.png" alt="Image lieu en dégradation" class="rounded-3xl"
-            style="width:40%; aspect-ratio: 1/1; object-fit: cover; background: #ccc;" />
-        </div>
-      </div>
-    </section>
-  </article>
-
-  <footer class="py-12 text-center text-xs opacity-60">© 2025 Urbex</footer>
-
-  <script src="article.js"></script>
-</body>
-
+    <script src="article.js"></script>
+  </body>
 </html>
