@@ -1,8 +1,8 @@
 /* police roboto pour les articles */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   min-height: 100vh;
   height: auto;
 }
@@ -15,7 +15,7 @@ html {
 /* degradé pour les titres */
 h2.text-brandText,
 h3.text-brandText {
-  background: linear-gradient(135deg, #CFB17B, #E8D4A8);
+  background: linear-gradient(135deg, #cfb17b, #e8d4a8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -77,7 +77,7 @@ h3.text-brandText {
 .toc-title {
   font-size: 0.875rem;
   font-weight: 600;
-  background: linear-gradient(135deg, #CFB17B, #E8D4A8);
+  background: linear-gradient(135deg, #cfb17b, #e8d4a8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -117,7 +117,7 @@ h3.text-brandText {
   left: 0;
   height: 2px;
   width: 0%;
-  background: linear-gradient(90deg, #CFB17B, rgba(207, 177, 123, 0.8));
+  background: linear-gradient(90deg, #cfb17b, rgba(207, 177, 123, 0.8));
   border-radius: 0 0 6px 6px;
   transition: width 0.3s ease;
 }
@@ -137,7 +137,7 @@ h3.text-brandText {
 .mobile-toc-title {
   font-size: 0.875rem;
   font-weight: 600;
-  background: linear-gradient(135deg, #CFB17B, #E8D4A8);
+  background: linear-gradient(135deg, #cfb17b, #e8d4a8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -174,17 +174,17 @@ h3.text-brandText {
 
 .mobile-toc-link.active {
   position: relative;
-  background: linear-gradient(135deg, #CFB17B, #E8D4A8);
+  background: linear-gradient(135deg, #cfb17b, #e8d4a8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   border-left: 3px solid transparent;
-  border-image: linear-gradient(135deg, #CFB17B, #E8D4A8) 1;
+  border-image: linear-gradient(135deg, #cfb17b, #e8d4a8) 1;
   font-weight: 500;
 }
 
 .mobile-toc-link.active::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background-color: rgba(207, 177, 123, 0.15);
@@ -223,9 +223,11 @@ h3.text-brandText {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: linear-gradient(to bottom,
-      rgba(207, 177, 123, 0.3),
-      rgba(207, 177, 123, 0.1));
+  background: linear-gradient(
+    to bottom,
+    rgba(207, 177, 123, 0.3),
+    rgba(207, 177, 123, 0.1)
+  );
 }
 
 .progress-item {
@@ -250,8 +252,8 @@ h3.text-brandText {
 }
 
 .progress-item.active .progress-dot {
-  background: linear-gradient(135deg, #CFB17B, #E8D4A8);
-  border-color: #CFB17B;
+  background: linear-gradient(135deg, #cfb17b, #e8d4a8);
+  border-color: #cfb17b;
   box-shadow: 0 0 10px rgba(207, 177, 123, 0.5);
   width: 1rem;
   height: 1rem;
@@ -302,7 +304,7 @@ h3.text-brandText {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #CFB17B;
+  color: #cfb17b;
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 600;
@@ -312,4 +314,30 @@ h3.text-brandText {
 
 .back-link:hover {
   opacity: 0.7;
+}
+.back-button-fixed {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 60;
+}
+
+.back-button-fixed a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(51, 41, 42, 0.6);
+  background-color: rgba(207, 177, 123, 0.1);
+  padding: 0.35rem 1rem;
+  backdrop-filter: blur(12px);
+  color: white;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: border 0.3s ease, transform 0.3s ease;
+}
+
+.back-button-fixed a svg {
+  width: 1rem;
+  height: 1rem;
 }

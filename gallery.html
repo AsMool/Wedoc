@@ -29,55 +29,62 @@
 
 <body class="bg-black text-white antialiased selection:bg-brandText/20 gallery">
 
+  <div class="back-button-fixed">
+    <a href="index.html"
+      class="inline-flex items-center gap-2 rounded-full border border-brandStroke/60 bg-brandText/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-md transition-all duration-300 hover:border-2">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">
+        <path fill-rule="evenodd"
+          d="M11.03 3.97a.75.75 0 0 1 0 1.06l-6.22 6.22H21a.75.75 0 0 1 0 1.5H4.81l6.22 6.22a.75.75 0 1 1-1.06 1.06l-7.5-7.5a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 0 1 1.06 0Z"
+          clip-rule="evenodd" />
+      </svg>
+      <span>Retour à l'accueil</span>
+    </a>
+  </div>
 
-  <main class="pt-8 pb-8">
-    <main class="">
-      <div class="container mx-auto px-6">
-        <a href="index.html" class="back-link">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-            class="w-4 h-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-          </svg>
-          Retour à l'accueil
-        </a>
-
-
-        <div class="flex gap-4 mb-5 justify-left">
-          <button id="filter-all"
-            class="filter-btn rounded-full px-4 py-2 border border-brandStroke bg-black/20 text-brandText">Voir
-            tout</button>
-          <button id="filter-day"
-            class="filter-btn rounded-full px-4 py-2 border border-brandStroke bg-black/20 text-brandText">
-            Jour</button>
-          <button id="filter-night"
-            class="filter-btn rounded-full px-4 py-2 border border-brandStroke bg-black/20 text-brandText">
-            Nuit</button>
-        </div>
-
-        <section id="gallery" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></section>
-
-        <div id="gallery-empty" class="mt-8 opacity-60">Aucune photo trouvée dans les dossiers
-          <code>img/photojours</code>
-          ou <code>img/photonuit</code>. Déposez vos images et nommez-les comme <code>1.jpg</code>, <code>2.jpg</code>
-          etc., ou modifiez la variable dans <code>gallery.js</code>.
-        </div>
-      </div>
-    </main>
-
-    <div id="image-modal" class="image-modal hidden">
-      <div class="image-modal-overlay"></div>
-      <div class="image-modal-content max-w-[1100px] p-4">
-        <button class="image-modal-close" aria-label="Fermer">✕</button>
-        <div class="image-modal-image-wrapper">
-          <img id="modal-image" src="" alt="" />
-          <div id="modal-caption" class="image-modal-caption"></div>
-        </div>
+  <main class="pt-8 pb-8 gallery-main">
+    <div class="container mx-auto px-6">
+      <div class="flex gap-4 mb-5 justify-left">
+        <button id="filter-all"
+          class="filter-btn rounded-full px-4 py-2 border border-brandStroke bg-black/20 text-brandText">
+          Voir tout
+        </button>
+        <button id="filter-day"
+          class="filter-btn rounded-full px-4 py-2 border border-brandStroke bg-black/20 text-brandText">
+          Jour
+        </button>
+        <button id="filter-night"
+          class="filter-btn rounded-full px-4 py-2 border border-brandStroke bg-black/20 text-brandText">
+          Nuit
+        </button>
       </div>
     </div>
 
+    <section id="gallery" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></section>
 
-    <script src="./gallery-data.js"></script>
-    <script src="./gallery.js" defer></script>
+    <div id="gallery-empty" class="mt-8 opacity-60">
+      Aucune photo trouvée dans les dossiers
+      <code>img/photojours</code>
+      ou <code>img/photonuit</code>. Déposez vos images et nommez-les comme
+      <code>1.jpg</code>, <code>2.jpg</code> etc., ou modifiez la variable
+      dans <code>gallery.js</code>.
+    </div>
+    </div>
+  </main>
+
+  <div id="image-modal" class="image-modal hidden">
+    <div class="image-modal-overlay"></div>
+    <div class="image-modal-content max-w-[1100px] p-4">
+      <button class="image-modal-close" aria-label="Fermer">✕</button>
+      <div class="image-modal-image-wrapper">
+        <img id="modal-image" src="" alt="" loading="lazy" />
+        <div id="modal-caption" class="image-modal-caption"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="./gallery-data.js"></script>
+  <script src="./gallery.js" defer></script>
 </body>
 
 </html>
