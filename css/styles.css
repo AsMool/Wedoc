@@ -1,5 +1,4 @@
 @charset "UTF-8";
-
 :root {
   --gap: 1.5rem;
   --speed: 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -20,7 +19,6 @@
     --gap: 0.8rem;
   }
 }
-
 /* régler des petits détails globaux sans surcharger Tailwind */
 html,
 body {
@@ -60,7 +58,6 @@ body {
     font-size: 2.25rem;
   }
 }
-
 .articles-slider .slider {
   width: 100%;
   margin: 0 auto;
@@ -230,7 +227,6 @@ body {
     align-items: flex-start;
     gap: 1rem;
   }
-
   .articles-slider .slider {
     padding: 0 15px;
     overflow-y: auto;
@@ -238,13 +234,11 @@ body {
     max-height: 80vh;
     /* Ensure it has a height to scroll */
   }
-
   .articles-slider .track {
     flex-direction: column;
     gap: 0.8rem;
     padding-bottom: 20px;
   }
-
   .articles-slider .project-card {
     height: auto;
     min-height: 80px;
@@ -254,13 +248,11 @@ body {
     -webkit-tap-highlight-color: rgba(207, 177, 123, 0.3);
     touch-action: pan-y;
   }
-
   .articles-slider .project-card[active] {
     min-height: 300px;
     transform: none;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
   }
-
   .articles-slider .project-card__content {
     flex-direction: row;
     justify-content: flex-start;
@@ -268,53 +260,44 @@ body {
     align-items: center;
     gap: 1rem;
   }
-
   .articles-slider .project-card__title {
     writing-mode: horizontal-tb;
     transform: none;
     font-size: 1.2rem;
     margin-right: auto;
   }
-
   .articles-slider .project-card__thumb,
   .articles-slider .project-card__desc,
   .articles-slider .project-card__btn {
     display: none;
   }
-
   .articles-slider .project-card[active] .project-card__content {
     align-items: flex-start;
     padding: 1.5rem;
   }
-
   .articles-slider .project-card[active] .project-card__title {
     font-size: 1.8rem;
     margin-bottom: 1rem;
     margin-top: 2rem;
   }
-
   .articles-slider .project-card[active] .project-card__thumb {
     width: 140px;
     height: 180px;
     border-radius: 0.35rem;
     margin-bottom: 1rem;
   }
-
   .articles-slider .project-card[active] .project-card__desc {
     font-size: 0.95rem;
     max-width: 100%;
     margin-bottom: 1rem;
   }
-
   .articles-slider .project-card[active] .project-card__btn {
     display: none;
   }
-
   .articles-slider .dots {
     display: none;
   }
 }
-
 /* Image slider */
 .images-slider {
   position: relative;
@@ -427,14 +410,12 @@ body {
     filter: blur(5px);
     transform: translateY(calc(-50% + 75px));
   }
-
   100% {
     opacity: 1;
     filter: blur(0);
     transform: translateY(-50%);
   }
 }
-
 .images-slider .slider-nav {
   position: absolute;
   bottom: 2rem;
@@ -472,66 +453,52 @@ body {
   .images-slider .content .title {
     font-size: 1rem;
   }
-
   .images-slider .content .description,
   .images-slider .content button {
     font-size: 0.7rem;
   }
-
   .images-slider .item {
     width: 160px;
     height: 270px;
   }
-
   .images-slider .item:nth-child(4) {
     left: calc(50% + 170px);
   }
-
   .images-slider .item:nth-child(5) {
     left: calc(50% + 340px);
   }
-
   .images-slider .item:nth-child(6) {
     left: calc(50% + 510px);
   }
 }
-
 @media (max-width: 650px) {
   .images-slider {
     height: clamp(380px, 65vh, 520px);
   }
-
   .images-slider .content .title {
     font-size: 0.9rem;
   }
-
   .images-slider .content .description,
   .images-slider .content button {
     font-size: 0.7rem;
   }
-
   .images-slider .item {
     width: 130px;
     height: 220px;
   }
-
   .images-slider .item:nth-child(4) {
     left: calc(50% + 140px);
   }
-
   .images-slider .item:nth-child(5) {
     left: calc(50% + 280px);
   }
-
   .images-slider .item:nth-child(6) {
     left: calc(50% + 420px);
   }
-
   .images-slider .slider-nav {
     bottom: 1.5rem;
   }
 }
-
 /* modal pour afficher l'image en grand */
 .image-modal {
   position: fixed;
@@ -561,9 +528,20 @@ body {
   width: 85vw;
   height: 85vh;
   display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
   align-items: center;
   justify-content: center;
   pointer-events: auto;
+}
+
+.image-modal-image-wrapper {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
 }
 
 .image-modal-content img {
@@ -599,31 +577,78 @@ body {
   transform: scale(1.1);
 }
 
+/* texte descriptif sous l image */
+.image-modal-caption {
+  width: 100%;
+  text-align: center;
+  color: #ffffff;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0.5rem 1rem 0;
+  line-height: 1.5;
+}
+
 @media (max-width: 650px) {
   .image-modal {
     padding: 1rem;
   }
-
   .image-modal-content {
     width: 85vw;
     height: 85vh;
   }
-
   .image-modal-close {
     top: -3rem;
     width: 2rem;
     height: 2rem;
   }
 }
+@media (min-width: 1024px) {
+  .image-modal-content {
+    flex-direction: column;
+    gap: 0;
+    align-items: center;
+    width: auto;
+    /* Allow shrinking */
+    max-width: 95vw;
+  }
+  .image-modal-image-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: min-content;
+    /* Shrink to fit the widest child (the image) */
+    max-width: 100%;
+    gap: 1.5rem;
+  }
+  .image-modal-content img {
+    display: block;
+    max-height: 70vh;
+    /* Leave room for caption */
+    width: auto;
+    /* Intrinsic width */
+    max-width: 90vw;
+    height: auto;
+    border-radius: 0.5rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  }
+  /* Styled caption block below image */
+  .image-modal-caption {
+    flex: 0 0 auto;
+    width: 100%;
+    /* Match wrapper width (which is image width) */
+    background: rgba(89, 71, 72, 0.9);
+    border: 1px solid rgba(207, 177, 123, 0.3);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    color: #f1dfd9;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    box-sizing: border-box;
+    /* Ensure padding doesn't overflow */
+  }
+}
 
 /*# sourceMappingURL=styles.css.map */
-
-#mobile-menu {
-  transform-origin: top right;
-  will-change: transform, opacity;
-}
-
-#menu-toggle svg {
-  transition: transform 0.18s ease, opacity 0.12s ease;
-  transform-origin: center;
-}

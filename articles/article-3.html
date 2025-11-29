@@ -33,17 +33,7 @@
 
 <body class="bg-neutral-900 text-white antialiased selection:bg-brandText/20">
   <!-- Navbar -->
-  <header class="fixed top-4 left-4 z-50">
-    <a href="../index.html#articles"
-      class="inline-flex items-center gap-2 rounded-full border border-brandStroke/60 bg-brandText/10 px-4 py-2 backdrop-blur-md transition-all duration-300 hover:border-2">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
-        <path fill-rule="evenodd"
-          d="M11.03 3.97a.75.75 0 0 1 0 1.06l-6.22 6.22H21a.75.75 0 0 1 0 1.5H4.81l6.22 6.22a.75.75 0 1 1-1.06 1.06l-7.5-7.5a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 0 1 1.06 0Z"
-          clip-rule="evenodd" />
-      </svg>
-      <span class="text-sm">Retour</span>
-    </a>
-  </header>
+
 
   <!-- Progress Navigation -->
   <nav class="progress-nav" aria-label="Article progress">
@@ -68,6 +58,13 @@
 
   <!-- Article Content -->
   <article class="container mx-auto px-6 py-24 max-w-4xl">
+    <a href="../index.html" class="back-link">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+        class="w-4 h-4">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+      </svg>
+      Retour à l'accueil
+    </a>
     <!-- Header -->
     <header class="mb-16 text-center">
       <h1 class="text-4xl md:text-5xl font-semibold mb-4 tracking-wide">
@@ -86,9 +83,13 @@
       <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">Introduction</h2>
       <div class="prose prose-invert prose-lg max-w-2xl">
         <p class="mb-4 leading-relaxed">
-          Dans un petit hameaux de Seine-et-Marne, au milieu d'un bois, je fit la découverte d'un bâtiment abandonné. D'une grande superficie, silencieux et oublié, il semble attendre d'être redécouvert. Sa fonction initiale, son histoire et les raisons de son abandon sont et restent à ce jour inconnus. J'ai mené une enquête approfondie afin d'éclaircir certains points de l'énigme.
+          Dans un petit hameaux de Seine-et-Marne, au milieu d'un bois, je fit la découverte d'un bâtiment abandonné.
+          D'une grande superficie, silencieux et oublié, il semble attendre d'être redécouvert. Sa fonction initiale,
+          son histoire et les raisons de son abandon sont et restent à ce jour inconnus. J'ai mené une enquête
+          approfondie afin d'éclaircir certains points de l'énigme.
         </p>
-        <img src="article adam/photo1 entrée.webp" alt="Entrée du bâtiment abandonné" class="rounded-lg my-6 max-w-md mx-auto">
+        <img src="article adam/photo1 entrée.webp" alt="Entrée du bâtiment abandonné"
+          class="rounded-lg my-6 max-w-md mx-auto">
       </div>
     </section>
 
@@ -97,7 +98,11 @@
       <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">Exploration des lieux</h2>
       <div class="prose prose-invert prose-lg max-w-2xl">
         <p class="mb-4 leading-relaxed">
-          La première phase de mon enquête a consisté en une exploration minutieuse des lieux. À l'intérieur, des indices matériels témoignent d'une activité passée : des sacs de billes d'airsoft vides, des pneus, un préservatif usagé datant d'après l'abandon, montrent qu'une activité reste. Cependant, des vieux matelas moisis, des robinets, douches et toilettes en morceaux sont encore présentes dans ce qui ressemble à des chambres, et une pile de livres en hébreu sont des indices de l'activité originelle du lieu.
+          La première phase de mon enquête a consisté en une exploration minutieuse des lieux. À l'intérieur, des
+          indices matériels témoignent d'une activité passée : des sacs de billes d'airsoft vides, des pneus, un
+          préservatif usagé datant d'après l'abandon, montrent qu'une activité reste. Cependant, des vieux matelas
+          moisis, des robinets, douches et toilettes en morceaux sont encore présentes dans ce qui ressemble à des
+          chambres, et une pile de livres en hébreu sont des indices de l'activité originelle du lieu.
         </p>
         <div class="grid grid-cols-3 gap-4 my-6">
           <img src="article adam/photo chambres.webp" alt="Chambres abandonnées" class="rounded-lg w-full">
@@ -112,38 +117,62 @@
       <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">Enquête et hypothèses</h2>
       <div class="prose prose-invert prose-lg max-w-2xl">
         <p class="mb-4 leading-relaxed">
-          Ma première piste fut le nom de "lycée" donné au lieu, qui, au fur et à mesure de mon enquête, me semblait de moins en moins plausible. En effet, mis à part ce qui ressemblait à un internat, je n'ai trouvé aucune salle de classe. Cela aurait pu s'expliquer si le bâtiment principal avait été séparé ou démoli. L'idée d'un bâtiment séparé ne faisait pas vraiment sens puisqu'il n'y avait aucun grand bâtiment scolaire aux environs. En revanche, il était possible qu'un bâtiment ait été abattu. Comme je pouvais le voir sur l'image ci-dessous, il était tout à fait envisageable qu'une autre structure ait existé à cet emplacement.
+          Ma première piste fut le nom de "lycée" donné au lieu, qui, au fur et à mesure de mon enquête, me semblait de
+          moins en moins plausible. En effet, mis à part ce qui ressemblait à un internat, je n'ai trouvé aucune salle
+          de classe. Cela aurait pu s'expliquer si le bâtiment principal avait été séparé ou démoli. L'idée d'un
+          bâtiment séparé ne faisait pas vraiment sens puisqu'il n'y avait aucun grand bâtiment scolaire aux environs.
+          En revanche, il était possible qu'un bâtiment ait été abattu. Comme je pouvais le voir sur l'image ci-dessous,
+          il était tout à fait envisageable qu'une autre structure ait existé à cet emplacement.
         </p>
-        <img src="article adam/photo possible ecole plus la.webp" alt="Emplacement possible d'une ancienne structure" class="rounded-lg my-6 max-w-md mx-auto">
+        <img src="article adam/photo possible ecole plus la.webp" alt="Emplacement possible d'une ancienne structure"
+          class="rounded-lg my-6 max-w-md mx-auto">
         <p class="mb-4 leading-relaxed">
-          Ma deuxième piste fut le bâtiment lui-même. Il est composé entièrement de chambres avec salle de bain individuelle et placard, avec une grande entrée et une cour intérieure.
+          Ma deuxième piste fut le bâtiment lui-même. Il est composé entièrement de chambres avec salle de bain
+          individuelle et placard, avec une grande entrée et une cour intérieure.
         </p>
         <div class="grid grid-cols-2 gap-4 my-6 max-w-lg mx-auto">
           <img src="article adam/aile droite.webp" alt="Livre en hébreu 1" class="rounded-lg w-full">
           <img src="article adam/cour interieur.webp" alt="Cour interieur" class="rounded-lg w-full">
         </div>
         <p class="mb-4 leading-relaxed">
-          Tout laisse à penser qu'il s'agissait d'un lieu de résidence, de vacances ou un internat. Il y avait aussi un petit bâtiment annexe contenant une piscine peu profonde. C'est là que j'ai trouvé les livres.
+          Tout laisse à penser qu'il s'agissait d'un lieu de résidence, de vacances ou un internat. Il y avait aussi un
+          petit bâtiment annexe contenant une piscine peu profonde. C'est là que j'ai trouvé les livres.
         </p>
-        <img src="article adam/photo tas livres.webp" alt="Tas de livres abandonnés" class="rounded-lg my-6 max-w-md mx-auto">
+        <img src="article adam/photo tas livres.webp" alt="Tas de livres abandonnés"
+          class="rounded-lg my-6 max-w-md mx-auto">
         <p class="mb-4 leading-relaxed">
-          Les livres, dont les pages sont collées par l'humidité, constituent des sources incroyables d'informations, mais ils sont presque illisibles. J'ai effectué une recherche d'images inversée sur Google qui m'a permis d'identifier certains d'entre eux comme des ouvrages religieux. Cela me laissait penser que le site avait pu être un lieu de résidence ou de vacances, juif car en Hébreu.
+          Les livres, dont les pages sont collées par l'humidité, constituent des sources incroyables d'informations,
+          mais ils sont presque illisibles. J'ai effectué une recherche d'images inversée sur Google qui m'a permis
+          d'identifier certains d'entre eux comme des ouvrages religieux. Cela me laissait penser que le site avait pu
+          être un lieu de résidence ou de vacances, juif car en Hébreu.
         </p>
         <div class="grid grid-cols-2 gap-4 my-6 max-w-lg mx-auto">
           <img src="article adam/photo livre 1.webp" alt="Livre en hébreu 1" class="rounded-lg w-full">
           <img src="article adam/photo livre 2.webp" alt="Livre en hébreu 2" class="rounded-lg w-full">
         </div>
         <p class="mb-4 leading-relaxed">
-          Un autre indice important fut la pancarte du permis de construire, décrochée mais encore en un seul morceau. Bien que dégradée par les intempéries, elle mentionnait un numéro, une date et le nom d’une entreprise ayant précédemment réalisé des travaux. Ces informations m’ont permis d’identifier le titulaire du permis et de remonter jusqu’au propriétaire actuel.
+          Un autre indice important fut la pancarte du permis de construire, décrochée mais encore en un seul morceau.
+          Bien que dégradée par les intempéries, elle mentionnait un numéro, une date et le nom d’une entreprise ayant
+          précédemment réalisé des travaux. Ces informations m’ont permis d’identifier le titulaire du permis et de
+          remonter jusqu’au propriétaire actuel.
         </p>
         <p class="mb-4 leading-relaxed">
-          Afin d’approfondir mon enquête, j’ai effectué des recherches sur le permis de construire dans les archives régionales et nationales disponibles sur Internet. Mes premières investigations n’ont révélé aucune information sur l’édifice. Aucun registre public n’était disponible.
+          Afin d’approfondir mon enquête, j’ai effectué des recherches sur le permis de construire dans les archives
+          régionales et nationales disponibles sur Internet. Mes premières investigations n’ont révélé aucune
+          information sur l’édifice. Aucun registre public n’était disponible.
         </p>
         <p class="mb-4 leading-relaxed">
-          J’ai essayé de contacter la mairie par mail, mais l’adresse était injoignable. Leur site indiquait aussi un numéro de téléphone, auquel personne n’a jamais répondu. Enfin, la mairie n’étant ouverte qu’un seul jour dans la semaine, je n’ai pas eu l’occasion de m’y rendre pour consulter le permis de construire, qui était normalement disponible sur place. J’ai également essayé de contacter l’entreprise titulaire du permis de construire. Dans l’hypothèse où elle serait toujours en activité, elle pourrait détenir des plans ou des informations relatives à la destination initiale du bâtiment.
+          J’ai essayé de contacter la mairie par mail, mais l’adresse était injoignable. Leur site indiquait aussi un
+          numéro de téléphone, auquel personne n’a jamais répondu. Enfin, la mairie n’étant ouverte qu’un seul jour dans
+          la semaine, je n’ai pas eu l’occasion de m’y rendre pour consulter le permis de construire, qui était
+          normalement disponible sur place. J’ai également essayé de contacter l’entreprise titulaire du permis de
+          construire. Dans l’hypothèse où elle serait toujours en activité, elle pourrait détenir des plans ou des
+          informations relatives à la destination initiale du bâtiment.
         </p>
         <p class="mb-4 leading-relaxed">
-          Les indices que j’ai recueillis – les livres en hébreu, les chambres, la piscine, le permis de construire – dessinaient les contours d’une histoire incomplète. S’agissait-il d’un hôtel ? D’une résidence religieuse ? Le mystère demeurait entier.
+          Les indices que j’ai recueillis – les livres en hébreu, les chambres, la piscine, le permis de construire –
+          dessinaient les contours d’une histoire incomplète. S’agissait-il d’un hôtel ? D’une résidence religieuse ? Le
+          mystère demeurait entier.
         </p>
       </div>
     </section>
@@ -153,20 +182,26 @@
       <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">Abandon du lieu</h2>
       <div class="prose prose-invert prose-lg max-w-2xl">
         <p class="mb-4 leading-relaxed">
-          La raison de son abandon, en revanche, est assez facile à imaginer. En règle générale, il y a 2 raisons d'abandonner un bâtiment:
+          La raison de son abandon, en revanche, est assez facile à imaginer. En règle générale, il y a 2 raisons
+          d'abandonner un bâtiment:
         </p>
         <ul>
           <li>Manque d’argent: c’est le plus fréquent, beaucoup de bâtiments ferment par manque de fonds</li>
-          <li>Changement des règlementations: avec des règles de plus en plus stricte sur la sécurité des bâtiments, les plus anciens se retrouvent devant le choix de soit dépenser beaucoup d’argent dans des rénovations, soit abandonner le lieu</li>
+          <li>Changement des règlementations: avec des règles de plus en plus stricte sur la sécurité des bâtiments, les
+            plus anciens se retrouvent devant le choix de soit dépenser beaucoup d’argent dans des rénovations, soit
+            abandonner le lieu</li>
         </ul>
         <p class="mb-4 leading-relaxed">
-          Au fond, ces deux raisons n'en sont qu'une : les propriétaires n'ont pas toujours l'argent nécessaire à l'entretiens de leur propriété, et doivent se contraindre a revendre ou abandonner
+          Au fond, ces deux raisons n'en sont qu'une : les propriétaires n'ont pas toujours l'argent nécessaire à
+          l'entretiens de leur propriété, et doivent se contraindre a revendre ou abandonner
         </p>
       </div>
       <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-brandText">Conclusion</h2>
       <div class="prose prose-invert prose-lg max-w-2xl">
         <p class="mb-4 leading-relaxed">
-          Mon enquête ne sera terminée que lorsque j'aurai la réponse. J'essaierai de me rendre à la mairie locale un jour pour demander à voir, voire récupérer une copie des documents liés au permis de construire, dans l'espoir de trouver une réponse à cette grande énigme.
+          Mon enquête ne sera terminée que lorsque j'aurai la réponse. J'essaierai de me rendre à la mairie locale un
+          jour pour demander à voir, voire récupérer une copie des documents liés au permis de construire, dans l'espoir
+          de trouver une réponse à cette grande énigme.
         </p>
         <p class="mt-6 text-right text-brandText">
           — Adam GOSMAT

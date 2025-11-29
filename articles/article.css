@@ -3,6 +3,13 @@
 
 body {
   font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
+  height: auto;
+}
+
+html {
+  background-color: #171717;
+  /* neutral-900 */
 }
 
 /* degradé pour les titres */
@@ -61,7 +68,7 @@ h3.text-brandText {
   .toc-sidebar {
     display: block;
   }
-  
+
   .progress-nav {
     display: none !important;
   }
@@ -216,11 +223,9 @@ h3.text-brandText {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: linear-gradient(
-    to bottom,
-    rgba(207, 177, 123, 0.3),
-    rgba(207, 177, 123, 0.1)
-  );
+  background: linear-gradient(to bottom,
+      rgba(207, 177, 123, 0.3),
+      rgba(207, 177, 123, 0.1));
 }
 
 .progress-item {
@@ -290,4 +295,21 @@ h3.text-brandText {
   .progress-label {
     display: none;
   }
+}
+
+/* Back link style */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #CFB17B;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  transition: opacity 0.3s;
+}
+
+.back-link:hover {
+  opacity: 0.7;
 }

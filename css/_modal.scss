@@ -109,28 +109,49 @@
 
 @media (min-width: 1024px) {
     .image-modal-content {
-        flex-direction: row;
+        flex-direction: column;
         gap: 0;
-        align-items: stretch;
-    }
-
-    /* legende laterale sur desktop */
-    .image-modal-image-wrapper {
-        flex: 0 0 75%;
-        height: 100%;
-    }
-
-    .image-modal-caption {
-        flex: 0 0 25%;
-        max-width: 340px;
-        background: rgba(0, 0, 0, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 1rem;
-        padding: 0.75rem;
-        text-align: left;
-        display: flex;
         align-items: center;
-        justify-content: center;
-        line-height: 1.6;
+        width: auto;
+        /* Allow shrinking */
+        max-width: 95vw;
+    }
+
+    .image-modal-image-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: min-content;
+        /* Shrink to fit the widest child (the image) */
+        max-width: 100%;
+        gap: 1.5rem;
+    }
+
+    .image-modal-content img {
+        display: block;
+        max-height: 70vh;
+        /* Leave room for caption */
+        width: auto;
+        /* Intrinsic width */
+        max-width: 90vw;
+        height: auto;
+        border-radius: 0.5rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Styled caption block below image */
+    .image-modal-caption {
+        flex: 0 0 auto;
+        width: 100%;
+        /* Match wrapper width (which is image width) */
+        background: rgba(89, 71, 72, 0.9);
+        border: 1px solid rgba(207, 177, 123, 0.3);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        text-align: center;
+        color: #f1dfd9;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        box-sizing: border-box;
+        /* Ensure padding doesn't overflow */
     }
 }
