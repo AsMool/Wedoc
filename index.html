@@ -41,20 +41,17 @@
         <source src="./img/intrositeloop.mp4" type="video/mp4" />
       </video>
     </div>
-    <div class="relative z-10 text-center px-6">
+    <div class="relative z-10 text-center px-6 mt-5" data-animate>
       <div class="glitch-wrapper">
-        <h1 class="hero-title text-4xl md:text-6xl tracking-widest font-semibold glitch"
+        <h1 class="hero-title text-5xl md:text-6xl tracking-widest font-semibold glitch"
           data-text="LE MONDE DE L'URBEX">
-          <span class="glitch-text">Les explorateurs du passé</span>
+          <span class="glitch-text" data-animate>Les explorateurs du passé</span>
         </h1>
       </div>
-      <p class="hero-subtitle mt-6 max-w-2xl mx-auto opacity-80">
+      <p class="hero-subtitle mt-5 max-w-2xl mx-auto opacity-80" data-animate>
         Exploration urbaine, histoires et témoignages.
       </p>
-      <button id="cta-visiter"
-        class="mt-10 inline-flex items-center gap-2 rounded-2xl border border-brandStroke bg-brandBg px-6 py-3 text-brandText shadow-soft transition-colors duration-300 hover:bg-brandBg/90">
-        Explorer
-      </button>
+
     </div>
     <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black"></div>
   </section>
@@ -63,13 +60,13 @@
   <section id="histoire" class="relative py-24">
     <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 items-end">
       <div class="rounded-3xl border border-brandStroke bg-brandBg p-8 shadow-soft" data-animate>
-        <h2 class="text-2xl md:text-3xl mb-4">
+        <h2 class="text-2xl font-bold :text-3xl mb-4">
           Histoire de l’Urbex (Exploration Urbaine)
         </h2>
-        <p class="leading-relaxed opacity-90">
-          L’exploration urbaine, abrégée en urbex (de l'anglais urban exploration), est une pratique consistant à
-          visiter des lieux construits et abandonnés par l’homme ou inaccessibles au public, l’explorateur urbain étant
-          communément désigné par le néologisme urbexeur.
+        <p class="leading-relaxed opacity-90 text-lg">
+L’exploration urbaine, ou urbex (pour urban exploration), désigne la visite de lieux construits puis abandonnés ou interdits d’accès. L’urbexeur cherche à découvrir des espaces oubliés comme des usines, hôpitaux, maisons désertées ou galeries souterraines. Cette pratique séduit par l’atmosphère particulière de ces lieux hors du temps et par la possibilité d’en préserver la mémoire grâce à la photographie.
+L’urbex n’est toutefois pas sans risques : structures fragilisées, matériaux dangereux ou isolement. Elle pose aussi des questions légales, car la plupart des sites explorés sont privés ou protégés. La communauté suit donc des principes stricts : ne rien dégrader, ne rien voler et éviter de divulguer les adresses.
+Entre découverte, patrimoine et émotion, l’urbex reste une pratique mêlant curiosité, respect et sens de l’aventure.
         </p>
         <p class="mt-3 text-xs text-neutral-400">
           Source: <a href="https://fr.wikipedia.org/wiki/Exploration_urbaine" target="_blank" rel="noopener noreferrer"
@@ -77,22 +74,23 @@
         </p>
       </div>
       <div class="rounded-3xl border border-brandStroke bg-black/20 p-2 shadow-soft" data-animate>
-        <img src="./img/placeholder.png" alt="Urbex" class="w-full h-[380px] object-cover rounded-2xl"
+        <img src="./img/placeholder.png" alt="Urbex" class="w-full h-[420px] object-cover rounded-2xl"
           loading="eager" />
       </div>
     </div>
   </section>
 
   <!-- Section Interview -->
-  <section id="interview" class="relative py-24">
+  <section id="interview" class="relative py-0" data-animate>
     <div class="container mx-auto px-6">
-      <div
-        class="rounded-full mx-auto w-max px-6 py-2 border border-brandStroke bg-black/20 text-brandText font-bold mb-10"
-        data-animate>
-        Rendez-vous en terrain inconnu (interview d'un passionné d'urbex)
+      <div class="rounded-full mx-auto w-max px-6 py-0 bg-black/20 text-brandText font-bold mb-2 text-5xl" data-animate>
+        Rendez-vous en terrain inconnu
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-        <div class="rounded-3xl border border-brandStroke bg-black/30 p-2 shadow-soft flex flex-col" data-animate>
+      <div class="rounded-full mx-auto w-max px-6 bg-black/20 text-brandText mb-10 text-base font-bold" data-animate>
+            Interview d'un urbexeur passionné
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-11 gap-10 items-stretch">
+        <div class="col-span-7 rounded-3xl border border-brandStroke bg-black/30 p-2 shadow-soft flex flex-col" data-animate>
           <div class="relative w-full overflow-hidden rounded-2xl flex-1" style="padding-top: 56.25%">
             <iframe class="absolute top-0 left-0 h-full w-full rounded-2xl"
               src="https://www.youtube.com/embed/b3R1oiNjyMs" title="Interview" frameborder="0"
@@ -100,106 +98,80 @@
               allowfullscreen></iframe>
           </div>
         </div>
-        <div class="rounded-3xl border border-brandStroke bg-brandBg p-6 shadow-soft flex flex-col" data-animate>
-          <h3 class="text-xl md:text-2xl mb-3">
-            Interview d'un passionné d'urbex
+        <div class="col-span-4 rounded-3xl border border-brandStroke bg-brandBg p-6 shadow-soft flex flex-col h-full" data-animate>
+          <h3 class="text-xl md:text-2xl font-bold mb-4">
+            Le Vagabond des Ruines
           </h3>
-          <p class="opacity-90"></p>
-          <div class="mt-6 flex justify-center">
-            <a href="https://www.youtube.com/watch?v=b3R1oiNjyMs" target="_blank" rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 rounded-full border-2 border-brandStroke bg-black/20 px-6 py-3 text-brandText transition-colors duration-500 hover:bg-black/40">
-              Voir plus
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+          <p class="opacity-90 text-lg">Félix, 20 ans, est un urbexeur passionné qui consacre une bonne partie de son temps libre à découvrir et chercher des lieux oubliés et chargés d’histoire. Toujours en quête de nouvelles explorations et découvertes, il parcourt des bâtiments abandonnés pour en saisir l’atmosphère unique et les récits silencieux qu’ils renferment. Appareil photo en main, il prend beaucoup de plaisir à capturer et avec précision les traces du temps, les jeux de lumière et les détails qui témoignent d’un passé souvent méconnu, parfois même menacé de disparaître sous l’effet du temps.
+À travers ses expéditions, Félix partage non seulement des images, mais aussi une vision respectueuse, curieuse et profondément humaine de l’urbex, guidée par un sens de l’aventure sincère et une vraie passion du patrimoine et de la mémoire des lieux qu’il explore. Découvrez son monde et sa manière d’explorer à travers cette interview exclusive.
 
-  <!-- Section Audio -->
-  <section class="relative py-24">
-    <div class="container mx-auto px-6">
-      <div class="rounded-full mx-auto w-max px-6 py-2 border border-brandStroke bg-black/20 text-brandText mb-10"
-        data-animate>
-        Ambiance audio du lieu
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-stretch">
-        <div class="rounded-3xl border border-brandStroke bg-brandBg p-8 shadow-soft flex flex-col" data-animate>
-          <h3 class="text-xl md:text-2xl mb-3">Ambiance audio du lieu</h3>
-          <p class="opacity-90 flex-1"></p>
-        </div>
-        <div
-          class="rounded-3xl border border-brandStroke bg-black/30 p-8 shadow-soft flex flex-col items-center justify-center"
-          data-animate>
-          <div class="w-full max-w-md">
-            <audio id="audio-player" class="hidden">
-              <source src="./audiodocumentaire.mp3" type="audio/mpeg" />
-              Votre navigateur ne supporte pas l'élément audio.
-            </audio>
-            <div class="flex flex-col gap-4 w-full">
-              <div class="flex items-center gap-4">
-                <button id="play-pause-btn"
-                  class="rounded-full border-2 border-brandText bg-brandText/10 p-3 hover:bg-brandText/20 transition-colors">
-                  <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                    class="w-6 h-6 text-brandText">
-                    <path
-                      d="M8 5v14l11-7z" />
-                  </svg>
-                  <svg id="pause-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                    class="w-6 h-6 text-brandText hidden">
-                    <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
-                  </svg>
-                </button>
-                <div class="flex-1">
-                  <div class="relative h-2 bg-brandStroke rounded-full overflow-hidden">
-                    <div id="progress-bar" class="absolute left-0 top-0 h-full bg-brandText rounded-full transition-all"
-                      style="width: 0%"></div>
-                    <input type="range" id="progress-slider" min="0" max="100" value="0" step="0.1"
-                      class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
-                  </div>
-                  <div class="flex justify-between text-xs text-brandText/60 mt-1">
-                    <span id="current-time">0:00</span>
-                    <span id="duration">0:00</span>
-                  </div>
-                </div>
-              </div>
-              <div class="flex items-center gap-2">
-                <button id="volume-btn"
-                  class="rounded-full border border-brandStroke bg-black/20 p-2 hover:bg-black/40 transition-colors">
-                  <svg id="volume-on-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                    class="w-4 h-4 text-brandText">
-                    <path
-                      d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
-                  </svg>
-                  <svg id="volume-off-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                    class="w-4 h-4 text-brandText hidden">
-                    <path
-                      d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
-                  </svg>
-                </button>
-                <div class="flex-1 flex items-center gap-2">
-                  <input type="range" id="volume-slider" min="0" max="100" value="100"
-                    class="flex-1 h-1 bg-brandStroke rounded-full appearance-none cursor-pointer accent-brandText" />
-                  <span id="volume-value" class="text-xs text-brandText/60 w-8">100%</span>
-                </div>
-              </div>
-            </div>
+
           </div>
         </div>
       </div>
     </div>
   </section>
+<section class="relative py-24" data-animate>
+  <div class="container mx-auto px-6" data-animate>
+    <div
+      class="rounded-3xl mx-auto w-full h-[500px] flex flex-col justify-start items-center relative overflow-hidden"
+      style="background-image: url('./img/photojours/20251031_163738(0).webp'); background-size: cover; background-position: center;"
+      data-animate
+    >
+      <!-- Titre en haut -->
+      <div class="w-full text-left ml-20 pt-6" data-animate>
+        <h2 class="text-2xl md:text-4xl font-bold tracking-wide drop-shadow text-brandText" data-animate>
+          Immersion : Exploration Audio
+        </h2>
+        <p class="text-sm md:text-lg font-bold tracking-wide drop-shadow text-brandText" data-animate>
+          exploration audio du lieu de l'interview
+        </p>
+      </div>
+      <!-- Bouton central -->
+      <button id="play-btn"
+        class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 
+        mt-0 inline-flex items-center gap-2 rounded-2xl border border-brandStroke bg-brandBg px-6 py-3 text-brandText shadow-soft transition-colors duration-300 hover:bg-brandBg/90"
+        data-animate
+        >
+        Voyager à travers l'audio
+      </button>
+
+      <!-- Player audio natif (barre en bas) -->
+      <audio id="audio" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-11/12 md:w-2/3 rounded-lg p-2" controls>
+        <source src="audiodocumentaire.mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas l'élément audio.
+      </audio>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Bien récupérer l'élément audio
+  document.addEventListener('DOMContentLoaded', function() {
+    const audio = document.getElementById('audio');
+    const playBtn = document.getElementById('play-btn');
+
+    function hideBtnOnPlay() {
+      if (playBtn) playBtn.style.display = 'none';
+    }
+
+    if (playBtn && audio) {
+      playBtn.addEventListener('click', () => {
+        audio.play();
+        hideBtnOnPlay();
+      });
+      audio.addEventListener('play', hideBtnOnPlay);
+    }
+  });
+</script>
+
 
   <!-- Section Articles - Grille simple -->
-  <section id="articles" class="relative py-24">
+  <section id="articles" class="relative py-8">
     <div class="container mx-auto px-6">
-      <h2 class="text-3xl md:text-4xl font-semibold text-brandText text-center mb-4" data-animate>
+      <h2 class="text-3xl md:text-5xl font-bold text-brandText text-center mb-7" data-animate>
         L'Urbex : Entre fascination et dégradation
       </h2>
-      <div class="rounded-full mx-auto w-max px-6 py-2 border border-brandStroke bg-black/20 text-brandText mb-10"
-        data-animate>
-        Explorez nos articles
-      </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" data-animate>
         <!-- Article 1 -->
@@ -234,7 +206,7 @@
           </div>
           <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
           <div class="absolute inset-0 flex flex-col items-center justify-end text-center p-6">
-            <h3 class="text-lg md:text-xl font-semibold text-brandText mb-2">
+            <h3 class="text-lg md:text-2xl font-semibold text-brandText mb-2">
               L'urbex : quand le temps se fige
             </h3>
             <span
@@ -281,7 +253,7 @@
           <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
           <div class="absolute inset-0 flex flex-col items-center justify-end text-center p-6">
             <h3 class="text-lg md:text-xl font-semibold text-brandText mb-2">
-              Fragments lumineux
+              Exploration frémissante d’un hôtel abandonné
             </h3>
             <span
               class="mt-2 inline-flex items-center gap-2 text-sm text-brandText/80 group-hover:text-brandText transition-colors">
@@ -297,89 +269,68 @@
     </div>
   </section>
 
-  <section id="images" class="relative py-24">
-    <div class="container mx-auto px-6">
-      <div class="mx-auto w-max rounded-full px-6 py-2 border border-brandStroke bg-black/20 text-brandText mb-10"
-        data-animate>
-        Galerie Photos
+      <!-- Lien vers galerie complète avec image de fond et largeur 100%, vert plus sombre -->
+      <div class="w-full my-20">
+        <a href="donne.html"
+          class="group relative flex flex-col items-center justify-center w-full py-10 font-bold text-3xl tracking-wide transition-all duration-300 overflow-hidden"
+          style="color:#fff; letter-spacing:0.04em;"
+          onmouseover="this.style.background='linear-gradient(90deg,#11301c 0%,#18582e 100%)';"
+          onmouseout="this.style.background='linear-gradient(90deg,#11301c 0%,#18582e 100%)';"
+        >
+          <div class="absolute inset-0 bg-[url('./img/photojours/20251031_163052.webp')] bg-cover bg-center opacity-80"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-[#11301c] to-[#18582e] opacity-95"></div>
+          <span class="relative z-10 text-xl md:text-3xl drop-shadow mb-2 group-hover:scale-105 transition-transform duration-200">
+            L’urbex en quelques chiffres
+          </span>
+          <div class="relative z-10 mt-0 text-base font-normal tracking-normal opacity-90 group-hover:opacity-100 transition-opacity">
+            Explorer la page des données
+          </div>
+        </a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto" data-animate>
+
+  <section id="images" class="relative py-0">
+    <div class="container mx-auto px-6">
+      <div
+        class="rounded-full mx-auto w-max px-6 py-0 bg-black/20 text-brandText font-bold mb-7 text-5xl"
+        data-animate>
+        L'Urbex en Images
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-0" style="margin-left:-24px;margin-right:-24px;" data-animate>
         <!-- Photos Jour -->
         <a href="gallery.html?filter=day"
-          class="gallery-card group relative rounded-3xl border border-brandStroke bg-black/20 overflow-hidden aspect-[4/3] transition-all duration-500 hover:border-brandText/50 hover:shadow-soft">
+          class="gallery-card group relative border border-brandStroke bg-black/20 overflow-hidden aspect-[4/3] transition-all duration-500 hover:border-brandText/50 hover:shadow-soft p-0 m-0"
+          style="border-radius:0;">
           <div class="absolute inset-0 bg-gradient-to-br from-amber-500/20 to-orange-600/10"></div>
           <div
-            class="absolute inset-0 bg-[url('./img/photojours/20251031_163052.webp')] bg-cover bg-center opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700">
+            class="absolute inset-0 bg-[url('./img/photojours/20251031_163052.webp')] bg-cover bg-center opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700"
+            style="border-radius:0;">
           </div>
           <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor"
-              class="w-16 h-16 text-amber-400 mb-4 group-hover:scale-110 transition-transform duration-300">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
-            </svg>
             <h3 class="text-2xl md:text-3xl font-semibold text-brandText mb-2">
-              Photos Jour
+              Aventures Diurnes
             </h3>
-            <p class="text-sm opacity-70">Aventures Diurnes</p>
-            <span
-              class="mt-4 inline-flex items-center gap-2 text-sm text-brandText/80 group-hover:text-brandText transition-colors">
-              Voir la galerie
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                stroke="currentColor" class="w-4 h-4 group-hover:translate-x-1 transition-transform">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-              </svg>
-            </span>
+            <p class="text-sm opacity-70">Voir la galerie</p>
           </div>
         </a>
 
         <!-- Photos Nuit -->
         <a href="gallery.html?filter=night"
-          class="gallery-card group relative rounded-3xl border border-brandStroke bg-black/20 overflow-hidden aspect-[4/3] transition-all duration-500 hover:border-indigo-400/50 hover:shadow-soft">
+          class="gallery-card group relative border border-brandStroke bg-black/20 overflow-hidden aspect-[4/3] transition-all duration-500 hover:border-indigo-400/50 hover:shadow-soft p-0 m-0"
+          style="border-radius:0;">
           <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/30 to-purple-900/20"></div>
           <div
-            class="absolute inset-0 bg-[url('./img/photonuit/169DBAA2-E100-4D23-91EE-991EB90BE0E5_1_105_c.webp')] bg-cover bg-center opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700">
+            class="absolute inset-0 bg-[url('./img/photonuit/169DBAA2-E100-4D23-91EE-991EB90BE0E5_1_105_c.webp')] bg-cover bg-center opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700"
+            style="border-radius:0;">
           </div>
           <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor"
-              class="w-16 h-16 text-indigo-400 mb-4 group-hover:scale-110 transition-transform duration-300">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
-            </svg>
             <h3 class="text-2xl md:text-3xl font-semibold text-indigo-300 mb-2">
-              Photos Nuit
+              Aventures Nocturnes
             </h3>
-            <p class="text-sm opacity-70">Aventures Nocturnes</p>
-            <span
-              class="mt-4 inline-flex items-center gap-2 text-sm text-indigo-300/80 group-hover:text-indigo-200 transition-colors">
-              Voir la galerie
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                stroke="currentColor" class="w-4 h-4 group-hover:translate-x-1 transition-transform">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-              </svg>
-            </span>
+            <p class="text-sm opacity-70">Voir la galerie</p>
           </div>
         </a>
-      </div>
-
-      <!-- Lien vers galerie complète -->
-      <div class="text-center mt-10" data-animate>
-        <a href="gallery.html"
-          class="inline-flex items-center gap-2 rounded-2xl border border-brandStroke bg-brandBg px-6 py-3 text-brandText shadow-soft transition-colors duration-300 hover:bg-brandBg/90">
-          Voir toutes les photos
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-            class="w-5 h-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-          </svg>
-        </a>
-        <div class="mt-4">
-          <a href="donne.html"
-            class="inline-block rounded-full border border-brandStroke bg-black/10 px-6 py-3 text-brandText text-base font-medium transition-all duration-500 hover:bg-gradient-to-r hover:from-indigo-900/30 hover:to-purple-900/20 hover:text-purple-400 hover:border-purple-400">
-            Voir les données du lieu
-          </a>
-        </div>
       </div>
     </div>
   </section>
@@ -393,6 +344,19 @@
   <script src="./glitch.js"></script>
   <script src="./slider.js"></script>
   <script src="./script.js"></script>
+  <script>
+        // Simple audio play/pause on click for article 1
+        const trigger = document.getElementById('article1-audio-trigger');
+        const audio = document.getElementById('article1-audio');
+        trigger.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (audio.paused) {
+            audio.play();
+          } else {
+            audio.pause();
+          }
+        });
+      </script>
 </body>
 
 </html>
