@@ -336,8 +336,3 @@ h3.text-brandText {
   font-size: 0.9rem;
   transition: border 0.3s ease, transform 0.3s ease;
 }
-
-.back-button-fixed a svg {
-  width: 1rem;
-  height: 1rem;
-}
