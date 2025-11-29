@@ -271,21 +271,23 @@ Entre découverte, patrimoine et émotion, l’urbex reste une pratique mêlant 
 
       <!-- Lien vers galerie complète avec image de fond et largeur 100%, vert plus sombre -->
       <div class="w-full my-20">
-        <a href="donne.html"
-          class="group relative flex flex-col items-center justify-center w-full py-10 font-bold text-3xl tracking-wide transition-all duration-300 overflow-hidden"
-          style="color:#fff; letter-spacing:0.04em;"
-          onmouseover="this.style.background='linear-gradient(90deg,#11301c 0%,#18582e 100%)';"
-          onmouseout="this.style.background='linear-gradient(90deg,#11301c 0%,#18582e 100%)';"
-        >
-          <div class="absolute inset-0 bg-[url('./img/photojours/20251031_163052.webp')] bg-cover bg-center opacity-80"></div>
-          <div class="absolute inset-0 bg-gradient-to-r from-[#11301c] to-[#18582e] opacity-95"></div>
-          <span class="relative z-10 text-xl md:text-3xl drop-shadow mb-2 group-hover:scale-105 transition-transform duration-200">
-            L’urbex en quelques chiffres
-          </span>
-          <div class="relative z-10 mt-0 text-base font-normal tracking-normal opacity-90 group-hover:opacity-100 transition-opacity">
-            Explorer la page des données
-          </div>
-        </a>
+        <div class="container mx-auto px-6">
+          <a href="donne.html"
+            class="group relative flex flex-col items-center justify-center w-full max-w-5xl mx-auto py-10 font-bold text-3xl tracking-wide transition-all duration-300 overflow-hidden rounded-3xl"
+            style="color:#fff; letter-spacing:0.04em;"
+            onmouseover="this.style.background='linear-gradient(90deg,#11301c 0%,#18582e 100%)';"
+            onmouseout="this.style.background='linear-gradient(90deg,#11301c 0%,#18582e 100%)';"
+          >
+            <div class="absolute inset-0 bg-[url('./img/photojours/20251031_163052.webp')] bg-cover bg-center opacity-80 rounded-3xl"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#11301c] to-[#18582e] opacity-95 rounded-3xl"></div>
+            <span class="relative z-10 text-xl md:text-3xl drop-shadow mb-2 group-hover:scale-105 transition-transform duration-200">
+              L’urbex en quelques chiffres
+            </span>
+            <div class="relative z-10 mt-0 text-base font-normal tracking-normal opacity-90 group-hover:opacity-100 transition-opacity">
+              Explorer la page des données
+            </div>
+          </a>
+        </div>
       </div>
 
 
@@ -296,11 +298,13 @@ Entre découverte, patrimoine et émotion, l’urbex reste une pratique mêlant 
         data-animate>
         L'Urbex en Images
       </div>
+    </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-0" style="margin-left:-24px;margin-right:-24px;" data-animate>
+    <div class="w-full" style="margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-0" data-animate>
         <!-- Photos Jour -->
         <a href="gallery.html?filter=day"
-          class="gallery-card group relative border border-brandStroke bg-black/20 overflow-hidden aspect-[4/3] transition-all duration-500 hover:border-brandText/50 hover:shadow-soft p-0 m-0"
+          class="gallery-card group relative w-full border border-brandStroke bg-black/20 overflow-hidden aspect-[4/3] transition-all duration-500 hover:border-brandText/50 hover:shadow-soft p-0 m-0"
           style="border-radius:0;">
           <div class="absolute inset-0 bg-gradient-to-br from-amber-500/20 to-orange-600/10"></div>
           <div
@@ -317,7 +321,7 @@ Entre découverte, patrimoine et émotion, l’urbex reste une pratique mêlant 
 
         <!-- Photos Nuit -->
         <a href="gallery.html?filter=night"
-          class="gallery-card group relative border border-brandStroke bg-black/20 overflow-hidden aspect-[4/3] transition-all duration-500 hover:border-indigo-400/50 hover:shadow-soft p-0 m-0"
+          class="gallery-card group relative w-full border border-brandStroke bg-black/20 overflow-hidden aspect-[4/3] transition-all duration-500 hover:border-indigo-400/50 hover:shadow-soft p-0 m-0"
           style="border-radius:0;">
           <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/30 to-purple-900/20"></div>
           <div

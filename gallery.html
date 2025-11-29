@@ -7,36 +7,53 @@
   <title>Galerie — Urbex</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandBg: "#594748",
+            brandText: "#CFB17B",
+            brandStroke: "#33292A",
+          },
+          boxShadow: {
+            soft: "0 10px 40px rgba(0,0,0,0.35)",
+          },
+        },
+      },
+    };
+  </script>
   <link rel="stylesheet" href="./css/styles.css" />
   <link rel="stylesheet" href="./css/gallery.css" />
 </head>
 
 <body class="bg-black text-white antialiased selection:bg-brandText/20 gallery">
-  <header class="fixed top-4 right-4 z-50">
-    <div class="flex items-center justify-end">
-      <nav
-        class="md:flex gap-4 rounded-full border border-brandStroke/60 bg-brandText/10 px-4 py-2 backdrop-blur-md transition-all duration-500 hover:border-2">
-        <a href="index.html" class="px-4 py-1 rounded-full text-sm md:text-base hover:bg-brandText/20">Accueil</a>
-        <a href="index.html#articles"
-          class="px-4 py-1 rounded-full text-sm md:text-base hover:bg-brandText/20">Articles</a>
-        <a href="index.html#images" class="px-4 py-1 rounded-full text-sm md:text-base hover:bg-brandText/20">Retour</a>
-      </nav>
+  <header class="fixed top-4 left-4 z-50">
+    <div class="flex items-center justify-start">
+      <a href="index.html#images"
+        class="inline-flex items-center gap-2 rounded-full border border-brandStroke/60 bg-brandText/10 px-4 py-2 backdrop-blur-md transition-all duration-300 hover:border-2">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+          <path fill-rule="evenodd"
+            d="M11.03 3.97a.75.75 0 0 1 0 1.06l-6.22 6.22H21a.75.75 0 0 1 0 1.5H4.81l6.22 6.22a.75.75 0 1 1-1.06 1.06l-7.5-7.5a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 0 1 1.06 0Z"
+            clip-rule="evenodd" />
+        </svg>
+        <span class="text-sm">Retour</span>
+      </a>
     </div>
   </header>
 
   <main class="pt-24 pb-24">
     <div class="container mx-auto px-6">
-      <div class="mx-auto w-max rounded-full px-6 py-2 border border-brandStroke bg-black/20 text-brandText mb-10">
-        Galerie</div>
 
-      <div class="flex gap-4 mb-8">
+
+      <div class="flex gap-4 mb-8 justify-center">
         <button id="filter-all"
-          class="filter-btn rounded-full px-4 py-2 border border-brandStroke bg-black/20 text-brandText">Toutes</button>
+          class="filter-btn rounded-full px-4 py-2 border border-brandStroke bg-black/20 text-brandText">Voir tout</button>
         <button id="filter-day"
-          class="filter-btn rounded-full px-4 py-2 border border-brandStroke bg-black/20 text-brandText">Photos
+          class="filter-btn rounded-full px-4 py-2 border border-brandStroke bg-black/20 text-brandText">
           Jour</button>
         <button id="filter-night"
-          class="filter-btn rounded-full px-4 py-2 border border-brandStroke bg-black/20 text-brandText">Photos
+          class="filter-btn rounded-full px-4 py-2 border border-brandStroke bg-black/20 text-brandText">
           Nuit</button>
       </div>
 
