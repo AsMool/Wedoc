@@ -7,260 +7,318 @@
 <title>Fiche du matin – Boulangerie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>
+/* ================= Tokens ================= */
 :root {
-  --bg: #F6F5F3;
-  --card: #FFFFFF;
-  --ink: #1D1C20;
-  --muted: #77737D;
-  --faint: #A9A5AE;
-  --line: #ECEAE6;
+  --bitume: #2B2A2F;        /* la route */
+  --beton: #EFEEEB;         /* le fond, comme un trottoir */
+  --blanc: #FFFFFF;
+  --encre: #1E1D21;
+  --gris: #74717A;
+  --gris-clair: #ABA8B0;
+  --trait: #E2E0DC;
 
-  --violet: #5B55E3;
-  --violet-soft: #EEEDFC;
-  --rouge: #E2231A;
-  --rouge-soft: #FCEDEC;
-  --asphalte: #2C2A30;
+  --rouge: #E2231A;         /* enseigne + bornes */
+  --rouge-fonce: #B8160F;
+  --violet: #5B55E3;        /* la 107 */
+  --violet-fonce: #403BC0;
+  --violet-pale: #ECEBFC;
+  --or: #F2B33D;
 
-  --smooth: cubic-bezier(.3, .7, .2, 1);
-  --spring: cubic-bezier(.2, 1.35, .4, 1);
+  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --texte: "Barlow", -apple-system, system-ui, sans-serif;
+
+  --doux: cubic-bezier(.3, .7, .2, 1);
+  --ressort: cubic-bezier(.2, 1.35, .4, 1);
+
+  --road-l: 6px;     /* bord gauche de la route */
+  --road-w: 48px;    /* largeur de la route */
+  --text-l: 76px;    /* début du texte */
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 body {
-  margin: 0; background: var(--bg); color: var(--ink);
-  font-family: "Geist", -apple-system, system-ui, sans-serif;
-  font-size: 15px; line-height: 1.45;
+  margin: 0; background: var(--beton); color: var(--encre);
+  font-family: var(--texte); font-size: 15.5px; line-height: 1.42;
   -webkit-font-smoothing: antialiased;
 }
 button { font: inherit; color: inherit; }
-:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; border-radius: 6px; }
+:focus-visible { outline: 2px solid var(--violet); outline-offset: 3px; border-radius: 6px; }
 
-/* ---------- La 107 ---------- */
+/* ================= La 107 ================= */
 .car { display: block; width: 100%; height: auto; overflow: visible; }
 .car .wheel { transform-box: view-box; }
 .car .puff { opacity: 0; fill: #D9D6E0; transform-box: fill-box; transform-origin: center; }
 .moving .car .wheel { animation: spin .32s linear infinite; }
-.moving.reverse .car .wheel { animation-direction: reverse; }
 .moving .car .carbody { animation: bob .28s ease-in-out infinite alternate; }
-.moving .car .puff { animation: puff .7s ease-out infinite; }
+.moving .car .puff { animation: puffX .7s ease-out infinite; }
 .moving .car .puff.p2 { animation-delay: .23s; }
 .moving .car .puff.p3 { animation-delay: .46s; }
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes bob { to { transform: translateY(-1.2px); } }
-@keyframes puff { 0% { opacity: .9; transform: translate(0,0) scale(.5); } 100% { opacity: 0; transform: translate(-12px,-5px) scale(1.7); } }
+@keyframes puffX { 0% { opacity: .9; transform: translate(0,0) scale(.5); } 100% { opacity: 0; transform: translate(-12px,-5px) scale(1.7); } }
 
-/* ---------- Page ---------- */
-.wrap { max-width: 560px; margin: 0 auto; padding: 0 14px 110px; }
-
-.hero { background: var(--rouge); color: #fff; position: relative; overflow: hidden; }
-.hero-in { max-width: 560px; margin: 0 auto; padding: 24px 18px 60px; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; position: relative; }
+/* ================= En-tête ================= */
+.hero { background: var(--rouge); color: #fff; overflow: hidden; }
+.hero-in {
+  position: relative; max-width: 560px; margin: 0 auto;
+  padding: 26px 18px 52px;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 10px;
+}
 .hero-num {
-  position: absolute; right: -6px; top: -26px; font-size: 150px; font-weight: 700; letter-spacing: -.06em;
-  color: rgba(255,255,255,.09); line-height: 1; pointer-events: none; user-select: none;
+  position: absolute; right: -10px; top: -30px;
+  font-family: var(--cond); font-weight: 700; font-size: 170px; line-height: 1; letter-spacing: -.02em;
+  color: rgba(255,255,255,.1); pointer-events: none; user-select: none;
 }
+.hero-txt { position: relative; }
 .logo { height: 30px; width: auto; display: block; margin-bottom: 10px; background: #fff; border-radius: 6px; padding: 3px 6px; }
-.hero h1 { margin: 0; font-size: 27px; font-weight: 700; letter-spacing: -.025em; line-height: 1.1; }
-.mission { margin: 6px 0 0; font-size: 14px; color: #FFE1DF; max-width: 30ch; }
+.hero h1 { margin: 0; font-family: var(--cond); font-weight: 700; font-size: 38px; line-height: .95; letter-spacing: -.01em; }
+.mission { margin: 8px 0 0; font-size: 14.5px; color: #FFE1DF; max-width: 29ch; }
 .mission b { color: #fff; font-weight: 600; }
-.top-car { width: 92px; flex: none; margin-bottom: 2px; position: relative; filter: drop-shadow(0 4px 4px rgba(90,0,0,.25)); }
-.top-car.arrive { animation: park 1.5s var(--smooth) both; }
+.hero-car { position: relative; width: 96px; flex: none; filter: drop-shadow(0 4px 3px rgba(90,0,0,.28)); }
+.hero-car.arrive { animation: park 1.5s var(--doux) both; }
 @keyframes park { from { transform: translateX(-110vw); } }
-.wrap { margin-top: -44px; position: relative; }
 
-/* ---------- Barre (collante) ---------- */
+/* ================= Compteur collant ================= */
+.wrap { max-width: 560px; margin: -28px auto 0; padding: 0 12px 90px; position: relative; }
 .hud {
-  position: sticky; top: 8px; z-index: 10;
-  background: var(--card); border-radius: 16px; padding: 12px 12px 12px;
-  box-shadow: 0 0 0 1px var(--line), 0 10px 24px -14px rgba(30, 20, 50, .25);
+  position: sticky; top: 8px; z-index: 20;
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px;
+  background: var(--blanc); border-radius: 14px; padding: 9px 14px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.04), 0 10px 24px -14px rgba(30,20,40,.35);
 }
-.hud-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 0 2px; }
-.deadline { font-size: 13.5px; color: var(--muted); }
-.deadline b { color: var(--ink); font-weight: 600; }
-.count { font-size: 13.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.count b { color: var(--ink); font-weight: 700; display: inline-block; }
-.count b.bump { animation: bump .4s var(--spring); }
+.km { font-family: var(--cond); font-weight: 700; font-size: 26px; line-height: 1; font-variant-numeric: tabular-nums; }
+.km small { font-size: 15px; color: var(--gris-clair); font-weight: 600; }
+.km b { display: inline-block; font-weight: 700; }
+.km b.bump { animation: bump .45s var(--ressort); }
 @keyframes bump { 40% { transform: scale(1.35); color: var(--violet); } }
+.bar { height: 6px; border-radius: 3px; background: #ECEAE6; position: relative; }
+.bar i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 3px; background: var(--violet); transition: width .9s var(--doux); }
+.bar i::after { content: ""; position: absolute; right: -5px; top: 50%; width: 10px; height: 10px; margin-top: -5px; border-radius: 50%; background: var(--violet); box-shadow: 0 0 0 3px #fff; }
+.when { text-align: right; font-size: 12.5px; color: var(--gris); line-height: 1.15; }
+.when b { display: block; font-family: var(--cond); font-weight: 700; font-size: 17px; color: var(--encre); }
 
-.road { --p: 0; position: relative; height: 32px; margin-top: 9px; background: var(--asphalte); border-radius: 9px; overflow: hidden; }
-.trail {
-  position: absolute; left: 0; top: 0; bottom: 0;
-  width: calc(4px + (100% - 76px) * var(--p) + 24px);
-  background: linear-gradient(90deg, rgba(91,85,227,0), rgba(91,85,227,.5));
-  transition: width .9s var(--smooth);
+/* ================= La route ================= */
+.route { position: relative; margin-top: 18px; padding: 22px 0 8px var(--text-l); }
+.route::before {           /* bitume */
+  content: ""; position: absolute; top: 0; bottom: 0; left: var(--road-l); width: var(--road-w);
+  background: var(--bitume); border-radius: 24px 24px 0 0;
+  box-shadow: inset 3px 0 0 rgba(255,255,255,.08), inset -3px 0 0 rgba(255,255,255,.08);
 }
-.lane {
-  position: absolute; left: 8px; right: 30px; top: 50%; height: 2px; margin-top: -1px;
-  background: repeating-linear-gradient(90deg, rgba(255,255,255,.4) 0 8px, transparent 8px 16px);
+.route::after {            /* ligne pointillée */
+  content: ""; position: absolute; top: 16px; bottom: 0; width: 2px;
+  left: calc(var(--road-l) + var(--road-w) / 2 - 1px);
+  background: repeating-linear-gradient(180deg, rgba(255,255,255,.55) 0 12px, transparent 12px 26px);
 }
-.road.moving .lane { animation: lane .3s linear infinite; }
-.road.moving.reverse .lane { animation-direction: reverse; }
-@keyframes lane { to { background-position: -16px 0; } }
-.road-car { position: absolute; bottom: 3px; width: 44px; left: calc(4px + (100% - 76px) * var(--p)); transition: left .9s var(--smooth); }
-.flag { position: absolute; right: 7px; top: 5px; width: 20px; height: 22px; }
+.road-car {
+  position: absolute; z-index: 5; width: 22px;
+  left: calc(var(--road-l) + 3px);
+  top: 18px; transition: top 1s var(--doux);
+}
+.road-car svg { display: block; width: 100%; height: auto; overflow: visible; }
+.road-car .beam { opacity: 0; transition: opacity .3s; }
+.road-car.moving .beam { opacity: 1; }
+.road-car.moving svg { animation: sway .5s ease-in-out infinite alternate; }
+@keyframes sway { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
+.road-car .smoke { fill: #CFCCD6; opacity: 0; transform-box: fill-box; transform-origin: center; }
+.road-car.moving .smoke { animation: smoke .6s ease-out infinite; }
+.road-car.moving .smoke.s2 { animation-delay: .2s; }
+.road-car.moving .smoke.s3 { animation-delay: .4s; }
+@keyframes smoke { 0% { opacity: .9; transform: translateY(0) scale(.5); } 100% { opacity: 0; transform: translateY(-9px) scale(1.6); } }
 
-/* ---------- Icônes de section ---------- */
+/* ================= Panneaux de section ================= */
+.panel { position: relative; margin-bottom: 30px; }
+.sign { perspective: 700px; margin-bottom: 14px; position: relative; }
+.sign::before {           /* poteau vers la route */
+  content: ""; position: absolute; top: 50%; height: 4px; margin-top: -2px;
+  left: calc(var(--road-l) + var(--road-w) - var(--text-l)); width: calc(var(--text-l) - var(--road-l) - var(--road-w));
+  background: #C9C6CE;
+}
+.sign-inner { display: grid; transform-style: preserve-3d; transition: transform .8s var(--ressort); }
+.face {
+  grid-area: 1 / 1; -webkit-backface-visibility: hidden; backface-visibility: hidden;
+  border-radius: 9px; padding: 3px;
+}
+.face > div { border-radius: 7px; padding: 7px 10px; display: flex; align-items: center; gap: 10px; min-height: 42px; }
+.front { background: var(--blanc); box-shadow: 0 2px 0 rgba(0,0,0,.07); }
+.front > div { border: 2px solid var(--encre); }
+.back { background: var(--violet); color: #fff; transform: rotateX(180deg); }
+.back > div { border: 2px solid rgba(255,255,255,.75); }
+.panel.complete .sign-inner { transform: rotateX(180deg); }
+.sname { flex: 1; font-family: var(--cond); font-weight: 700; font-size: 20px; line-height: 1.05; letter-spacing: .005em; }
+.skm { font-family: var(--cond); font-weight: 600; font-size: 17px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.back .tick-ic { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
+
 .sico {
-  width: 19px; height: 19px; flex: none; margin-right: 8px; vertical-align: -3px;
-  fill: none; stroke: var(--rouge); stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round;
-  transform-origin: 50% 80%; transition: stroke .3s;
+  width: 22px; height: 22px; flex: none;
+  fill: none; stroke: var(--encre); stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round;
+  transform-origin: 50% 80%;
 }
-.panel.complete .sico { stroke: var(--violet); }
-/* section en cours : l'icône bouge doucement */
 .panel.current .sico[data-a="flame"] { animation: flicker 1.1s ease-in-out infinite; }
 .panel.current .sico[data-a="sun"]   { animation: rise 1.6s ease-in-out infinite; }
 .panel.current .sico[data-a="bread"] { animation: wiggle 1.4s ease-in-out infinite; }
 .panel.current .sico[data-a="shelf"] { animation: hop 1.2s ease-in-out infinite; }
 .panel.current .sico[data-a="cake"]  { animation: wiggle 1.4s ease-in-out infinite; }
 .panel.current .sico[data-a="tray"]  { animation: hop 1.2s ease-in-out infinite; }
-.panel.current .sico[data-a="snow"]  { animation: twirl 3s linear infinite; transform-origin: 50% 50%; }
+.panel.current .sico[data-a="snow"]  { animation: twirl 3.2s linear infinite; transform-origin: 50% 50%; }
 .panel.current .sico[data-a="broom"] { animation: sweep 1.2s ease-in-out infinite; }
-@keyframes flicker { 0%,100% { transform: scale(1, 1); } 30% { transform: scale(.92, 1.1) rotate(-3deg); } 60% { transform: scale(1.05, .95) rotate(3deg); } }
+@keyframes flicker { 0%,100% { transform: scale(1,1); } 30% { transform: scale(.92,1.1) rotate(-3deg); } 60% { transform: scale(1.05,.95) rotate(3deg); } }
 @keyframes rise { 0%,100% { transform: translateY(1px); } 50% { transform: translateY(-2px); } }
 @keyframes wiggle { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-9deg); } 75% { transform: rotate(9deg); } }
 @keyframes hop { 0%,100% { transform: translateY(0); } 40% { transform: translateY(-3px); } 60% { transform: translateY(0); } }
 @keyframes twirl { to { transform: rotate(360deg); } }
 @keyframes sweep { 0%,100% { transform: rotate(-12deg); } 50% { transform: rotate(12deg); } }
-/* section terminée : petit saut une fois */
-.panel.celebrate .sico { animation: done .6s var(--spring) !important; }
-@keyframes done { 0% { transform: scale(.6) rotate(-20deg); } 60% { transform: scale(1.3) rotate(8deg); } 100% { transform: scale(1); } }
-.panel.current .panel-head h2 { color: var(--ink); }
-.panel:not(.current):not(.complete) .panel-head h2 { color: #4A474F; }
 
-/* Étincelles quand on coche */
-.spark { position: absolute; width: 5px; height: 5px; border-radius: 50%; background: var(--violet); pointer-events: none; animation: spark .5s ease-out forwards; }
-.spark:nth-child(odd) { background: #F2B33D; }
-@keyframes spark { from { transform: translate(-50%, -50%) scale(1); opacity: 1; } to { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0); opacity: 0; } }
+.sub { margin: -6px 0 12px; font-size: 13.5px; color: var(--gris); }
 
-/* ---------- Sections ---------- */
-.panel { margin-top: 22px; }
-.panel-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 0 6px 7px; }
-.panel-head h2 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: -.005em; }
-.panel-head h2 small { display: block; font-size: 13px; font-weight: 400; color: var(--muted); margin-top: 1px; }
-.chip { flex: none; font-size: 13px; color: var(--faint); font-variant-numeric: tabular-nums; display: inline-flex; align-items: center; gap: 4px; }
-.chip svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; display: none; }
-.panel.complete .chip { color: var(--violet); font-weight: 600; }
-.panel.complete .chip svg { display: block; }
-.panel.celebrate .chip { animation: chipPop .5s var(--spring); }
-@keyframes chipPop { 40% { transform: scale(1.25); } }
-
-.steps { list-style: none; margin: 0; padding: 0; background: var(--card); border-radius: 14px; box-shadow: 0 0 0 1px var(--line); overflow: hidden; }
+/* ================= Étapes = bornes ================= */
+.steps { list-style: none; margin: 0; padding: 0; }
 .step {
-  position: relative; display: flex; gap: 12px; align-items: flex-start;
-  padding: 12px 14px; cursor: pointer;
+  position: relative; padding: 3px 0 18px; cursor: pointer;
   user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent;
 }
-.step + .step::before { content: ""; position: absolute; top: 0; left: 50px; right: 0; height: 1px; background: var(--line); }
-.step:active { background: #FAFAF8; }
-
-.num {
-  position: relative; flex: none; width: 24px; height: 24px; margin-top: -1px; border-radius: 50%;
-  border: 1.6px solid #D4D1D9; display: grid; place-items: center;
-  font-size: 11.5px; font-weight: 600; color: var(--faint); font-variant-numeric: tabular-nums;
-  transition: background .2s, border-color .2s;
+.step:last-child { padding-bottom: 4px; }
+.num {             /* borne kilométrique */
+  position: absolute; top: 0;
+  left: calc(var(--road-l) + var(--road-w) - var(--text-l) - 9px);
+  width: 22px; height: 27px; border-radius: 11px 11px 3px 3px;
+  background: #fff; overflow: hidden;
+  box-shadow: 0 2px 3px rgba(0,0,0,.3);
+  transition: background .25s;
 }
-.num .n { transition: opacity .12s; }
-.num .tick { position: absolute; width: 14px; height: 14px; fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
-.num .tick path { stroke-dasharray: 22; stroke-dashoffset: 22; transition: stroke-dashoffset .25s ease .06s; }
-.step.done .num { background: var(--violet); border-color: var(--violet); }
+.num::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 9px; background: var(--rouge); transition: background .25s; }
+.num .n {
+  position: absolute; left: 0; right: 0; bottom: 3px; text-align: center;
+  font-family: var(--cond); font-weight: 700; font-size: 12px; line-height: 1; color: var(--encre);
+  transition: opacity .15s;
+}
+.num .tick { position: absolute; left: 4px; bottom: 3px; width: 14px; height: 14px; fill: none; stroke: #fff; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+.num .tick path { stroke-dasharray: 22; stroke-dashoffset: 22; transition: stroke-dashoffset .25s ease .08s; }
+.step.done .num { background: var(--violet); }
+.step.done .num::before { background: var(--violet-fonce); }
 .step.done .num .n { opacity: 0; }
 .step.done .num .tick path { stroke-dashoffset: 0; }
-.step.pop .num { animation: numPop .45s var(--spring); }
-@keyframes numPop { 0% { transform: scale(.75); } 60% { transform: scale(1.15); } 100% { transform: scale(1); } }
+.step.pop .num { animation: numPop .5s var(--ressort); }
+@keyframes numPop { 0% { transform: scale(.7); } 55% { transform: scale(1.25); } 100% { transform: scale(1); } }
+.step.current .num { animation: here 1.8s ease-out infinite; }
+@keyframes here { 0% { box-shadow: 0 2px 3px rgba(0,0,0,.3), 0 0 0 0 rgba(91,85,227,.7); } 70%,100% { box-shadow: 0 2px 3px rgba(0,0,0,.3), 0 0 0 9px rgba(91,85,227,0); } }
 
-.body { flex: 1; min-width: 0; }
-.title { font-weight: 500; transition: color .3s; }
-.note { display: block; font-size: 13.5px; color: var(--muted); margin-top: 2px; transition: color .3s; }
-.step.done .title, .step.done .note, .step.done .qty, .step.done .tag { color: var(--faint); }
+.spark { position: absolute; width: 5px; height: 5px; border-radius: 50%; background: var(--violet); pointer-events: none; z-index: 6; animation: spark .55s ease-out forwards; }
+.spark:nth-of-type(odd) { background: var(--or); }
+@keyframes spark { from { transform: translate(-50%,-50%) scale(1); opacity: 1; } to { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0); opacity: 0; } }
 
-.tag { display: inline-block; font-size: 12.5px; font-weight: 500; padding: 3px 8px; border-radius: 6px; margin-top: 6px; transition: color .3s; }
-.tag.ok { background: var(--violet-soft); color: #4440C2; }
-.tag.ask { background: var(--rouge-soft); color: #B3170F; }
-.step.done .tag { background: #F3F2F0; }
+.title { font-weight: 600; font-size: 16px; line-height: 1.3; transition: color .3s; }
+.note { display: block; font-size: 14px; color: var(--gris); margin-top: 2px; transition: color .3s; }
+.step.done .title { color: var(--gris-clair); }
+.step.done .note, .step.done .qty, .step.done .tag { color: var(--gris-clair); }
+.step.current .title { color: var(--encre); }
 
-.qty { list-style: none; margin: 5px 0 0; padding: 0; font-size: 14px; transition: color .3s; }
+.tag { display: inline-block; font-size: 13px; font-weight: 600; padding: 3px 8px; border-radius: 6px; margin-top: 6px; transition: color .3s, background .3s; }
+.tag.ok { background: var(--violet-pale); color: var(--violet-fonce); }
+.tag.ask { background: #FBE3E1; color: var(--rouge-fonce); }
+.step.done .tag { background: #E7E5E1; }
+
+.qty { list-style: none; margin: 6px 0 0; padding: 0; font-size: 15px; }
 .qty li { display: flex; gap: 8px; padding: 1px 0; }
-.qty b { min-width: 12px; text-align: right; font-weight: 700; color: var(--rouge); }
-.step.done .qty b { color: var(--faint); }
+.qty b { font-family: var(--cond); font-weight: 700; font-size: 18px; line-height: 1.1; min-width: 12px; text-align: right; color: var(--rouge); }
+.step.done .qty b { color: var(--gris-clair); }
 
-.precision { margin: 0 0 8px; padding: 10px 12px; border-radius: 12px; background: #EFEDE9; font-size: 13.5px; color: #55525A; }
-.precision strong { display: block; color: var(--ink); font-weight: 600; margin-bottom: 2px; }
+/* Panneau "attention" */
+.warn { display: flex; gap: 10px; margin: 0 0 16px; padding: 11px 12px; background: var(--blanc); border-radius: 10px; font-size: 14px; color: #514E57; box-shadow: 0 1px 0 rgba(0,0,0,.05); }
+.warn svg { width: 26px; height: 24px; flex: none; margin-top: 1px; }
+.warn strong { display: block; color: var(--encre); font-weight: 600; margin-bottom: 2px; }
 
+/* Bouton boîtes */
 .more { margin-top: 8px; cursor: default; }
 .more-btn {
-  display: inline-flex; align-items: center; gap: 4px;
-  background: #F1F0EE; border: 0; border-radius: 8px; padding: 5px 8px 5px 10px;
-  font-size: 13px; font-weight: 600; cursor: pointer; transition: background .2s;
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--encre); color: #fff; border: 0; border-radius: 8px; padding: 6px 9px 6px 11px;
+  font-size: 13.5px; font-weight: 600; cursor: pointer; transition: transform .15s;
 }
-.more-btn:active { background: #E7E5E1; }
-.more-btn .chev { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: transform .3s var(--smooth); }
+.more-btn:active { transform: scale(.96); }
+.more-btn .chev { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transition: transform .3s var(--doux); }
 .more.open .more-btn .chev { transform: rotate(180deg); }
-.more-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s var(--smooth); }
+.more-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s var(--doux); }
 .more.open .more-body { grid-template-rows: 1fr; }
 .more-inner { overflow: hidden; }
-.boxes { padding-top: 8px; }
-.box { padding: 8px 0; border-top: 1px solid var(--line); font-size: 13.5px; opacity: 0; transition: opacity .3s; }
+.boxes { margin-top: 10px; background: var(--blanc); border-radius: 10px; padding: 2px 12px; }
+.box { padding: 9px 0; border-top: 1px solid var(--trait); font-size: 14px; opacity: 0; transform: translateY(4px); transition: opacity .3s, transform .35s var(--doux); }
 .box:first-child { border-top: 0; }
-.more.open .box { opacity: 1; }
+.more.open .box { opacity: 1; transform: none; }
+.more.open .box:nth-child(2) { transition-delay: .04s; }
+.more.open .box:nth-child(3) { transition-delay: .08s; }
+.more.open .box:nth-child(4) { transition-delay: .12s; }
+.more.open .box:nth-child(5) { transition-delay: .16s; }
 .box strong { display: block; font-weight: 600; }
-.box .note { font-size: 13px; }
-.box.end { color: var(--muted); font-style: italic; }
+.box .note { font-size: 13.5px; }
+.box.end { color: var(--gris); font-style: italic; }
 
-.tips { margin-top: 22px; padding: 12px 14px; background: var(--violet-soft); border-radius: 14px; font-size: 14px; color: #34307E; }
-.tips h3 .sico { stroke: var(--violet); }
-.tips h3 { margin: 0 0 4px; font-size: 14px; font-weight: 600; color: #2C2873; }
-.tips ul { margin: 0; padding-left: 18px; }
-.tips li { margin: 2px 0; }
+/* Panneau info "pendant la matinée" */
+.info { position: relative; margin: -8px 0 30px; padding: 12px 14px 12px 14px; background: var(--violet-pale); border-radius: 12px; font-size: 14.5px; color: #33307A; }
+.info h3 { display: flex; align-items: center; gap: 8px; margin: 0 0 4px; font-family: var(--cond); font-weight: 700; font-size: 18px; color: var(--violet-fonce); }
+.info h3 span { width: 20px; height: 20px; border-radius: 5px; background: var(--violet); color: #fff; display: grid; place-items: center; font-family: var(--texte); font-size: 13px; font-weight: 600; font-style: italic; }
+.info ul { margin: 0; padding-left: 18px; }
+.info li { margin: 2px 0; }
 
-.end-zone { text-align: center; margin-top: 26px; }
-.reset { background: none; border: 0; color: var(--muted); font-size: 13.5px; font-weight: 500; padding: 8px 12px; border-radius: 8px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: #D4D1D9; }
+/* Arrivée sur la route */
+.finish-line { position: relative; padding: 4px 0 0; }
+.checker {
+  position: absolute; top: 4px; height: 14px;
+  left: calc(var(--road-l) - var(--text-l)); width: var(--road-w);
+  background:
+    conic-gradient(#fff 25%, var(--encre) 0 50%, #fff 0 75%, var(--encre) 0) 0 0 / 14px 14px;
+}
+.arrive-sign { display: inline-flex; align-items: center; gap: 8px; font-family: var(--cond); font-weight: 700; font-size: 20px; }
+.arrive-sign svg { width: 22px; height: 24px; }
+
+/* Bas de page */
+.end-zone { text-align: center; margin-top: 30px; }
+.reset { background: none; border: 0; color: var(--gris); font-size: 14px; font-weight: 500; padding: 8px 12px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: #CFCCD3; }
 .reset.armed { color: var(--rouge); text-decoration-color: currentColor; }
 
-/* ---------- Pop-up ---------- */
-.toast {
-  position: fixed; left: 0; right: 0; margin: 0 auto; width: max-content;
-  bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 50;
-  transform: translateY(150%);
-  display: flex; align-items: center; gap: 9px;
-  background: var(--asphalte); color: #fff;
-  padding: 7px 14px 7px 9px; border-radius: 12px;
-  box-shadow: 0 12px 26px -10px rgba(20, 10, 30, .45);
-  font-size: 13.5px; font-weight: 500; max-width: calc(100vw - 28px);
-  transition: transform .45s var(--spring); pointer-events: none;
+/* ================= GPS (pop-up) ================= */
+.gps {
+  position: fixed; z-index: 50; left: 0; right: 0; margin: 0 auto; width: max-content; max-width: calc(100vw - 24px);
+  bottom: calc(14px + env(safe-area-inset-bottom));
+  display: flex; align-items: center; gap: 11px;
+  background: var(--bitume); color: #fff; border-radius: 14px; padding: 8px 16px 8px 8px;
+  box-shadow: 0 14px 30px -12px rgba(15,10,25,.55);
+  transform: translateY(160%); transition: transform .5s var(--ressort); pointer-events: none;
 }
-.toast.show { transform: none; }
-.toast .tcar { width: 36px; flex: none; }
-.toast.show .tcar { animation: tcarIn .6s var(--smooth); }
-@keyframes tcarIn { from { transform: translateX(-24px); opacity: 0; } }
+.gps.show { transform: none; }
+.gps-ic { width: 38px; height: 38px; border-radius: 10px; background: var(--violet); display: grid; place-items: center; flex: none; }
+.gps-ic svg { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.gps.show .gps-ic svg { animation: arrow .6s var(--ressort); }
+@keyframes arrow { from { transform: translateY(8px); opacity: 0; } }
+.gps small { display: block; font-family: var(--cond); font-weight: 600; font-size: 13px; color: #A9A6B4; line-height: 1.1; }
+.gps span { display: block; font-weight: 600; font-size: 14.5px; line-height: 1.25; }
 
-/* ---------- Arrivée ---------- */
+/* ================= Écran d'arrivée ================= */
 .finish {
   position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 20px;
-  background: rgba(29, 28, 32, .45); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  background: rgba(30,29,33,.5); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
   opacity: 0; pointer-events: none; transition: opacity .3s;
 }
 .finish.show { opacity: 1; pointer-events: auto; }
 #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 61; }
 .finish-card {
-  position: relative; z-index: 62; width: min(340px, 100%);
-  background: var(--card); border-radius: 20px; overflow: hidden; text-align: center; padding-bottom: 18px;
-  transform: translateY(24px) scale(.96); transition: transform .5s var(--spring);
+  position: relative; z-index: 62; width: min(340px, 100%); background: var(--blanc);
+  border-radius: 20px; overflow: hidden; text-align: center; padding-bottom: 18px;
+  transform: translateY(24px) scale(.96); transition: transform .5s var(--ressort);
 }
 .finish.show .finish-card { transform: none; }
-.scene { position: relative; height: 104px; background: var(--violet-soft); overflow: hidden; }
-.scene .ground { position: absolute; left: 0; right: 0; bottom: 0; height: 28px; background: var(--asphalte); }
-.scene .ground::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: repeating-linear-gradient(90deg, rgba(255,255,255,.4) 0 10px, transparent 10px 20px); }
-.scene .fcar { position: absolute; bottom: 11px; right: 56px; width: 96px; }
-.finish.show .fcar { animation: driveIn 1.3s var(--smooth) both; }
-@keyframes driveIn { from { transform: translateX(-300px); } }
-.scene .fflag { position: absolute; right: 20px; bottom: 24px; width: 26px; height: 46px; }
-.finish-card h2 { margin: 16px 18px 4px; font-size: 21px; font-weight: 700; letter-spacing: -.02em; }
-.finish-card p { margin: 0 22px 16px; color: var(--muted); font-size: 14px; }
-.btn { background: var(--ink); color: #fff; border: 0; border-radius: 10px; padding: 9px 20px; font-size: 14.5px; font-weight: 600; cursor: pointer; }
-
-.bg-cars { position: fixed; inset: 0; pointer-events: none; z-index: -1; overflow: hidden; }
-.bg-cars div { position: absolute; opacity: .05; }
+.scene { position: relative; height: 112px; background: var(--rouge); overflow: hidden; }
+.scene .scene-num { position: absolute; left: 12px; top: -18px; font-family: var(--cond); font-weight: 700; font-size: 110px; color: rgba(255,255,255,.12); line-height: 1; }
+.scene .ground { position: absolute; left: 0; right: 0; bottom: 0; height: 30px; background: var(--bitume); }
+.scene .ground::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: repeating-linear-gradient(90deg, rgba(255,255,255,.45) 0 10px, transparent 10px 22px); }
+.scene .fcar { position: absolute; bottom: 12px; right: 58px; width: 100px; }
+.finish.show .fcar { animation: driveIn 1.3s var(--doux) both; }
+@keyframes driveIn { from { transform: translateX(-320px); } }
+.scene .fflag { position: absolute; right: 20px; bottom: 26px; width: 28px; height: 50px; }
+.finish-card h2 { margin: 16px 18px 4px; font-family: var(--cond); font-weight: 700; font-size: 30px; line-height: 1; }
+.finish-card p { margin: 0 22px 16px; color: var(--gris); font-size: 14.5px; }
+.btn { background: var(--encre); color: #fff; border: 0; border-radius: 10px; padding: 10px 22px; font-size: 15px; font-weight: 600; cursor: pointer; }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; } }
 .no-anim *, .no-anim *::before, .no-anim *::after { transition: none !important; }
@@ -269,7 +327,7 @@ button { font: inherit; color: inherit; }
 <body class="no-anim">
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="i-sunrise" viewBox="0 0 24 24"><path d="M3 19h18"/><path d="M7 19a5 5 0 0 1 10 0"/><path d="M12 5v3"/><path d="M5.6 10.6l1.8 1.8"/><path d="M18.4 10.6l-1.8 1.8"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><path d="M3 19h18"/><path d="M7 19a5 5 0 0 1 10 0"/><path d="M12 5v3"/><path d="M5.6 10.6l1.8 1.8"/><path d="M18.4 10.6l-1.8 1.8"/></symbol>
   <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3c.8 3 4.5 5 4.5 9.5a4.5 4.5 0 0 1-9 0c0-2.2 1-3.6 2.2-4.6.1 1.8 1 2.9 2.1 3.1-.4-2.8-.5-5.3.2-8z"/></symbol>
   <symbol id="i-bread" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(-45 12 12)"/><path d="M8.5 12.5l2 1"/><path d="M11.5 9.5l2 1"/><path d="M14.5 6.8l1.6.8"/></symbol>
   <symbol id="i-shelf" viewBox="0 0 24 24"><path d="M3 5h18"/><path d="M3 12h18"/><path d="M3 19h18"/><rect x="5" y="7" width="4" height="5"/><rect x="11" y="8.5" width="5" height="3.5"/><rect x="6" y="14.5" width="6" height="4.5"/></symbol>
@@ -277,256 +335,268 @@ button { font: inherit; color: inherit; }
   <symbol id="i-tray" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="1.5"/><circle cx="8" cy="10" r="1"/><circle cx="12" cy="10" r="1"/><circle cx="16" cy="10" r="1"/><circle cx="8" cy="14" r="1"/><circle cx="12" cy="14" r="1"/><circle cx="16" cy="14" r="1"/></symbol>
   <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M4.2 7.5l15.6 9"/><path d="M19.8 7.5l-15.6 9"/><path d="M9.5 4.5L12 7l2.5-2.5"/><path d="M9.5 19.5L12 17l2.5 2.5"/></symbol>
   <symbol id="i-broom" viewBox="0 0 24 24"><path d="M19 3l-6.5 8"/><path d="M8.5 10.5l5 4"/><path d="M8.5 10.5c-2.5 1-4.5 4-5.5 9.5 5.5-1 8.5-3 10.5-5.5"/><path d="M6 17l2-2"/></symbol>
-  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></symbol>
+  <symbol id="i-tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
   <symbol id="flag" viewBox="0 0 26 28">
-    <rect x="2" y="2" width="2" height="25" rx="1" fill="#E9E6EF"/>
-    <rect x="4" y="3" width="20" height="13" fill="#fff"/>
-    <rect x="4" y="3" width="5" height="4.33" fill="#1D1C20"/><rect x="14" y="3" width="5" height="4.33" fill="#1D1C20"/>
-    <rect x="9" y="7.33" width="5" height="4.33" fill="#1D1C20"/><rect x="19" y="7.33" width="5" height="4.33" fill="#1D1C20"/>
-    <rect x="4" y="11.66" width="5" height="4.34" fill="#1D1C20"/><rect x="14" y="11.66" width="5" height="4.34" fill="#1D1C20"/>
+    <rect x="2" y="2" width="2" height="25" rx="1" fill="#C9C6CE"/>
+    <rect x="4" y="3" width="20" height="13" fill="#fff" stroke="#1E1D21" stroke-width=".8"/>
+    <rect x="4" y="3" width="5" height="4.33" fill="#1E1D21"/><rect x="14" y="3" width="5" height="4.33" fill="#1E1D21"/>
+    <rect x="9" y="7.33" width="5" height="4.33" fill="#1E1D21"/><rect x="19" y="7.33" width="5" height="4.33" fill="#1E1D21"/>
+    <rect x="4" y="11.66" width="5" height="4.34" fill="#1E1D21"/><rect x="14" y="11.66" width="5" height="4.34" fill="#1E1D21"/>
   </symbol>
 </svg>
-
-<div class="bg-cars" aria-hidden="true">
-  <div data-car style="top:34%;left:-30px;width:120px;transform:rotate(-8deg)"></div>
-  <div data-car style="top:62%;right:-34px;width:140px;transform:scaleX(-1) rotate(-5deg)"></div>
-  <div data-car style="top:88%;left:-24px;width:100px;transform:rotate(5deg)"></div>
-</div>
 
 <header class="hero">
   <div class="hero-in">
     <span class="hero-num" aria-hidden="true">107</span>
-    <div style="position:relative">
+    <div class="hero-txt">
       <img class="logo" src="logo.png" alt="" onerror="this.remove()">
       <h1>Fiche du matin</h1>
       <p class="mission"><b>Ta mission :</b> faire arriver la 107 au bout du trajet. Chaque étape cochée la fait avancer.</p>
     </div>
-    <div class="top-car" id="topCar" data-car></div>
+    <div class="hero-car" id="heroCar" data-side></div>
   </div>
 </header>
 
 <div class="wrap">
 
   <div class="hud">
-    <div class="hud-top">
-      <span class="deadline">Rayon prêt pour <b>9 h – 9 h 30</b></span>
-      <span class="count"><b id="countN">0</b> / <span id="countT">0</span></span>
-    </div>
-    <div class="road" id="road">
-      <div class="trail"></div>
-      <div class="lane"></div>
-      <div class="road-car" data-car></div>
-      <svg class="flag"><use href="#flag"/></svg>
-    </div>
+    <div class="km"><b id="countN">0</b><small> / <span id="countT">21</span></small></div>
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="when">Rayon prêt<b>9 h – 9 h 30</b></div>
   </div>
 
-  <!-- En arrivant -->
-  <section class="panel">
-    <div class="panel-head">
-      <h2><svg class="sico" data-a="sun"><use href="#i-sunrise"/></svg>En arrivant</h2>
-      <span class="chip"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="chip-t"></span></span>
+  <main class="route" id="route">
+    <div class="road-car" id="roadCar" aria-hidden="true">
+      <svg viewBox="0 0 40 92">
+        <defs>
+          <linearGradient id="beamG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#FFF3C4" stop-opacity=".55"/><stop offset="1" stop-color="#FFF3C4" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <circle class="smoke" cx="14" cy="4" r="3"/><circle class="smoke s2" cx="14" cy="4" r="3"/><circle class="smoke s3" cx="14" cy="4" r="3"/>
+        <path class="beam" d="M6 66 L-6 92 L46 92 L34 66 Z" fill="url(#beamG)"/>
+        <rect x="1" y="38" width="5" height="4" rx="1.5" fill="#403BC0"/>
+        <rect x="34" y="38" width="5" height="4" rx="1.5" fill="#403BC0"/>
+        <rect x="4" y="6" width="32" height="60" rx="13" fill="#5D5AD8"/>
+        <rect x="9" y="7" width="7" height="3" rx="1.5" fill="#E5484D"/>
+        <rect x="24" y="7" width="7" height="3" rx="1.5" fill="#E5484D"/>
+        <path d="M10 18 L30 18 L28 12 L12 12 Z" fill="#DCEAF8"/>
+        <rect x="9" y="20" width="22" height="22" rx="4" fill="#4A46C8"/>
+        <path d="M9 45 L31 45 L28 55 L12 55 Z" fill="#DCEAF8"/>
+        <path d="M13 47 L18 47" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity=".8"/>
+        <ellipse cx="11" cy="63" rx="3" ry="1.8" fill="#FFF3C4"/>
+        <ellipse cx="29" cy="63" rx="3" ry="1.8" fill="#FFF3C4"/>
+      </svg>
     </div>
-    <ol class="steps">
-      <li class="step"><div class="body"><div class="title"><span>Tu allumes le four</span></div></div></li>
-      <li class="step"><div class="body"><div class="title"><span>Tu sors tes viennoiseries et tu éteins la chambre de pousse</span></div></div></li>
-      <li class="step"><div class="body"><div class="title"><span>Tu mets tes viennoiseries dans le four</span></div></div></li>
-    </ol>
-  </section>
 
-  <!-- Pendant la cuisson -->
-  <section class="panel">
-    <div class="panel-head">
-      <h2><svg class="sico" data-a="flame"><use href="#i-flame"/></svg>Pendant la cuisson</h2>
-      <span class="chip"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="chip-t"></span></span>
-    </div>
-    <ol class="steps">
-      <li class="step"><div class="body">
-        <div class="title"><span>Tu prends les pains et viennoiseries de la veille à jeter</span></div>
-        <span class="note">Les viennoiseries, tu peux en faire des « viennoiseries de la veille » par paquets de 10.</span>
-      </div></li>
-      <li class="step"><div class="body">
-        <div class="title"><span>Tu vérifies qu'il n'y a pas de sandwichs de la veille à récupérer</span></div>
-        <span class="tag ok">Déjà regardé ce soir, il n'y a rien</span>
-      </div></li>
-      <li class="step"><div class="body">
-        <div class="title"><span>Tu vérifies les dates des viennoiseries</span></div>
-        <span class="note">Pour savoir s'il faut les mettre en −30 % ou pas.</span>
-        <span class="tag ask">Pour te connecter au Zebra, demande à Gaëtan</span>
-      </div></li>
-      <li class="step"><div class="body"><div class="title"><span>Tu nettoies un peu le meuble</span></div></div></li>
-    </ol>
-  </section>
+    <!-- 1 -->
+    <section class="panel">
+      <div class="sign"><div class="sign-inner">
+        <div class="face front"><div><svg class="sico" data-a="sun"><use href="#i-sun"/></svg><span class="sname">En arrivant</span><span class="skm"></span></div></div>
+        <div class="face back"><div><svg class="tick-ic"><use href="#i-tick"/></svg><span class="sname">En arrivant</span><span class="skm">Fait</span></div></div>
+      </div></div>
+      <ol class="steps">
+        <li class="step"><div class="title">Tu allumes le four</div></li>
+        <li class="step"><div class="title">Tu sors tes viennoiseries et tu éteins la chambre de pousse</div></li>
+        <li class="step"><div class="title">Tu mets tes viennoiseries dans le four</div></li>
+      </ol>
+    </section>
 
-  <!-- Cuisson du pain -->
-  <section class="panel">
-    <div class="panel-head">
-      <h2><svg class="sico" data-a="bread"><use href="#i-bread"/></svg>Cuisson du pain</h2>
-      <span class="chip"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="chip-t"></span></span>
-    </div>
-    <ol class="steps">
-      <li class="step"><div class="body">
-        <div class="title"><span>Tu sors tes viennoiseries</span></div>
-        <span class="note">Tu les laisses refroidir.</span>
-      </div></li>
-      <li class="step"><div class="body"><div class="title"><span>Tu mets un des 3 chariots de pain</span></div></div></li>
-      <li class="step"><div class="body">
-        <div class="title"><span>Tu enchaînes les 3 chariots et les viennoiseries</span></div>
-        <span class="note">Tranquille.</span>
-      </div></li>
-      <li class="step"><div class="body">
-        <div class="title"><span>Tu emballes quand ce n'est pas trop chaud</span></div>
-        <div class="more">
-          <button class="more-btn" type="button" aria-expanded="false">
-            Voir les boîtes à faire<svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-          <div class="more-body"><div class="more-inner"><div class="boxes">
-            <div class="box">
-              <strong>Croissants et pains au chocolat pur beurre</strong>
-              Une plaque sur le meuble, l'autre plaque en boîtes de 4.
-              <span class="note">Et quelques boîtes d'assortiment pur beurre (2, 3, 4…) : 2 pains au chocolat et 2 croissants.</span>
-            </div>
-            <div class="box">
-              <strong>Croissants et pains au chocolat ordinaires</strong>
-              Que des boîtes de 10.
-            </div>
-            <div class="box">
-              <strong>Pains suisses, triangles, croissants à l'abricot</strong>
-              La moitié dans le meuble, l'autre moitié en boîtes de 2.
-            </div>
-            <div class="box">
-              <strong>Chaussons</strong>
-              Pareil : moitié en rayon, moitié en boîte.
-            </div>
-            <div class="box end">En fait, tu fais un peu comme tu veux, il faut juste que ce soit à peu près équilibré.</div>
-          </div></div></div>
+    <!-- 2 -->
+    <section class="panel">
+      <div class="sign"><div class="sign-inner">
+        <div class="face front"><div><svg class="sico" data-a="flame"><use href="#i-flame"/></svg><span class="sname">Pendant la cuisson</span><span class="skm"></span></div></div>
+        <div class="face back"><div><svg class="tick-ic"><use href="#i-tick"/></svg><span class="sname">Pendant la cuisson</span><span class="skm">Fait</span></div></div>
+      </div></div>
+      <ol class="steps">
+        <li class="step">
+          <div class="title">Tu prends les pains et viennoiseries de la veille à jeter</div>
+          <span class="note">Les viennoiseries, tu peux en faire des « viennoiseries de la veille » par paquets de 10.</span>
+        </li>
+        <li class="step">
+          <div class="title">Tu vérifies qu'il n'y a pas de sandwichs de la veille à récupérer</div>
+          <span class="tag ok">Déjà regardé ce soir, il n'y a rien</span>
+        </li>
+        <li class="step">
+          <div class="title">Tu vérifies les dates des viennoiseries</div>
+          <span class="note">Pour savoir s'il faut les mettre en −30 % ou pas.</span>
+          <span class="tag ask">Pour te connecter au Zebra, demande à Gaëtan</span>
+        </li>
+        <li class="step"><div class="title">Tu nettoies un peu le meuble</div></li>
+      </ol>
+    </section>
+
+    <!-- 3 -->
+    <section class="panel">
+      <div class="sign"><div class="sign-inner">
+        <div class="face front"><div><svg class="sico" data-a="bread"><use href="#i-bread"/></svg><span class="sname">Cuisson du pain</span><span class="skm"></span></div></div>
+        <div class="face back"><div><svg class="tick-ic"><use href="#i-tick"/></svg><span class="sname">Cuisson du pain</span><span class="skm">Fait</span></div></div>
+      </div></div>
+      <ol class="steps">
+        <li class="step">
+          <div class="title">Tu sors tes viennoiseries</div>
+          <span class="note">Tu les laisses refroidir.</span>
+        </li>
+        <li class="step"><div class="title">Tu mets un des 3 chariots de pain</div></li>
+        <li class="step">
+          <div class="title">Tu enchaînes les 3 chariots et les viennoiseries</div>
+          <span class="note">Tranquille.</span>
+        </li>
+        <li class="step">
+          <div class="title">Tu emballes quand ce n'est pas trop chaud</div>
+          <div class="more">
+            <button class="more-btn" type="button" aria-expanded="false">Voir les boîtes à faire<svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="more-body"><div class="more-inner"><div class="boxes">
+              <div class="box">
+                <strong>Croissants et pains au chocolat pur beurre</strong>
+                Une plaque sur le meuble, l'autre plaque en boîtes de 4.
+                <span class="note">Et quelques boîtes d'assortiment pur beurre (2, 3, 4…) : 2 pains au chocolat et 2 croissants.</span>
+              </div>
+              <div class="box"><strong>Croissants et pains au chocolat ordinaires</strong>Que des boîtes de 10.</div>
+              <div class="box"><strong>Pains suisses, triangles, croissants à l'abricot</strong>La moitié dans le meuble, l'autre moitié en boîtes de 2.</div>
+              <div class="box"><strong>Chaussons</strong>Pareil : moitié en rayon, moitié en boîte.</div>
+              <div class="box end">En fait, tu fais un peu comme tu veux, il faut juste que ce soit à peu près équilibré.</div>
+            </div></div></div>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- 4 -->
+    <section class="panel">
+      <div class="sign"><div class="sign-inner">
+        <div class="face front"><div><svg class="sico" data-a="shelf"><use href="#i-shelf"/></svg><span class="sname">Mise en rayon</span><span class="skm"></span></div></div>
+        <div class="face back"><div><svg class="tick-ic"><use href="#i-tick"/></svg><span class="sname">Mise en rayon</span><span class="skm">Fait</span></div></div>
+      </div></div>
+      <ol class="steps">
+        <li class="step">
+          <div class="title">Tu mets en rayon pour 9 h – 9 h 30</div>
+          <span class="note">(Les pains spéciaux sur la rangée du haut. Fais en sorte qu'ils soient visibles contre la vitre pour les personnes petites.)</span>
+          <span class="note">Fais au mieux, peu importe.</span>
+        </li>
+      </ol>
+    </section>
+
+    <aside class="info">
+      <h3><span>i</span>Pendant la matinée</h3>
+      <ul>
+        <li>Va voir de temps en temps comment les pains se vident.</li>
+        <li>Rapproche les baguettes, fais le facing de tes pains.</li>
+        <li>Tu peux aussi réorganiser le rayon des viennoiseries.</li>
+      </ul>
+    </aside>
+
+    <!-- 5 -->
+    <section class="panel">
+      <div class="sign"><div class="sign-inner">
+        <div class="face front"><div><svg class="sico" data-a="cake"><use href="#i-cake"/></svg><span class="sname">Après la mise en rayon</span><span class="skm"></span></div></div>
+        <div class="face back"><div><svg class="tick-ic"><use href="#i-tick"/></svg><span class="sname">Après la mise en rayon</span><span class="skm">Fait</span></div></div>
+      </div></div>
+      <ol class="steps">
+        <li class="step"><div class="title">Tu tires</div></li>
+        <li class="step">
+          <div class="title">Tu vérifies s'il y a des gâteaux dans le frigo à mettre en rayon</div>
+          <span class="note">N'hésite pas à vérifier les dates des gâteaux.</span>
+        </li>
+      </ol>
+    </section>
+
+    <!-- 6 -->
+    <section class="panel">
+      <div class="sign"><div class="sign-inner">
+        <div class="face front"><div><svg class="sico" data-a="tray"><use href="#i-tray"/></svg><span class="sname">Plaquage des viennoiseries</span><span class="skm"></span></div></div>
+        <div class="face back"><div><svg class="tick-ic"><use href="#i-tick"/></svg><span class="sname">Plaquage des viennoiseries</span><span class="skm">Fait</span></div></div>
+      </div></div>
+      <p class="sub">Pour le lendemain. Tu fais comme tu veux, mais moi je fais comme ça.</p>
+      <div class="warn">
+        <svg viewBox="0 0 26 24" aria-hidden="true"><path d="M13 2 L24.5 22 H1.5 Z" fill="#fff" stroke="#E2231A" stroke-width="2.6" stroke-linejoin="round"/><path d="M13 9v6" stroke="#1E1D21" stroke-width="2.2" stroke-linecap="round"/><circle cx="13" cy="18.3" r="1.3" fill="#1E1D21"/></svg>
+        <div>
+          <strong>C'est pas grave si tu ne respectes pas exactement les quantités, fais au mieux.</strong>
+          Il va sûrement te manquer des pains au chocolat ordinaires : fais-en le plus possible, mais en multiples de 10, parce que ce sont des boîtes de 10. Par exemple, si tu as 53 pains au chocolat, tu n'en mets pas 53, tu en mets 50, comme ça on peut faire 5 boîtes de 10.
         </div>
-      </div></li>
-    </ol>
-  </section>
+      </div>
+      <ol class="steps">
+        <li class="step">
+          <div class="title">Tu fais le premier chariot</div>
+          <span class="note">Tu suis la fiche de plaque qu'Enzo a faite.</span>
+        </li>
+        <li class="step"><div class="title">Tu fais le deuxième chariot</div></li>
+        <li class="step">
+          <div class="title">Tu mets dans la chambre de pousse, tu l'allumes et tu mets 17 h 30 de temps</div>
+          <span class="note">Normalement il faut juste appuyer sur le bouton du temps (là où tu bouges le temps) et ça se lance. Tu verras quand c'est fait.</span>
+          <span class="tag ask">Si tu n'y arrives pas, demande à Gaëtan</span>
+        </li>
+      </ol>
+    </section>
 
-  <!-- Mise en rayon -->
-  <section class="panel">
-    <div class="panel-head">
-      <h2><svg class="sico" data-a="shelf"><use href="#i-shelf"/></svg>Mise en rayon</h2>
-      <span class="chip"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="chip-t"></span></span>
+    <!-- 7 -->
+    <section class="panel">
+      <div class="sign"><div class="sign-inner">
+        <div class="face front"><div><svg class="sico" data-a="snow"><use href="#i-snow"/></svg><span class="sname">Les 3 chariots de pain</span><span class="skm"></span></div></div>
+        <div class="face back"><div><svg class="tick-ic"><use href="#i-tick"/></svg><span class="sname">Les 3 chariots de pain</span><span class="skm">Fait</span></div></div>
+      </div></div>
+      <p class="sub">Pour le lendemain.</p>
+      <ol class="steps">
+        <li class="step">
+          <div class="title">Chariot des pains blancs</div>
+          <ul class="qty">
+            <li><b>2</b>cartons de parisiens</li>
+            <li><b>1</b>carton de baguettes normales</li>
+          </ul>
+          <span class="note">Tu le mets au congèle.</span>
+        </li>
+        <li class="step">
+          <div class="title">Chariot des Constance</div>
+          <ul class="qty">
+            <li><b>2</b>Constance normales (nature)</li>
+            <li><b>1</b>Constance céréales</li>
+            <li><b>1</b>carton de Généreuse</li>
+          </ul>
+        </li>
+        <li class="step">
+          <div class="title">Les pains spéciaux</div>
+          <span class="note">Conseil : tu peux sortir tous les chariots d'un coup. Comme ça, ils sont tous dehors, tu les remplis tranquillement et après tu les rerentres, ça t'évite de rester dans le froid. Sinon tu les sors un par un, mais tout sortir d'un coup, c'est bien aussi.</span>
+        </li>
+      </ol>
+    </section>
+
+    <!-- 8 -->
+    <section class="panel">
+      <div class="sign"><div class="sign-inner">
+        <div class="face front"><div><svg class="sico" data-a="broom"><use href="#i-broom"/></svg><span class="sname">Pour finir</span><span class="skm"></span></div></div>
+        <div class="face back"><div><svg class="tick-ic"><use href="#i-tick"/></svg><span class="sname">Pour finir</span><span class="skm">Fait</span></div></div>
+      </div></div>
+      <ol class="steps">
+        <li class="step">
+          <div class="title">Tu ranges la boulangerie</div>
+          <span class="note">Tu vas chercher le balai dans la réserve, avec la pelle et la balayette. Tu ne te prends pas la tête.</span>
+        </li>
+      </ol>
+    </section>
+
+    <div class="finish-line" id="finishLine">
+      <span class="checker"></span>
+      <span class="arrive-sign"><svg><use href="#flag"/></svg>Arrivée</span>
     </div>
-    <ol class="steps">
-      <li class="step"><div class="body">
-        <div class="title"><span>Tu mets en rayon pour 9 h – 9 h 30</span></div>
-        <span class="note">(Les pains spéciaux sur la rangée du haut. Fais en sorte qu'ils soient visibles contre la vitre pour les personnes petites.)</span>
-        <span class="note">Fais au mieux, peu importe.</span>
-      </div></li>
-    </ol>
-  </section>
-
-  <aside class="tips">
-    <h3><svg class="sico"><use href="#i-eye"/></svg>Pendant la matinée</h3>
-    <ul>
-      <li>Va voir de temps en temps comment les pains se vident.</li>
-      <li>Rapproche les baguettes, fais le facing de tes pains.</li>
-      <li>Tu peux aussi réorganiser le rayon des viennoiseries.</li>
-    </ul>
-  </aside>
-
-  <!-- Après la mise en rayon -->
-  <section class="panel">
-    <div class="panel-head">
-      <h2><svg class="sico" data-a="cake"><use href="#i-cake"/></svg>Après la mise en rayon</h2>
-      <span class="chip"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="chip-t"></span></span>
-    </div>
-    <ol class="steps">
-      <li class="step"><div class="body"><div class="title"><span>Tu tires</span></div></div></li>
-      <li class="step"><div class="body">
-        <div class="title"><span>Tu vérifies s'il y a des gâteaux dans le frigo à mettre en rayon</span></div>
-        <span class="note">N'hésite pas à vérifier les dates des gâteaux.</span>
-      </div></li>
-    </ol>
-  </section>
-
-  <!-- Plaquage viennoiseries -->
-  <section class="panel">
-    <div class="panel-head">
-      <h2><svg class="sico" data-a="tray"><use href="#i-tray"/></svg>Plaquage des viennoiseries<small>Pour le lendemain. Tu fais comme tu veux, mais moi je fais comme ça.</small></h2>
-      <span class="chip"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="chip-t"></span></span>
-    </div>
-    <div class="precision">
-      <strong>C'est pas grave si tu ne respectes pas exactement les quantités, fais au mieux.</strong>
-      Il va sûrement te manquer des pains au chocolat ordinaires : fais-en le plus possible, mais en multiples de 10, parce que ce sont des boîtes de 10. Par exemple, si tu as 53 pains au chocolat, tu n'en mets pas 53, tu en mets 50, comme ça on peut faire 5 boîtes de 10.
-    </div>
-    <ol class="steps">
-      <li class="step"><div class="body">
-        <div class="title"><span>Tu fais le premier chariot</span></div>
-        <span class="note">Tu suis la fiche de plaque qu'Enzo a faite.</span>
-      </div></li>
-      <li class="step"><div class="body"><div class="title"><span>Tu fais le deuxième chariot</span></div></div></li>
-      <li class="step"><div class="body">
-        <div class="title"><span>Tu mets dans la chambre de pousse, tu l'allumes et tu mets 17 h 30 de temps</span></div>
-        <span class="note">Normalement il faut juste appuyer sur le bouton du temps (là où tu bouges le temps) et ça se lance. Tu verras quand c'est fait.</span>
-        <span class="tag ask">Si tu n'y arrives pas, demande à Gaëtan</span>
-      </div></li>
-    </ol>
-  </section>
-
-  <!-- Chariots de pain -->
-  <section class="panel">
-    <div class="panel-head">
-      <h2><svg class="sico" data-a="snow"><use href="#i-snow"/></svg>Les 3 chariots de pain<small>Pour le lendemain</small></h2>
-      <span class="chip"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="chip-t"></span></span>
-    </div>
-    <ol class="steps">
-      <li class="step"><div class="body">
-        <div class="title"><span>Chariot des pains blancs</span></div>
-        <ul class="qty">
-          <li><b>2</b>cartons de parisiens</li>
-          <li><b>1</b>carton de baguettes normales</li>
-        </ul>
-        <span class="note">Tu le mets au congèle.</span>
-      </div></li>
-      <li class="step"><div class="body">
-        <div class="title"><span>Chariot des Constance</span></div>
-        <ul class="qty">
-          <li><b>2</b>Constance normales (nature)</li>
-          <li><b>1</b>Constance céréales</li>
-          <li><b>1</b>carton de Généreuse</li>
-        </ul>
-      </div></li>
-      <li class="step"><div class="body">
-        <div class="title"><span>Les pains spéciaux</span></div>
-        <span class="note">Conseil : tu peux sortir tous les chariots d'un coup. Comme ça, ils sont tous dehors, tu les remplis tranquillement et après tu les rerentres, ça t'évite de rester dans le froid. Sinon tu les sors un par un, mais tout sortir d'un coup, c'est bien aussi.</span>
-      </div></li>
-    </ol>
-  </section>
-
-  <!-- Pour finir -->
-  <section class="panel">
-    <div class="panel-head">
-      <h2><svg class="sico" data-a="broom"><use href="#i-broom"/></svg>Pour finir</h2>
-      <span class="chip"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="chip-t"></span></span>
-    </div>
-    <ol class="steps">
-      <li class="step"><div class="body">
-        <div class="title"><span>Tu ranges la boulangerie</span></div>
-        <span class="note">Tu vas chercher le balai dans la réserve, avec la pelle et la balayette. Tu ne te prends pas la tête.</span>
-      </div></li>
-    </ol>
-  </section>
-
+  </main>
 
   <div class="end-zone">
     <button class="reset" id="reset" type="button">Recommencer la fiche</button>
   </div>
 </div>
 
-<div class="toast" id="toast" role="status" aria-live="polite">
-  <div class="tcar" data-car></div><span id="toastText"></span>
+<div class="gps" id="gps" role="status" aria-live="polite">
+  <div class="gps-ic"><svg viewBox="0 0 24 24"><path d="M12 20V5"/><path d="M6 11l6-6 6 6"/></svg></div>
+  <div><small id="gpsKm"></small><span id="gpsText"></span></div>
 </div>
 
 <div class="finish" id="finish" aria-hidden="true">
   <div class="finish-card" role="dialog" aria-labelledby="finishTitle">
     <div class="scene">
+      <span class="scene-num" aria-hidden="true">107</span>
       <svg class="fflag"><use href="#flag"/></svg>
       <div class="ground"></div>
-      <div class="fcar" id="fcar" data-car></div>
+      <div class="fcar" id="fcar" data-side></div>
     </div>
     <h2 id="finishTitle">La 107 est arrivée !</h2>
     <p>Toute la fiche est faite. Merci, et bonne journée !</p>
@@ -537,14 +607,14 @@ button { font: inherit; color: inherit; }
 
 <script>
 (function () {
+  /* ---------- La 107 vue de côté ---------- */
   function wheel(cx) {
     return '<g class="wheel" style="transform-origin:' + cx + 'px 49px">' +
-      '<circle cx="' + cx + '" cy="49" r="9" fill="#1E1B23"/>' +
-      '<circle cx="' + cx + '" cy="49" r="5.2" fill="#CFCBDA"/>' +
+      '<circle cx="' + cx + '" cy="49" r="9" fill="#1E1B23"/><circle cx="' + cx + '" cy="49" r="5.2" fill="#CFCBDA"/>' +
       '<path d="M' + cx + ' 44.6v8.8M' + (cx - 4.4) + ' 49h8.8" stroke="#8C879A" stroke-width="1.6"/>' +
       '<circle cx="' + cx + '" cy="49" r="1.6" fill="#6E6980"/></g>';
   }
-  var CAR =
+  var SIDE =
     '<svg class="car" viewBox="-6 0 126 64" aria-hidden="true">' +
       '<circle class="puff p1" cx="4" cy="45" r="3"/><circle class="puff p2" cx="4" cy="45" r="3"/><circle class="puff p3" cx="4" cy="45" r="3"/>' +
       '<g class="carbody"><g transform="translate(120 0) scale(-1 1)">' +
@@ -559,13 +629,16 @@ button { font: inherit; color: inherit; }
         '<rect x="104.5" y="28" width="3" height="8" rx="1.2" fill="#E5484D"/>' +
         '<rect x="8" y="44" width="101" height="3" rx="1.5" fill="#3A37A0"/>' +
       '</g>' + wheel(32) + wheel(90) + '</g></svg>';
-  document.querySelectorAll('[data-car]').forEach(function (el) { el.innerHTML = CAR; });
+  document.querySelectorAll('[data-side]').forEach(function (el) { el.innerHTML = SIDE; });
 
-  var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
-  var panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
+  /* ---------- Éléments ---------- */
+  var steps = [].slice.call(document.querySelectorAll('.step'));
+  var panels = [].slice.call(document.querySelectorAll('.panel'));
   var TOTAL = steps.length;
-  var road = document.getElementById('road');
+  var route = document.getElementById('route');
+  var roadCar = document.getElementById('roadCar');
   var countN = document.getElementById('countN');
+  var barFill = document.getElementById('barFill');
   document.getElementById('countT').textContent = TOTAL;
 
   steps.forEach(function (s, i) {
@@ -578,7 +651,7 @@ button { font: inherit; color: inherit; }
     s.insertBefore(num, s.firstChild);
   });
 
-  /* Un message par étape (index = nombre d'étapes faites) */
+  /* ---------- Un message par étape ---------- */
   var MSG = [
     '',
     'Contact ! La 107 démarre.',
@@ -603,13 +676,10 @@ button { font: inherit; color: inherit; }
     'Plus que 2, la 107 ralentit.',
     'Dernière étape, elle cherche une place.'
   ];
-  function msgFor(done) {
-    if (done < MSG.length) return MSG[done];
-    return 'La 107 avance.';
-  }
 
-  var today = new Date();
-  var KEY = 'fiche107-' + today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  /* ---------- Sauvegarde du jour ---------- */
+  var d0 = new Date();
+  var KEY = 'fiche107-' + d0.getFullYear() + '-' + (d0.getMonth() + 1) + '-' + d0.getDate();
   function save() {
     try {
       var d = [];
@@ -624,70 +694,94 @@ button { font: inherit; color: inherit; }
     } catch (e) {}
   }
 
-  var toast = document.getElementById('toast'), toastText = document.getElementById('toastText'), toastTimer;
-  function showToast(msg) {
-    toastText.textContent = msg;
-    toast.classList.remove('show', 'moving'); void toast.offsetWidth;
-    toast.classList.add('show', 'moving');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(function () { toast.classList.remove('show', 'moving'); }, 2200);
+  /* ---------- GPS ---------- */
+  var gps = document.getElementById('gps'), gpsText = document.getElementById('gpsText'), gpsKm = document.getElementById('gpsKm'), gpsTimer;
+  function showGps(km, msg) {
+    gpsKm.textContent = km;
+    gpsText.textContent = msg;
+    gps.classList.remove('show'); void gps.offsetWidth; gps.classList.add('show');
+    clearTimeout(gpsTimer);
+    gpsTimer = setTimeout(function () { gps.classList.remove('show'); }, 2300);
   }
 
+  /* ---------- La 107 sur la route ---------- */
   var moveTimer;
+  function placeCar(animate) {
+    var cur = steps.filter(function (s) { return !s.classList.contains('done'); })[0];
+    var rTop = route.getBoundingClientRect().top;
+    var y;
+    if (cur) {
+      y = cur.getBoundingClientRect().top - rTop - 8;
+    } else {
+      y = document.getElementById('finishLine').getBoundingClientRect().top - rTop - 26;
+    }
+    var prev = parseFloat(roadCar.style.top || '0');
+    roadCar.style.top = Math.max(6, y) + 'px';
+    if (animate && Math.abs(prev - y) > 2) {
+      roadCar.classList.add('moving');
+      clearTimeout(moveTimer);
+      moveTimer = setTimeout(function () { roadCar.classList.remove('moving'); }, 1000);
+    }
+  }
+
+  /* ---------- Rendu ---------- */
   function render(animate, dir) {
     var done = steps.filter(function (s) { return s.classList.contains('done'); }).length;
-    road.style.setProperty('--p', done / TOTAL);
     countN.textContent = done;
+    barFill.style.width = (done / TOTAL * 100) + '%';
+
+    var cur = steps.filter(function (s) { return !s.classList.contains('done'); })[0];
+    steps.forEach(function (s) { s.classList.toggle('current', s === cur); });
 
     panels.forEach(function (p) {
       var n = p.querySelectorAll('.step').length, d = p.querySelectorAll('.step.done').length;
-      var was = p.classList.contains('complete'), now = d === n;
-      p.querySelector('.chip-t').textContent = now ? 'Fait' : d + '/' + n;
-      p.classList.toggle('complete', now);
-      if (animate && now && !was) {
-        p.classList.remove('celebrate'); void p.offsetWidth; p.classList.add('celebrate');
-        setTimeout(function () { p.classList.remove('celebrate'); }, 650);
-      }
+      var left = n - d;
+      p.querySelector('.front .skm').textContent = left + ' km';
+      p.classList.toggle('complete', left === 0);
+      p.classList.toggle('current', !!cur && p.contains(cur));
     });
-    var cur = panels.filter(function (p) { return !p.classList.contains('complete'); })[0];
-    panels.forEach(function (p) { p.classList.toggle('current', p === cur); });
+
+    placeCar(animate);
 
     if (!animate) return;
     countN.classList.remove('bump'); void countN.offsetWidth; countN.classList.add('bump');
-    road.classList.add('moving');
-    road.classList.toggle('reverse', dir < 0);
-    clearTimeout(moveTimer);
-    moveTimer = setTimeout(function () { road.classList.remove('moving', 'reverse'); }, 950);
-
-    if (done === TOTAL) setTimeout(openFinish, 650);
-    else if (dir < 0) showToast('Marche arrière, la 107 recule.');
-    else showToast(msgFor(done));
+    if (done === TOTAL) setTimeout(openFinish, 900);
+    else if (dir < 0) showGps('Étape ' + done + ' / ' + TOTAL, 'Marche arrière, la 107 recule.');
+    else showGps('Étape ' + done + ' / ' + TOTAL, MSG[done] || 'La 107 avance.');
   }
 
   function setDone(step, on) {
     step.classList.toggle('done', on);
     step.setAttribute('aria-checked', on ? 'true' : 'false');
   }
+
+  function sparks(step) {
+    var num = step.querySelector('.num');
+    var r = num.getBoundingClientRect(), sr = step.getBoundingClientRect();
+    var cx = r.left - sr.left + r.width / 2, cy = r.top - sr.top + r.height / 2;
+    for (var k = 0; k < 10; k++) {
+      var a = k / 10 * Math.PI * 2, d = 20 + Math.random() * 8, sp = document.createElement('span');
+      sp.className = 'spark';
+      sp.style.left = cx + 'px'; sp.style.top = cy + 'px';
+      sp.style.setProperty('--dx', Math.cos(a) * d + 'px');
+      sp.style.setProperty('--dy', Math.sin(a) * d + 'px');
+      step.appendChild(sp);
+      (function (el) { setTimeout(function () { el.remove(); }, 600); })(sp);
+    }
+  }
+
   function toggle(step) {
     var on = !step.classList.contains('done');
     setDone(step, on);
     if (on) {
       step.classList.remove('pop'); void step.offsetWidth; step.classList.add('pop');
-      var num = step.querySelector('.num');
-      for (var k = 0; k < 8; k++) {
-        var a = k / 8 * Math.PI * 2, d = 18 + Math.random() * 6, sp = document.createElement('span');
-        sp.className = 'spark';
-        sp.style.left = '50%'; sp.style.top = '50%';
-        sp.style.setProperty('--dx', Math.cos(a) * d + 'px');
-        sp.style.setProperty('--dy', Math.sin(a) * d + 'px');
-        num.appendChild(sp);
-        (function (el) { setTimeout(function () { el.remove(); }, 520); })(sp);
-      }
+      sparks(step);
       try { navigator.vibrate && navigator.vibrate(10); } catch (e) {}
     }
     save();
     render(true, on ? 1 : -1);
   }
+
   steps.forEach(function (s) {
     s.addEventListener('click', function (e) { if (!e.target.closest('.more')) toggle(s); });
     s.addEventListener('keydown', function (e) {
@@ -695,6 +789,7 @@ button { font: inherit; color: inherit; }
     });
   });
 
+  /* ---------- Boîtes ---------- */
   document.querySelectorAll('.more').forEach(function (m) {
     var b = m.querySelector('.more-btn');
     b.addEventListener('click', function (e) {
@@ -702,9 +797,11 @@ button { font: inherit; color: inherit; }
       var open = !m.classList.contains('open');
       m.classList.toggle('open', open);
       b.setAttribute('aria-expanded', open ? 'true' : 'false');
+      setTimeout(function () { placeCar(false); }, 420);
     });
   });
 
+  /* ---------- Recommencer ---------- */
   var resetBtn = document.getElementById('reset'), armTimer;
   resetBtn.addEventListener('click', function () {
     if (!resetBtn.classList.contains('armed')) {
@@ -722,9 +819,10 @@ button { font: inherit; color: inherit; }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
+  /* ---------- Arrivée ---------- */
   var finish = document.getElementById('finish');
   function openFinish() {
-    clearTimeout(toastTimer); toast.classList.remove('show', 'moving');
+    clearTimeout(gpsTimer); gps.classList.remove('show');
     var fc = document.getElementById('fcar');
     fc.classList.add('moving');
     setTimeout(function () { fc.classList.remove('moving'); }, 1300);
@@ -744,7 +842,7 @@ button { font: inherit; color: inherit; }
     c.width = innerWidth * dpr; c.height = innerHeight * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     var colors = ['#5B55E3', '#8E8AF0', '#E2231A', '#F2B33D', '#FFFFFF'], parts = [];
-    for (var i = 0; i < 110; i++) parts.push({
+    for (var i = 0; i < 120; i++) parts.push({
       x: innerWidth / 2 + (Math.random() - .5) * 60, y: innerHeight * .42,
       vx: (Math.random() - .5) * 12, vy: -Math.random() * 12 - 4,
       w: 4 + Math.random() * 5, h: 7 + Math.random() * 7,
@@ -765,12 +863,16 @@ button { font: inherit; color: inherit; }
     })(t0);
   }
 
+  /* ---------- Démarrage ---------- */
   load();
   render(false, 0);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { placeCar(false); });
+  window.addEventListener('resize', function () { placeCar(false); });
   requestAnimationFrame(function () { requestAnimationFrame(function () { document.body.classList.remove('no-anim'); }); });
-  var topCar = document.getElementById('topCar');
-  topCar.classList.add('arrive', 'moving');
-  setTimeout(function () { topCar.classList.remove('moving'); }, 1450);
+
+  var hero = document.getElementById('heroCar');
+  hero.classList.add('arrive', 'moving');
+  setTimeout(function () { hero.classList.remove('moving'); }, 1450);
 })();
 </script>
 </body>
