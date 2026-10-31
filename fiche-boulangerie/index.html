@@ -3,290 +3,526 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#E2231A">
 <title>Fiche du matin – Boulangerie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #f5f2ed;
-    --card: #ffffff;
-    --text: #1f1a16;
-    --muted: #6f655b;
-    --red: #d2232a;
-    --red-dark: #a8161c;
-    --red-soft: #fdeceb;
-    --ok: #2f7d4f;
-    --ok-soft: #e2f1e7;
-    --border: #e7dfd5;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.45;
-    font-size: 16px;
-  }
-  svg.i { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
-  svg.i.sm { width: 16px; height: 16px; }
+/* ============ Design tokens ============ */
+:root {
+  --bg: #F1F0F4;
+  --card: #FFFFFF;
+  --ink: #221D29;
+  --muted: #6B6577;
+  --line: #E6E3EC;
 
-  /* En-tête */
-  .top {
-    background: var(--red);
-    color: #fff;
-    padding: 22px 18px 54px;
-  }
-  .top-inner { max-width: 600px; margin: 0 auto; display: flex; align-items: center; gap: 14px; }
-  .logo { height: 44px; width: auto; background: #fff; border-radius: 8px; padding: 4px 8px; }
-  .top .kicker { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; opacity: .85; margin: 0; }
-  .top h1 { margin: 2px 0 0; font-size: 28px; line-height: 1.1; }
+  --rouge: #E2231A;
+  --rouge-deep: #B8160F;
+  --rouge-soft: #FDECEA;
 
-  .wrap { max-width: 600px; margin: -36px auto 0; padding: 0 14px 60px; counter-reset: step; }
+  --violet: #5B55E3;
+  --violet-deep: #4440C2;
+  --violet-soft: #ECEBFD;
 
-  /* Barre de progression collante */
-  .sticky {
-    position: sticky; top: 0; z-index: 5;
-    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
-    padding: 12px 14px; margin-bottom: 14px;
-    box-shadow: 0 6px 18px rgba(60, 30, 10, .08);
-  }
-  .sticky-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-  .deadline { display: flex; align-items: center; gap: 8px; font-weight: 700; }
-  .deadline svg { color: var(--red); }
-  .count { font-size: 14px; color: var(--muted); white-space: nowrap; }
-  .bar { height: 6px; background: #f0e8df; border-radius: 99px; margin-top: 10px; overflow: hidden; }
-  .bar > div { height: 100%; width: 0; background: var(--red); border-radius: 99px; transition: width .25s; }
-  /* La 107 qui avance sur la barre */
-  .road { position: relative; padding-top: 22px; margin-top: 4px; }
-  .road .bar { margin-top: 0; background: repeating-linear-gradient(90deg, #e9e1d7 0 10px, #f4eee7 10px 16px); }
-  .road-car {
-    position: absolute; top: 0; left: 0; width: 40px; height: 22px;
-    transition: left .35s ease, transform .35s ease;
-  }
-  .road-car.arrived { animation: hop .5s ease 2; }
-  @keyframes hop { 50% { margin-top: -6px; } }
+  --or: #F2B33D;
+  --or-soft: #FFF5DD;
 
-  .road { padding-right: 26px; }
-  .flag { position: absolute; right: 0; bottom: -6px; font-size: 20px; line-height: 1; }
-  .hint b { color: var(--text); }
-  .mission { margin: 8px 0 0; font-size: 14.5px; line-height: 1.4; opacity: .95; }
+  --asphalte: #2E2A35;
 
-  /* La 107 dans l'en-tête */
-  .top-car { width: 92px; height: 50px; margin-left: auto; flex: none; transform: rotate(-3deg); filter: drop-shadow(0 3px 4px rgba(0,0,0,.25)); }
+  --r-lg: 20px;
+  --r-md: 14px;
+  --r-sm: 8px;
 
-  /* Les 107 en fond */
-  .bg-cars { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-  .bg-cars svg { position: absolute; opacity: .09; height: auto; }
-  .top, .wrap { position: relative; z-index: 1; }
-  .sticky { z-index: 5; }
+  --font-display: "Bricolage Grotesque", "Atkinson Hyperlegible", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", -apple-system, system-ui, sans-serif;
 
-  .sticky .hint { font-size: 13px; color: var(--muted); margin-top: 6px; }
+  --spring: cubic-bezier(.2, 1.4, .4, 1);
+  --smooth: cubic-bezier(.3, .7, .2, 1);
+}
 
-  /* Sections */
-  section { margin-top: 26px; }
-  .sec-head { display: flex; align-items: center; gap: 10px; margin: 0 0 10px 2px; }
-  .sec-icon {
-    width: 38px; height: 38px; border-radius: 10px;
-    background: var(--red-soft); color: var(--red);
-    display: flex; align-items: center; justify-content: center; flex: none;
-  }
-  .sec-head h2 { font-size: 18px; margin: 0; line-height: 1.2; }
-  .sec-head small { display: block; font-size: 13px; color: var(--muted); font-weight: 400; margin-top: 1px; }
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16.5px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--violet); outline-offset: 2px; border-radius: 6px; }
 
-  ol { list-style: none; margin: 0; padding: 0; }
-  li.step {
-    counter-increment: step;
-    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-    padding: 13px 14px; margin-bottom: 8px;
-    display: flex; gap: 12px; align-items: flex-start;
-    cursor: pointer; transition: opacity .15s, background .15s, border-color .15s;
-    -webkit-tap-highlight-color: transparent;
-  }
-  li.step::before {
-    content: counter(step);
-    flex: 0 0 28px; height: 28px; border-radius: 50%;
-    border: 2px solid var(--red); color: var(--red);
-    font-weight: 700; font-size: 13px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  li.step.done { opacity: .55; background: #f1ede7; }
-  li.step.done::before { content: "✓"; background: var(--ok); border-color: var(--ok); color: #fff; font-size: 15px; }
-  li.step.done .t { text-decoration: line-through; }
-  .body { flex: 1; min-width: 0; }
-  .t { font-weight: 600; display: block; }
-  .note { display: block; font-size: 14.5px; color: var(--muted); margin-top: 3px; }
-  .tag {
-    display: inline-flex; align-items: center; gap: 5px;
-    font-size: 13px; font-weight: 600;
-    padding: 3px 9px; border-radius: 6px; margin-top: 7px;
-  }
-  .tag.ok { background: var(--ok-soft); color: var(--ok); }
-  .tag.info { background: var(--red-soft); color: var(--red-dark); }
+/* ============ Voiture ============ */
+.car { display: block; overflow: visible; }
+.car .wheel { transform-box: view-box; }
+.car .puff { opacity: 0; transform-box: fill-box; transform-origin: center; fill: #D9D6E0; }
+.moving .car .wheel { animation: spin .32s linear infinite; }
+.moving.reverse .car .wheel { animation-direction: reverse; }
+.moving .car .carbody { animation: bob .28s ease-in-out infinite alternate; }
+.moving .car .puff { animation: puff .7s ease-out infinite; }
+.moving .car .puff.p2 { animation-delay: .23s; }
+.moving .car .puff.p3 { animation-delay: .46s; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes bob { to { transform: translateY(-1.2px); } }
+@keyframes puff {
+  0% { opacity: .9; transform: translate(0, 0) scale(.5); }
+  100% { opacity: 0; transform: translate(-12px, -5px) scale(1.7); }
+}
 
-  .list { margin: 7px 0 0; padding: 0; list-style: none; font-size: 15px; }
-  .list li { padding: 5px 0; border-top: 1px solid #f1ebe3; display: flex; gap: 10px; }
-  .list li:first-child { border-top: 0; }
-  .list b { min-width: 22px; color: var(--red); }
+/* ============ En-tête ============ */
+.hero {
+  background: var(--rouge);
+  color: #fff;
+  padding: 26px 20px 70px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-in { max-width: 620px; margin: 0 auto; position: relative; }
+.logo { height: 40px; width: auto; background: #fff; border-radius: 8px; padding: 4px 8px; margin-bottom: 14px; display: block; }
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(38px, 11vw, 54px);
+  line-height: .95;
+  letter-spacing: -.03em;
+  margin: 0;
+  max-width: 9ch;
+}
+.mission { margin: 12px 0 0; font-size: 16px; line-height: 1.4; max-width: 30ch; color: #FFE9E7; }
+.mission strong { color: #fff; }
+.hero-car {
+  position: absolute; right: 0; top: 18px; width: 118px;
+}
+.hero-car::after {
+  content: ""; position: absolute; left: 14%; right: 10%; bottom: 2px; height: 8px;
+  background: rgba(0,0,0,.18); border-radius: 50%; filter: blur(3px); z-index: -1;
+}
+.hero-car.arrive { animation: park 1.6s var(--smooth) both; }
+@keyframes park {
+  from { transform: translateX(-120vw); }
+  to { transform: translateX(0); }
+}
 
-  .precision {
-    font-size: 14px; color: var(--muted);
-    background: #fbf9f6; border-left: 3px solid var(--red);
-    border-radius: 0 10px 10px 0;
-    padding: 10px 12px; margin: 0 0 10px;
-  }
-  .precision b { color: var(--text); display: block; margin-bottom: 3px; }
+/* ============ Tableau de bord (collant) ============ */
+.wrap { max-width: 620px; margin: -48px auto 0; padding: 0 14px 120px; position: relative; z-index: 1; }
+.hud {
+  position: sticky; top: 8px; z-index: 10;
+  background: var(--card);
+  border-radius: var(--r-lg);
+  padding: 14px 14px 12px;
+  box-shadow: 0 1px 0 var(--line), 0 12px 30px -12px rgba(46, 26, 60, .28);
+}
+.hud-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.deadline { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15.5px; }
+.deadline svg { color: var(--rouge); }
+.count { font-family: var(--font-display); font-weight: 800; font-size: 20px; letter-spacing: -.02em; white-space: nowrap; }
+.count small { font-size: 14px; color: var(--muted); font-weight: 600; }
+.count b { display: inline-block; color: var(--violet); }
+.count b.bump { animation: bump .45s var(--spring); }
+@keyframes bump { 40% { transform: scale(1.45); } }
 
-  /* Bouton boîtes */
-  details { margin-top: 9px; }
-  summary {
-    display: inline-flex; align-items: center; gap: 6px; cursor: pointer; list-style: none;
-    font-size: 14px; font-weight: 600; color: var(--red);
-    border: 1.5px solid var(--red); border-radius: 8px; padding: 6px 11px;
-  }
-  summary::-webkit-details-marker { display: none; }
-  details[open] summary { background: var(--red); color: #fff; }
-  .boxes { margin-top: 10px; display: grid; gap: 8px; }
-  .box { background: #fbf9f6; border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; font-size: 14.5px; }
-  .box strong { display: block; margin-bottom: 2px; }
-  .box.end { color: var(--muted); font-style: italic; }
+.road {
+  --p: 0;
+  position: relative; height: 42px; margin-top: 12px;
+  background: var(--asphalte); border-radius: 12px; overflow: hidden;
+}
+.road-trail {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: calc(8px + (100% - 92px) * var(--p) + 30px);
+  background: linear-gradient(90deg, rgba(91,85,227,.0), rgba(91,85,227,.55));
+  transition: width .9s var(--smooth);
+}
+.lane {
+  position: absolute; left: 10px; right: 38px; top: 50%; height: 2px; margin-top: -1px;
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.5) 0 10px, transparent 10px 20px);
+}
+.road.moving .lane { animation: lane .35s linear infinite; }
+.road.moving.reverse .lane { animation-direction: reverse; }
+@keyframes lane { to { background-position: -20px 0; } }
+.road-car {
+  position: absolute; bottom: 4px; width: 56px;
+  left: calc(6px + (100% - 98px) * var(--p));
+  transition: left .9s var(--smooth);
+}
+.flag { position: absolute; right: 8px; top: 7px; width: 26px; height: 28px; }
 
-  /* Pendant la matinée */
-  .tips {
-    background: #fff8f0; border: 1px solid #f1dcc4; border-radius: 12px;
-    padding: 13px 14px; margin-top: 4px;
-  }
-  .tips h3 { font-size: 15px; margin: 0 0 6px; display: flex; align-items: center; gap: 8px; }
-  .tips h3 svg { color: var(--red); }
-  .tips ul { margin: 0; padding-left: 18px; font-size: 14.5px; }
-  .tips li { margin: 3px 0; }
+.status {
+  margin: 9px 2px 0; font-size: 14.5px; color: var(--muted); min-height: 21px;
+  transition: opacity .2s, transform .2s;
+}
+.status b { color: var(--ink); }
+.status.swap { opacity: 0; transform: translateY(4px); }
 
-  .footer { text-align: center; margin-top: 30px; }
-  .done-msg { font-weight: 700; color: var(--ok); display: none; margin-bottom: 8px; }
-  .reset {
-    background: none; border: 1px solid var(--border);
-    color: var(--muted); padding: 7px 14px; border-radius: 8px; font-size: 13px; cursor: pointer;
-  }
+/* ============ Sections ============ */
+.panel {
+  background: var(--card);
+  border-radius: var(--r-lg);
+  margin-top: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 0 var(--line);
+}
+.panel-head {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 16px 10px;
+}
+.ico {
+  width: 40px; height: 40px; border-radius: 12px; flex: none;
+  background: var(--rouge-soft); color: var(--rouge);
+  display: grid; place-items: center;
+  transition: background .3s, color .3s;
+}
+.panel-head h2 {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 20px; line-height: 1.15; letter-spacing: -.015em;
+  margin: 0; flex: 1;
+}
+.panel-head h2 small {
+  display: block; font-family: var(--font-body); font-weight: 400;
+  font-size: 14px; letter-spacing: 0; color: var(--muted); margin-top: 2px;
+}
+.chip {
+  flex: none; font-size: 13.5px; font-weight: 700; color: var(--muted);
+  background: var(--bg); border-radius: 99px; padding: 4px 10px;
+  display: inline-flex; align-items: center; gap: 4px;
+  transition: background .3s, color .3s;
+}
+.chip svg { width: 14px; height: 14px; display: none; }
+.panel.complete .chip { background: var(--violet); color: #fff; }
+.panel.complete .chip svg { display: block; }
+.panel.complete .ico { background: var(--violet-soft); color: var(--violet); }
+.panel.celebrate .chip { animation: chipPop .6s var(--spring); }
+.panel.celebrate .ico { animation: wiggle .6s ease; }
+@keyframes chipPop { 40% { transform: scale(1.25); } }
+@keyframes wiggle { 25% { transform: rotate(-10deg) scale(1.1); } 60% { transform: rotate(8deg); } }
+
+/* ============ Étapes ============ */
+.steps { list-style: none; margin: 0; padding: 0 0 6px; }
+.step {
+  position: relative; overflow: hidden;
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 13px 16px;
+  border-top: 1px solid var(--line);
+  cursor: pointer; user-select: none; -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background .35s;
+}
+.step:first-child { border-top: 0; }
+.step:active { background: #FAF9FC; }
+.step.done { background: #FBFAFF; }
+
+.num {
+  position: relative; flex: none; width: 32px; height: 32px; border-radius: 50%;
+  border: 2px solid #D5D1DD; display: grid; place-items: center;
+  font-family: var(--font-display); font-weight: 800; font-size: 14px; color: var(--muted);
+  transition: background .25s, border-color .25s, color .25s;
+}
+.num .n { transition: opacity .15s, transform .25s; }
+.num .tick { position: absolute; width: 18px; height: 18px; fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.num .tick path { stroke-dasharray: 22; stroke-dashoffset: 22; transition: stroke-dashoffset .3s ease .08s; }
+.step.done .num { background: var(--violet); border-color: var(--violet); }
+.step.done .num .n { opacity: 0; transform: scale(.4); }
+.step.done .num .tick path { stroke-dashoffset: 0; }
+.step.pop .num { animation: numPop .5s var(--spring); }
+@keyframes numPop { 0% { transform: scale(.7); } 60% { transform: scale(1.18); } 100% { transform: scale(1); } }
+
+.body { flex: 1; min-width: 0; padding-top: 4px; }
+.title { font-weight: 700; }
+.title span {
+  background-image: linear-gradient(var(--violet), var(--violet));
+  background-repeat: no-repeat; background-position: 0 58%; background-size: 0 2px;
+  transition: background-size .4s var(--smooth), color .3s;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+.step.done .title span { background-size: 100% 2px; color: var(--muted); }
+.note { display: block; font-size: 15px; color: var(--muted); margin-top: 3px; }
+.step.done .note { opacity: .75; }
+
+.ripple {
+  position: absolute; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--violet); opacity: .16; pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  animation: ripple .65s ease-out forwards;
+}
+@keyframes ripple { to { transform: translate(-50%, -50%) scale(40); opacity: 0; } }
+
+.tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13.5px; font-weight: 700;
+  padding: 4px 10px; border-radius: 99px; margin-top: 8px;
+}
+.tag svg { width: 15px; height: 15px; }
+.tag.ok { background: var(--violet-soft); color: var(--violet-deep); }
+.tag.ask { background: var(--rouge-soft); color: var(--rouge-deep); }
+
+.qty { list-style: none; margin: 8px 0 0; padding: 0; }
+.qty li { display: flex; align-items: baseline; gap: 10px; padding: 4px 0; font-size: 15.5px; }
+.qty b {
+  font-family: var(--font-display); font-weight: 800; font-size: 18px; color: var(--rouge);
+  min-width: 18px; text-align: right;
+}
+
+/* Précision */
+.precision {
+  margin: 0 16px 12px; padding: 12px 14px;
+  background: var(--or-soft); border-radius: var(--r-md);
+  font-size: 15px; color: #5E4A1E;
+}
+.precision strong { display: block; color: var(--ink); margin-bottom: 4px; }
+
+/* Bouton "voir les boîtes" */
+.more { margin-top: 10px; cursor: default; }
+.more-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--ink); color: #fff; border: 0; border-radius: 99px;
+  padding: 8px 14px 8px 12px; font-weight: 700; font-size: 14.5px; cursor: pointer;
+  transition: transform .15s;
+}
+.more-btn:active { transform: scale(.96); }
+.more-btn .chev { width: 16px; height: 16px; transition: transform .3s var(--smooth); }
+.more.open .more-btn .chev { transform: rotate(180deg); }
+.more-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s var(--smooth); }
+.more.open .more-body { grid-template-rows: 1fr; }
+.more-inner { overflow: hidden; }
+.boxes { display: grid; gap: 8px; padding-top: 12px; }
+.box {
+  border: 1.5px solid var(--line); border-radius: var(--r-md); padding: 11px 13px;
+  font-size: 15px; background: #fff;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity .3s, transform .35s var(--smooth);
+}
+.more.open .box { opacity: 1; transform: none; }
+.more.open .box:nth-child(2) { transition-delay: .05s; }
+.more.open .box:nth-child(3) { transition-delay: .1s; }
+.more.open .box:nth-child(4) { transition-delay: .15s; }
+.more.open .box:nth-child(5) { transition-delay: .2s; }
+.box strong { display: block; }
+.box .muted { color: var(--muted); }
+.box.end { border-style: dashed; color: var(--muted); }
+
+/* Pendant la matinée */
+.tips {
+  margin-top: 16px; padding: 16px;
+  background: var(--violet-soft); border-radius: var(--r-lg);
+  color: #2D2A63;
+}
+.tips h3 {
+  display: flex; align-items: center; gap: 10px; margin: 0 0 8px;
+  font-family: var(--font-display); font-weight: 800; font-size: 18px; letter-spacing: -.01em; color: var(--violet-deep);
+}
+.tips ul { margin: 0; padding-left: 20px; }
+.tips li { margin: 4px 0; }
+
+/* Fin de page */
+.end-zone { text-align: center; margin-top: 30px; }
+.reset {
+  background: none; border: 1.5px solid #D5D1DD; color: var(--muted);
+  padding: 9px 16px; border-radius: 99px; font-size: 14.5px; font-weight: 700; cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.reset.armed { background: var(--rouge); border-color: var(--rouge); color: #fff; }
+
+/* ============ Toast ============ */
+.toast {
+  position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom)); z-index: 50;
+  transform: translate(-50%, 160%);
+  display: flex; align-items: center; gap: 10px;
+  background: var(--asphalte); color: #fff;
+  padding: 9px 18px 9px 10px; border-radius: 99px;
+  box-shadow: 0 14px 30px -10px rgba(20, 10, 30, .5);
+  font-weight: 700; font-size: 15px; white-space: nowrap; max-width: calc(100vw - 28px);
+  transition: transform .5s var(--spring);
+  pointer-events: none;
+}
+.toast.show { transform: translate(-50%, 0); }
+.toast .tcar { width: 46px; flex: none; }
+.toast.show .tcar { animation: tcarIn .7s var(--smooth); }
+@keyframes tcarIn { from { transform: translateX(-30px); opacity: 0; } }
+.toast span { overflow: hidden; text-overflow: ellipsis; }
+
+/* ============ Arrivée ============ */
+.finish {
+  position: fixed; inset: 0; z-index: 60;
+  display: grid; place-items: center; padding: 20px;
+  background: rgba(34, 29, 41, .55);
+  -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px);
+  opacity: 0; pointer-events: none; transition: opacity .35s;
+}
+.finish.show { opacity: 1; pointer-events: auto; }
+#confetti { position: fixed; inset: 0; pointer-events: none; z-index: 61; }
+.finish-card {
+  position: relative; z-index: 62;
+  width: min(380px, 100%); background: var(--card); border-radius: 24px;
+  padding: 0 0 22px; overflow: hidden; text-align: center;
+  transform: translateY(30px) scale(.94); transition: transform .55s var(--spring);
+}
+.finish.show .finish-card { transform: none; }
+.finish-scene { background: var(--rouge); height: 130px; position: relative; overflow: hidden; }
+.finish-scene .ground { position: absolute; left: 0; right: 0; bottom: 0; height: 34px; background: var(--asphalte); }
+.finish-scene .ground::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px;
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.5) 0 12px, transparent 12px 24px);
+}
+.finish-scene .fcar { position: absolute; bottom: 14px; right: 68px; width: 120px; }
+.finish.show .fcar { animation: driveIn 1.4s var(--smooth) both; }
+@keyframes driveIn { from { transform: translateX(-320px); } }
+.finish-scene .fflag { position: absolute; right: 26px; bottom: 30px; width: 34px; height: 60px; }
+.finish-card h2 {
+  font-family: var(--font-display); font-weight: 800; font-size: 30px; letter-spacing: -.025em;
+  margin: 20px 20px 6px; line-height: 1.05;
+}
+.finish-card p { margin: 0 24px 18px; color: var(--muted); }
+.btn {
+  background: var(--violet); color: #fff; border: 0; border-radius: 99px;
+  padding: 12px 22px; font-weight: 700; font-size: 16px; cursor: pointer;
+}
+.btn:active { transform: scale(.97); }
+
+/* ============ Fond ============ */
+.bg-cars { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.bg-cars svg { position: absolute; opacity: .07; }
+
+/* ============ Mouvement réduit ============ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+}
+.no-anim *, .no-anim *::before, .no-anim *::after { transition: none !important; }
 </style>
 </head>
-<body>
+<body class="no-anim">
 
-<!-- Icônes -->
-<svg width="0" height="0" style="position:absolute">
-  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
-  <symbol id="i-sunrise" viewBox="0 0 24 24"><path d="M3 19h18"/><path d="M7 19a5 5 0 0 1 10 0"/><path d="M12 5v3"/><path d="M5.6 10.6l1.8 1.8"/><path d="M18.4 10.6l-1.8 1.8"/></symbol>
-  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3c.8 3 4.5 5 4.5 9.5a4.5 4.5 0 0 1-9 0c0-2.2 1-3.6 2.2-4.6.1 1.8 1 2.9 2.1 3.1-.4-2.8-.5-5.3.2-8z"/></symbol>
-  <symbol id="i-bread" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(-45 12 12)"/><path d="M9 12.5l2.5 1"/><path d="M12 9.5l2.5 1"/><path d="M15 6.8l2 .8"/></symbol>
-  <symbol id="i-shelf" viewBox="0 0 24 24"><path d="M3 5h18"/><path d="M3 12h18"/><path d="M3 19h18"/><rect x="5" y="7" width="4" height="5"/><rect x="11" y="8.5" width="5" height="3.5"/><rect x="6" y="14.5" width="6" height="4.5"/></symbol>
-  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></symbol>
-  <symbol id="i-cake" viewBox="0 0 24 24"><path d="M4 20h16v-7.5H4z"/><path d="M4 15.5c1.3.9 2.7.9 4 0s2.7-.9 4 0 2.7.9 4 0 2.7-.9 4 0"/><path d="M12 12.5V9"/><path d="M12 6.8c-.8-.8-.6-1.8 0-2.8.6 1 .8 2 0 2.8z"/></symbol>
-  <symbol id="i-tray" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="1.5"/><circle cx="8" cy="10" r="1"/><circle cx="12" cy="10" r="1"/><circle cx="16" cy="10" r="1"/><circle cx="8" cy="14" r="1"/><circle cx="12" cy="14" r="1"/><circle cx="16" cy="14" r="1"/></symbol>
-  <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M4.2 7.5l15.6 9"/><path d="M19.8 7.5l-15.6 9"/><path d="M9.5 4.5L12 7l2.5-2.5"/><path d="M9.5 19.5L12 17l2.5 2.5"/></symbol>
-  <symbol id="i-broom" viewBox="0 0 24 24"><path d="M19 3l-6.5 8"/><path d="M8.5 10.5l5 4"/><path d="M8.5 10.5c-2.5 1-4.5 4-5.5 9.5 5.5-1 8.5-3 10.5-5.5"/><path d="M6 17l2-2"/></symbol>
-  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3.5 8L12 4l8.5 4v8L12 20l-8.5-4z"/><path d="M3.5 8L12 12l8.5-4"/><path d="M12 12v8"/></symbol>
-  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
-  <!-- La petite 107 bleu-violet -->
-  <symbol id="car" viewBox="0 0 120 64">
-    <path d="M8 46 Q8 37 16 35 L30 32 Q40 14 58 12 L88 12 Q100 12 104 25 L108 41 Q109 49 104 49 L12 49 Q8 49 8 46Z" fill="#5d5ad8"/>
-    <path d="M30 32 Q40 14 58 12 L88 12 Q100 12 104 25 L105 29 L30 33Z" fill="#4f4bc4"/>
-    <path d="M37 31 Q45 19 58 17.5 L67 17.5 L67 31Z" fill="#d7e8f7"/>
-    <path d="M71 17.5 L87 17.5 Q96 17.5 99 29 L99 31 L71 31Z" fill="#d7e8f7"/>
-    <path d="M67.5 34 L67.5 47" stroke="#423eb0" stroke-width="1.2"/>
-    <rect x="58" y="36" width="6" height="1.8" rx=".9" fill="#423eb0"/>
-    <ellipse cx="13" cy="39" rx="3" ry="2.2" fill="#fff6c9"/>
-    <rect x="104.5" y="28" width="3" height="8" rx="1.2" fill="#e5484d"/>
-    <rect x="8" y="44" width="101" height="3" rx="1.5" fill="#3a37a0"/>
-    <circle cx="30" cy="49" r="9" fill="#222"/><circle cx="30" cy="49" r="4" fill="#bbb"/>
-    <circle cx="88" cy="49" r="9" fill="#222"/><circle cx="88" cy="49" r="4" fill="#bbb"/>
-  </symbol>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-sunrise" viewBox="0 0 24 24"><path d="M3 19h18"/><path d="M7 19a5 5 0 0 1 10 0"/><path d="M12 5v3"/><path d="M5.6 10.6l1.8 1.8"/><path d="M18.4 10.6l-1.8 1.8"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3c.8 3 4.5 5 4.5 9.5a4.5 4.5 0 0 1-9 0c0-2.2 1-3.6 2.2-4.6.1 1.8 1 2.9 2.1 3.1-.4-2.8-.5-5.3.2-8z"/></symbol>
+    <symbol id="i-bread" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(-45 12 12)"/><path d="M8.5 12.5l2 1"/><path d="M11.5 9.5l2 1"/><path d="M14.5 6.8l1.6.8"/></symbol>
+    <symbol id="i-shelf" viewBox="0 0 24 24"><path d="M3 5h18"/><path d="M3 12h18"/><path d="M3 19h18"/><rect x="5" y="7" width="4" height="5"/><rect x="11" y="8.5" width="5" height="3.5"/><rect x="6" y="14.5" width="6" height="4.5"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></symbol>
+    <symbol id="i-cake" viewBox="0 0 24 24"><path d="M4 20h16v-7.5H4z"/><path d="M4 15.5c1.3.9 2.7.9 4 0s2.7-.9 4 0 2.7.9 4 0 2.7-.9 4 0"/><path d="M12 12.5V9"/><path d="M12 6.8c-.8-.8-.6-1.8 0-2.8.6 1 .8 2 0 2.8z"/></symbol>
+    <symbol id="i-tray" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="1.5"/><circle cx="8" cy="10" r="1"/><circle cx="12" cy="10" r="1"/><circle cx="16" cy="10" r="1"/><circle cx="8" cy="14" r="1"/><circle cx="12" cy="14" r="1"/><circle cx="16" cy="14" r="1"/></symbol>
+    <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M4.2 7.5l15.6 9"/><path d="M19.8 7.5l-15.6 9"/><path d="M9.5 4.5L12 7l2.5-2.5"/><path d="M9.5 19.5L12 17l2.5 2.5"/></symbol>
+    <symbol id="i-broom" viewBox="0 0 24 24"><path d="M19 3l-6.5 8"/><path d="M8.5 10.5l5 4"/><path d="M8.5 10.5c-2.5 1-4.5 4-5.5 9.5 5.5-1 8.5-3 10.5-5.5"/><path d="M6 17l2-2"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M3.5 8L12 4l8.5 4v8L12 20l-8.5-4z"/><path d="M3.5 8L12 12l8.5-4"/><path d="M12 12v8"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="flag" viewBox="0 0 26 28">
+      <rect x="2" y="2" width="2" height="25" rx="1" fill="#E9E6EF"/>
+      <g>
+        <rect x="4" y="3" width="20" height="13" fill="#fff"/>
+        <rect x="4" y="3" width="5" height="4.33" fill="#221D29"/><rect x="14" y="3" width="5" height="4.33" fill="#221D29"/>
+        <rect x="9" y="7.33" width="5" height="4.33" fill="#221D29"/><rect x="19" y="7.33" width="5" height="4.33" fill="#221D29"/>
+        <rect x="4" y="11.66" width="5" height="4.34" fill="#221D29"/><rect x="14" y="11.66" width="5" height="4.34" fill="#221D29"/>
+      </g>
+    </symbol>
+  </defs>
 </svg>
+<style>
+  svg.i { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  svg.i.sm { width: 16px; height: 16px; }
+</style>
 
-<div class="top">
-  <div class="top-inner">
-    <!-- Mets le fichier du logo à côté de cette page sous le nom logo.png -->
-    <img class="logo" src="logo.png" alt="" onerror="this.remove()">
-    <div>
-      <p class="kicker">Rayon boulangerie</p>
-      <h1>Fiche du matin</h1>
-      <p class="mission"><b>Ta mission :</b> faire arriver la 107 au bout du trajet. Chaque étape cochée = un bout de route.</p>
-    </div>
-    <svg class="top-car" viewBox="0 0 120 64"><use href="#car"/></svg>
-  </div>
-</div>
-
-<!-- Les 107 en fond -->
 <div class="bg-cars" aria-hidden="true">
-  <svg style="top:14%;left:-6%;width:140px;transform:rotate(-8deg)" viewBox="0 0 120 64"><use href="#car"/></svg>
-  <svg style="top:31%;right:-5%;width:110px;transform:scaleX(-1) rotate(-6deg)" viewBox="0 0 120 64"><use href="#car"/></svg>
-  <svg style="top:52%;left:-4%;width:100px;transform:rotate(7deg)" viewBox="0 0 120 64"><use href="#car"/></svg>
-  <svg style="top:70%;right:-7%;width:150px;transform:scaleX(-1) rotate(5deg)" viewBox="0 0 120 64"><use href="#car"/></svg>
-  <svg style="top:88%;left:-5%;width:120px;transform:rotate(-4deg)" viewBox="0 0 120 64"><use href="#car"/></svg>
+  <div data-car style="position:absolute;top:30%;left:-30px;width:130px;transform:rotate(-8deg)"></div>
+  <div data-car style="position:absolute;top:58%;right:-34px;width:150px;transform:scaleX(-1) rotate(-5deg)"></div>
+  <div data-car style="position:absolute;top:86%;left:-24px;width:110px;transform:rotate(5deg)"></div>
 </div>
+
+<header class="hero">
+  <div class="hero-in">
+    <img class="logo" src="logo.png" alt="" onerror="this.remove()">
+    <h1>Fiche du matin</h1>
+    <p class="mission"><strong>Ta mission :</strong> faire arriver la 107 au bout du trajet. Chaque étape cochée la fait avancer.</p>
+    <div class="hero-car" id="heroCar" data-car></div>
+  </div>
+</header>
 
 <div class="wrap">
 
-  <div class="sticky">
-    <div class="sticky-row">
+  <div class="hud">
+    <div class="hud-top">
       <span class="deadline"><svg class="i"><use href="#i-clock"/></svg>Rayon prêt pour 9 h – 9 h 30</span>
-      <span class="count" id="count"></span>
+      <span class="count"><b id="countN">0</b><small> / <span id="countT">0</span></small></span>
     </div>
-    <div class="road">
-      <svg class="road-car" id="roadCar" viewBox="0 0 120 64"><use href="#car" transform="translate(120 0) scale(-1 1)"/></svg>
-      <div class="bar"><div id="bar"></div></div>
-      <span class="flag" title="Arrivée">🏁</span>
+    <div class="road" id="road">
+      <div class="road-trail"></div>
+      <div class="lane"></div>
+      <div class="road-car" data-car></div>
+      <svg class="flag"><use href="#flag"/></svg>
     </div>
-    <div class="hint" id="status"></div>
+    <p class="status" id="status"></p>
   </div>
 
-  <section>
-    <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-sunrise"/></svg></div><h2>En arrivant</h2></div>
-    <ol>
-      <li class="step"><div class="body"><span class="t">Tu allumes le four</span></div></li>
-      <li class="step"><div class="body"><span class="t">Tu sors tes viennoiseries et tu éteins la chambre de pousse</span></div></li>
-      <li class="step"><div class="body"><span class="t">Tu mets tes viennoiseries dans le four</span></div></li>
+  <!-- En arrivant -->
+  <section class="panel">
+    <div class="panel-head">
+      <span class="ico"><svg class="i"><use href="#i-sunrise"/></svg></span>
+      <h2>En arrivant</h2>
+      <span class="chip"><svg class="i"><use href="#i-check"/></svg><span class="chip-t"></span></span>
+    </div>
+    <ol class="steps">
+      <li class="step"><div class="body"><div class="title"><span>Tu allumes le four</span></div></div></li>
+      <li class="step"><div class="body"><div class="title"><span>Tu sors tes viennoiseries et tu éteins la chambre de pousse</span></div></div></li>
+      <li class="step"><div class="body"><div class="title"><span>Tu mets tes viennoiseries dans le four</span></div></div></li>
     </ol>
   </section>
 
-  <section>
-    <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-flame"/></svg></div><h2>Pendant la cuisson</h2></div>
-    <ol>
+  <!-- Pendant la cuisson -->
+  <section class="panel">
+    <div class="panel-head">
+      <span class="ico"><svg class="i"><use href="#i-flame"/></svg></span>
+      <h2>Pendant la cuisson</h2>
+      <span class="chip"><svg class="i"><use href="#i-check"/></svg><span class="chip-t"></span></span>
+    </div>
+    <ol class="steps">
       <li class="step"><div class="body">
-        <span class="t">Tu prends les pains et viennoiseries de la veille à jeter</span>
+        <div class="title"><span>Tu prends les pains et viennoiseries de la veille à jeter</span></div>
         <span class="note">Les viennoiseries, tu peux en faire des « viennoiseries de la veille » par paquets de 10.</span>
       </div></li>
       <li class="step"><div class="body">
-        <span class="t">Tu vérifies qu'il n'y a pas de sandwichs de la veille à récupérer</span>
-        <span class="tag ok"><svg class="i sm"><use href="#i-check"/></svg>Déjà regardé ce soir, c'est bon, il n'y a rien</span>
+        <div class="title"><span>Tu vérifies qu'il n'y a pas de sandwichs de la veille à récupérer</span></div>
+        <span class="tag ok"><svg class="i"><use href="#i-check"/></svg>Déjà regardé ce soir, il n'y a rien</span>
       </div></li>
       <li class="step"><div class="body">
-        <span class="t">Tu vérifies les dates des viennoiseries</span>
+        <div class="title"><span>Tu vérifies les dates des viennoiseries</span></div>
         <span class="note">Pour savoir s'il faut les mettre en −30 % ou pas.</span>
-        <span class="tag info"><svg class="i sm"><use href="#i-user"/></svg>Pour te connecter au Zebra, demande à Gaëtan</span>
+        <span class="tag ask"><svg class="i"><use href="#i-user"/></svg>Pour te connecter au Zebra, demande à Gaëtan</span>
       </div></li>
-      <li class="step"><div class="body"><span class="t">Tu nettoies un peu le meuble</span></div></li>
+      <li class="step"><div class="body"><div class="title"><span>Tu nettoies un peu le meuble</span></div></div></li>
     </ol>
   </section>
 
-  <section>
-    <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-bread"/></svg></div><h2>Cuisson du pain</h2></div>
-    <ol>
+  <!-- Cuisson du pain -->
+  <section class="panel">
+    <div class="panel-head">
+      <span class="ico"><svg class="i"><use href="#i-bread"/></svg></span>
+      <h2>Cuisson du pain</h2>
+      <span class="chip"><svg class="i"><use href="#i-check"/></svg><span class="chip-t"></span></span>
+    </div>
+    <ol class="steps">
       <li class="step"><div class="body">
-        <span class="t">Tu sors tes viennoiseries</span>
+        <div class="title"><span>Tu sors tes viennoiseries</span></div>
         <span class="note">Tu les laisses refroidir.</span>
       </div></li>
-      <li class="step"><div class="body"><span class="t">Tu mets un des 3 chariots de pain</span></div></li>
+      <li class="step"><div class="body"><div class="title"><span>Tu mets un des 3 chariots de pain</span></div></div></li>
       <li class="step"><div class="body">
-        <span class="t">Tu enchaînes les 3 chariots et les viennoiseries</span>
+        <div class="title"><span>Tu enchaînes les 3 chariots et les viennoiseries</span></div>
         <span class="note">Tranquille.</span>
       </div></li>
       <li class="step"><div class="body">
-        <span class="t">Tu emballes quand ce n'est pas trop chaud</span>
-        <details>
-          <summary><svg class="i sm"><use href="#i-box"/></svg>Voir les boîtes à faire</summary>
-          <div class="boxes">
+        <div class="title"><span>Tu emballes quand ce n'est pas trop chaud</span></div>
+        <div class="more">
+          <button class="more-btn" type="button" aria-expanded="false">
+            <svg class="i sm"><use href="#i-box"/></svg>Voir les boîtes à faire<svg class="i chev"><use href="#i-chev"/></svg>
+          </button>
+          <div class="more-body"><div class="more-inner"><div class="boxes">
             <div class="box">
               <strong>Croissants et pains au chocolat pur beurre</strong>
               Une plaque sur le meuble, l'autre plaque en boîtes de 4.
-              <span class="note">+ quelques boîtes d'assortiment pur beurre (2, 3, 4…) : 2 pains au chocolat + 2 croissants.</span>
+              <span class="note">Et quelques boîtes d'assortiment pur beurre (2, 3, 4…) : 2 pains au chocolat et 2 croissants.</span>
             </div>
             <div class="box">
               <strong>Croissants et pains au chocolat ordinaires</strong>
@@ -301,144 +537,443 @@
               Pareil : moitié en rayon, moitié en boîte.
             </div>
             <div class="box end">En fait, tu fais un peu comme tu veux, il faut juste que ce soit à peu près équilibré.</div>
-          </div>
-        </details>
+          </div></div></div>
+        </div>
       </div></li>
     </ol>
   </section>
 
-  <section>
-    <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-shelf"/></svg></div><h2>Mise en rayon</h2></div>
-    <ol>
+  <!-- Mise en rayon -->
+  <section class="panel">
+    <div class="panel-head">
+      <span class="ico"><svg class="i"><use href="#i-shelf"/></svg></span>
+      <h2>Mise en rayon</h2>
+      <span class="chip"><svg class="i"><use href="#i-check"/></svg><span class="chip-t"></span></span>
+    </div>
+    <ol class="steps">
       <li class="step"><div class="body">
-        <span class="t">Tu mets en rayon pour 9 h – 9 h 30</span>
+        <div class="title"><span>Tu mets en rayon pour 9 h – 9 h 30</span></div>
         <span class="note">(Les pains spéciaux sur la rangée du haut. Fais en sorte qu'ils soient visibles contre la vitre pour les personnes petites.)</span>
         <span class="note">Fais au mieux, peu importe.</span>
       </div></li>
     </ol>
-    <div class="tips">
-      <h3><svg class="i"><use href="#i-eye"/></svg>Pendant la matinée</h3>
-      <ul>
-        <li>Va voir de temps en temps comment les pains se vident.</li>
-        <li>Rapproche les baguettes, fais le facing de tes pains.</li>
-        <li>Tu peux aussi réorganiser le rayon des viennoiseries.</li>
-      </ul>
-    </div>
   </section>
 
-  <section>
-    <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-cake"/></svg></div><h2>Après la mise en rayon</h2></div>
-    <ol>
-      <li class="step"><div class="body"><span class="t">Tu tires</span></div></li>
+  <aside class="tips">
+    <h3><svg class="i"><use href="#i-eye"/></svg>Pendant la matinée</h3>
+    <ul>
+      <li>Va voir de temps en temps comment les pains se vident.</li>
+      <li>Rapproche les baguettes, fais le facing de tes pains.</li>
+      <li>Tu peux aussi réorganiser le rayon des viennoiseries.</li>
+    </ul>
+  </aside>
+
+  <!-- Après la mise en rayon -->
+  <section class="panel">
+    <div class="panel-head">
+      <span class="ico"><svg class="i"><use href="#i-cake"/></svg></span>
+      <h2>Après la mise en rayon</h2>
+      <span class="chip"><svg class="i"><use href="#i-check"/></svg><span class="chip-t"></span></span>
+    </div>
+    <ol class="steps">
+      <li class="step"><div class="body"><div class="title"><span>Tu tires</span></div></div></li>
       <li class="step"><div class="body">
-        <span class="t">Tu vérifies s'il y a des gâteaux dans le frigo à mettre en rayon</span>
+        <div class="title"><span>Tu vérifies s'il y a des gâteaux dans le frigo à mettre en rayon</span></div>
         <span class="note">N'hésite pas à vérifier les dates des gâteaux.</span>
       </div></li>
     </ol>
   </section>
 
-  <section>
-    <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-tray"/></svg></div>
+  <!-- Plaquage viennoiseries -->
+  <section class="panel">
+    <div class="panel-head">
+      <span class="ico"><svg class="i"><use href="#i-tray"/></svg></span>
       <h2>Plaquage des viennoiseries<small>Pour le lendemain. Tu fais comme tu veux, mais moi je fais comme ça.</small></h2>
+      <span class="chip"><svg class="i"><use href="#i-check"/></svg><span class="chip-t"></span></span>
     </div>
     <div class="precision">
-      <b>C'est pas grave si tu ne respectes pas exactement les quantités, fais au mieux.</b>
+      <strong>C'est pas grave si tu ne respectes pas exactement les quantités, fais au mieux.</strong>
       Il va sûrement te manquer des pains au chocolat ordinaires : fais-en le plus possible, mais en multiples de 10, parce que ce sont des boîtes de 10. Par exemple, si tu as 53 pains au chocolat, tu n'en mets pas 53, tu en mets 50, comme ça on peut faire 5 boîtes de 10.
     </div>
-    <ol>
+    <ol class="steps">
       <li class="step"><div class="body">
-        <span class="t">Tu fais le premier chariot</span>
+        <div class="title"><span>Tu fais le premier chariot</span></div>
         <span class="note">Tu suis la fiche de plaque qu'Enzo a faite.</span>
       </div></li>
-      <li class="step"><div class="body"><span class="t">Tu fais le deuxième chariot</span></div></li>
+      <li class="step"><div class="body"><div class="title"><span>Tu fais le deuxième chariot</span></div></div></li>
       <li class="step"><div class="body">
-        <span class="t">Tu mets dans la chambre de pousse, tu l'allumes et tu mets 17 h 30 de temps</span>
+        <div class="title"><span>Tu mets dans la chambre de pousse, tu l'allumes et tu mets 17 h 30 de temps</span></div>
         <span class="note">Normalement il faut juste appuyer sur le bouton du temps (là où tu bouges le temps) et ça se lance. Tu verras quand c'est fait.</span>
-        <span class="tag info"><svg class="i sm"><use href="#i-user"/></svg>Si tu n'y arrives pas, demande à Gaëtan</span>
+        <span class="tag ask"><svg class="i"><use href="#i-user"/></svg>Si tu n'y arrives pas, demande à Gaëtan</span>
       </div></li>
     </ol>
   </section>
 
-  <section>
-    <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-snow"/></svg></div>
+  <!-- Chariots de pain -->
+  <section class="panel">
+    <div class="panel-head">
+      <span class="ico"><svg class="i"><use href="#i-snow"/></svg></span>
       <h2>Les 3 chariots de pain<small>Pour le lendemain</small></h2>
+      <span class="chip"><svg class="i"><use href="#i-check"/></svg><span class="chip-t"></span></span>
     </div>
-    <ol>
+    <ol class="steps">
       <li class="step"><div class="body">
-        <span class="t">Chariot des pains blancs</span>
-        <ul class="list">
+        <div class="title"><span>Chariot des pains blancs</span></div>
+        <ul class="qty">
           <li><b>2</b>cartons de parisiens</li>
           <li><b>1</b>carton de baguettes normales</li>
         </ul>
         <span class="note">Tu le mets au congèle.</span>
       </div></li>
       <li class="step"><div class="body">
-        <span class="t">Chariot des Constance</span>
-        <ul class="list">
+        <div class="title"><span>Chariot des Constance</span></div>
+        <ul class="qty">
           <li><b>2</b>Constance normales (nature)</li>
           <li><b>1</b>Constance céréales</li>
           <li><b>1</b>carton de Généreuse</li>
         </ul>
       </div></li>
       <li class="step"><div class="body">
-        <span class="t">Les pains spéciaux</span>
+        <div class="title"><span>Les pains spéciaux</span></div>
         <span class="note">Conseil : tu peux sortir tous les chariots d'un coup. Comme ça, ils sont tous dehors, tu les remplis tranquillement et après tu les rerentres, ça t'évite de rester dans le froid. Sinon tu les sors un par un, mais tout sortir d'un coup, c'est bien aussi.</span>
       </div></li>
     </ol>
   </section>
 
-  <section>
-    <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-broom"/></svg></div><h2>Pour finir</h2></div>
-    <ol>
+  <!-- Pour finir -->
+  <section class="panel">
+    <div class="panel-head">
+      <span class="ico"><svg class="i"><use href="#i-broom"/></svg></span>
+      <h2>Pour finir</h2>
+      <span class="chip"><svg class="i"><use href="#i-check"/></svg><span class="chip-t"></span></span>
+    </div>
+    <ol class="steps">
       <li class="step"><div class="body">
-        <span class="t">Tu ranges la boulangerie</span>
+        <div class="title"><span>Tu ranges la boulangerie</span></div>
         <span class="note">Tu vas chercher le balai dans la réserve, avec la pelle et la balayette. Tu ne te prends pas la tête.</span>
       </div></li>
     </ol>
   </section>
 
-  <div class="footer">
-    <div class="done-msg" id="doneMsg">Tout est fait, merci et bonne route en 107 !</div>
-    <button class="reset" id="reset">Tout décocher</button>
+  <div class="end-zone">
+    <button class="reset" id="reset" type="button">Recommencer la fiche</button>
   </div>
 </div>
 
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <div class="tcar" data-car></div><span id="toastText"></span>
+</div>
+
+<div class="finish" id="finish" aria-hidden="true">
+  <div class="finish-card" role="dialog" aria-labelledby="finishTitle">
+    <div class="finish-scene">
+      <svg class="fflag"><use href="#flag"/></svg>
+      <div class="ground"></div>
+      <div class="fcar" id="fcar" data-car></div>
+    </div>
+    <h2 id="finishTitle">La 107 est arrivée !</h2>
+    <p>Toute la fiche est faite. Merci, et bonne journée !</p>
+    <button class="btn" id="finishClose" type="button">Fermer</button>
+  </div>
+</div>
+<canvas id="confetti"></canvas>
+
 <script>
-  const steps = document.querySelectorAll('li.step');
-  const count = document.getElementById('count');
-  const bar = document.getElementById('bar');
-  const doneMsg = document.getElementById('doneMsg');
-  const roadCar = document.getElementById('roadCar');
-  function update() {
-    const done = document.querySelectorAll('li.step.done').length;
-    count.textContent = done + ' / ' + steps.length;
-    const pct = done / steps.length * 100;
-    bar.style.width = pct + '%';
-    roadCar.style.left = pct + '%';
-    roadCar.style.transform = 'translateX(-' + pct + '%)';
-    const finished = done === steps.length;
-    doneMsg.style.display = finished ? 'block' : 'none';
-    roadCar.classList.toggle('arrived', finished);
-    const left = steps.length - done;
-    let msg;
-    if (done === 0) msg = '<b>La 107 est garée, moteur froid.</b> Coche la 1re étape pour mettre le contact.';
-    else if (pct < 25) msg = '<b>Contact ! La 107 démarre.</b> Tranquille, elle chauffe.';
-    else if (pct < 50) msg = '<b>La 107 est lancée.</b> Elle tient la route, continue.';
-    else if (pct < 75) msg = '<b>Mi-parcours !</b> La 107 n\'a jamais roulé aussi loin.';
-    else if (!finished) msg = '<b>Plus que ' + left + ' étape' + (left > 1 ? 's' : '') + ' !</b> On aperçoit déjà l\'arrivée.';
-    else msg = '<b>La 107 est arrivée !</b> Mission réussie.';
-    document.getElementById('status').innerHTML = msg;
+(function () {
+  /* ---------- La 107 (dessin) ---------- */
+  function wheel(cx) {
+    return '<g class="wheel" style="transform-origin:' + cx + 'px 49px">' +
+      '<circle cx="' + cx + '" cy="49" r="9" fill="#1E1B23"/>' +
+      '<circle cx="' + cx + '" cy="49" r="5.2" fill="#CFCBDA"/>' +
+      '<path d="M' + cx + ' 44.6v8.8M' + (cx - 4.4) + ' 49h8.8" stroke="#8C879A" stroke-width="1.6"/>' +
+      '<circle cx="' + cx + '" cy="49" r="1.6" fill="#6E6980"/></g>';
   }
-  steps.forEach(li => li.addEventListener('click', e => {
-    if (e.target.closest('details')) return;
-    li.classList.toggle('done');
-    update();
-  }));
-  document.getElementById('reset').addEventListener('click', () => {
-    steps.forEach(li => li.classList.remove('done'));
-    update();
+  var CAR =
+    '<svg class="car" viewBox="-6 0 126 64" aria-hidden="true">' +
+      '<circle class="puff p1" cx="4" cy="45" r="3"/><circle class="puff p2" cx="4" cy="45" r="3"/><circle class="puff p3" cx="4" cy="45" r="3"/>' +
+      '<g class="carbody">' +
+        '<g transform="translate(120 0) scale(-1 1)">' +
+          '<path d="M8 46 Q8 37 16 35 L30 32 Q40 14 58 12 L88 12 Q100 12 104 25 L108 41 Q109 49 104 49 L12 49 Q8 49 8 46Z" fill="#5D5AD8"/>' +
+          '<path d="M30 32 Q40 14 58 12 L88 12 Q100 12 104 25 L105 29 L30 33Z" fill="#4F4BC4"/>' +
+          '<path d="M37 31 Q45 19 58 17.5 L67 17.5 L67 31Z" fill="#DCEAF8"/>' +
+          '<path d="M71 17.5 L87 17.5 Q96 17.5 99 29 L99 31 L71 31Z" fill="#DCEAF8"/>' +
+          '<path d="M40 29 Q46 21 54 19.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>' +
+          '<path d="M67.5 34 L67.5 47" stroke="#423EB0" stroke-width="1.2"/>' +
+          '<rect x="58" y="36" width="6" height="1.8" rx=".9" fill="#423EB0"/>' +
+          '<ellipse cx="13" cy="39" rx="3" ry="2.2" fill="#FFF3C4"/>' +
+          '<rect x="104.5" y="28" width="3" height="8" rx="1.2" fill="#E5484D"/>' +
+          '<rect x="8" y="44" width="101" height="3" rx="1.5" fill="#3A37A0"/>' +
+        '</g>' +
+        wheel(32) + wheel(90) +
+      '</g>' +
+    '</svg>';
+  document.querySelectorAll('[data-car]').forEach(function (el) { el.innerHTML = CAR; });
+
+  /* ---------- Éléments ---------- */
+  var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
+  var TOTAL = steps.length;
+  var road = document.getElementById('road');
+  var countN = document.getElementById('countN');
+  var statusEl = document.getElementById('status');
+  document.getElementById('countT').textContent = TOTAL;
+
+  steps.forEach(function (s, i) {
+    s.setAttribute('role', 'checkbox');
+    s.setAttribute('aria-checked', 'false');
+    s.tabIndex = 0;
+    var num = document.createElement('span');
+    num.className = 'num';
+    num.innerHTML = '<span class="n">' + (i + 1) + '</span><svg class="tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+    s.insertBefore(num, s.firstChild);
   });
-  update();
+
+  /* ---------- Sauvegarde du jour ---------- */
+  var today = new Date();
+  var KEY = 'fiche107-' + today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  function save() {
+    try {
+      var done = [];
+      steps.forEach(function (s, i) { if (s.classList.contains('done')) done.push(i); });
+      localStorage.setItem(KEY, JSON.stringify(done));
+    } catch (e) {}
+  }
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (!raw) return;
+      JSON.parse(raw).forEach(function (i) { if (steps[i]) setDone(steps[i], true); });
+    } catch (e) {}
+  }
+
+  /* ---------- Messages ---------- */
+  var RIDE = [
+    'Vroum, la 107 avance.',
+    'La 107 passe la seconde.',
+    'Ça roule, continue.',
+    'Encore un bout de route.',
+    'Feu vert, on avance.',
+    'La 107 double un chariot de pain.',
+    'Clignotant, et c\'est reparti.',
+    'Belle trajectoire.'
+  ];
+  var lastRide = -1;
+  function rideMsg() {
+    var i;
+    do { i = Math.floor(Math.random() * RIDE.length); } while (i === lastRide && RIDE.length > 1);
+    lastRide = i;
+    return RIDE[i];
+  }
+  function statusMsg(done) {
+    var pct = done / TOTAL * 100, left = TOTAL - done;
+    if (done === 0) return '<b>La 107 est garée, moteur froid.</b> Coche la 1re étape pour mettre le contact.';
+    if (done === TOTAL) return '<b>La 107 est arrivée.</b> Mission réussie.';
+    if (left <= 3) return '<b>Plus que ' + left + ' étape' + (left > 1 ? 's' : '') + ' !</b> On aperçoit déjà le drapeau.';
+    if (pct < 25) return '<b>Contact, la 107 démarre.</b> Tranquille, elle chauffe.';
+    if (pct < 50) return '<b>La 107 est lancée.</b> Elle tient la route.';
+    if (pct < 75) return '<b>Mi-parcours.</b> La 107 n\'a jamais roulé aussi loin.';
+    return '<b>Dernière ligne droite.</b> Garde le rythme.';
+  }
+
+  /* ---------- Toast ---------- */
+  var toast = document.getElementById('toast');
+  var toastText = document.getElementById('toastText');
+  var toastTimer;
+  function showToast(msg) {
+    toastText.textContent = msg;
+    toast.classList.remove('show', 'moving');
+    void toast.offsetWidth;
+    toast.classList.add('show', 'moving');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('show', 'moving'); }, 2000);
+  }
+
+  /* ---------- Progression ---------- */
+  var moveTimer, lastDone = 0;
+  function render(animate, dir) {
+    var done = steps.filter(function (s) { return s.classList.contains('done'); }).length;
+    road.style.setProperty('--p', done / TOTAL);
+    countN.textContent = done;
+
+    if (animate) {
+      countN.classList.remove('bump'); void countN.offsetWidth; countN.classList.add('bump');
+      road.classList.add('moving');
+      road.classList.toggle('reverse', dir < 0);
+      clearTimeout(moveTimer);
+      moveTimer = setTimeout(function () { road.classList.remove('moving', 'reverse'); }, 950);
+
+      statusEl.classList.add('swap');
+      setTimeout(function () { statusEl.innerHTML = statusMsg(done); statusEl.classList.remove('swap'); }, 180);
+    } else {
+      statusEl.innerHTML = statusMsg(done);
+    }
+
+    var newlyComplete = null;
+    panels.forEach(function (p) {
+      var ps = p.querySelectorAll('.step'), d = p.querySelectorAll('.step.done').length;
+      var was = p.classList.contains('complete'), now = d === ps.length;
+      p.querySelector('.chip-t').textContent = now ? 'Fait' : d + '/' + ps.length;
+      p.classList.toggle('complete', now);
+      if (animate && now && !was) {
+        newlyComplete = p;
+        p.classList.remove('celebrate'); void p.offsetWidth; p.classList.add('celebrate');
+      }
+    });
+
+    if (animate) {
+      var prevPct = lastDone / TOTAL, pct = done / TOTAL;
+      if (done === TOTAL) {
+        setTimeout(openFinish, 650);
+      } else if (dir < 0) {
+        showToast('Marche arrière, la 107 recule.');
+      } else if (prevPct < .5 && pct >= .5) {
+        showToast('Mi-parcours ! La 107 tient le coup.');
+      } else if (TOTAL - done === 1) {
+        showToast('Plus qu\'une étape, le drapeau est là.');
+      } else if (newlyComplete) {
+        showToast('« ' + newlyComplete.querySelector('h2').firstChild.textContent.trim() + ' » : fait.');
+      } else {
+        showToast(rideMsg());
+      }
+    }
+    lastDone = done;
+  }
+
+  function setDone(step, on) {
+    step.classList.toggle('done', on);
+    step.setAttribute('aria-checked', on ? 'true' : 'false');
+  }
+
+  function toggle(step, ev) {
+    var on = !step.classList.contains('done');
+    setDone(step, on);
+
+    var r = step.getBoundingClientRect();
+    var x = ev && ev.clientX ? ev.clientX - r.left : 30;
+    var y = ev && ev.clientY ? ev.clientY - r.top : r.height / 2;
+    var rip = document.createElement('span');
+    rip.className = 'ripple';
+    rip.style.left = x + 'px'; rip.style.top = y + 'px';
+    step.appendChild(rip);
+    setTimeout(function () { rip.remove(); }, 700);
+
+    if (on) {
+      step.classList.remove('pop'); void step.offsetWidth; step.classList.add('pop');
+      try { navigator.vibrate && navigator.vibrate(12); } catch (e) {}
+    }
+    save();
+    render(true, on ? 1 : -1);
+  }
+
+  steps.forEach(function (s) {
+    s.addEventListener('click', function (e) {
+      if (e.target.closest('.more')) return;
+      toggle(s, e);
+    });
+    s.addEventListener('keydown', function (e) {
+      if (e.target !== s) return;
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(s); }
+    });
+  });
+
+  /* ---------- Boîtes ---------- */
+  document.querySelectorAll('.more').forEach(function (m) {
+    var b = m.querySelector('.more-btn');
+    b.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var open = !m.classList.contains('open');
+      m.classList.toggle('open', open);
+      b.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+
+  /* ---------- Recommencer (double appui) ---------- */
+  var resetBtn = document.getElementById('reset'), armTimer;
+  resetBtn.addEventListener('click', function () {
+    if (!resetBtn.classList.contains('armed')) {
+      resetBtn.classList.add('armed');
+      resetBtn.textContent = 'Appuie encore pour tout décocher';
+      armTimer = setTimeout(function () {
+        resetBtn.classList.remove('armed');
+        resetBtn.textContent = 'Recommencer la fiche';
+      }, 3000);
+      return;
+    }
+    clearTimeout(armTimer);
+    resetBtn.classList.remove('armed');
+    resetBtn.textContent = 'Recommencer la fiche';
+    steps.forEach(function (s) { setDone(s, false); });
+    save();
+    render(true, -1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ---------- Arrivée + confettis ---------- */
+  var finish = document.getElementById('finish');
+  function openFinish() {
+    clearTimeout(toastTimer); toast.classList.remove('show', 'moving');
+    var fc = document.getElementById('fcar');
+    fc.classList.add('moving');
+    setTimeout(function () { fc.classList.remove('moving'); }, 1400);
+    finish.classList.add('show');
+    finish.setAttribute('aria-hidden', 'false');
+    document.getElementById('finishClose').focus({ preventScroll: true });
+    confetti();
+  }
+  document.getElementById('finishClose').addEventListener('click', function () {
+    finish.classList.remove('show');
+    finish.setAttribute('aria-hidden', 'true');
+  });
+
+  function confetti() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var c = document.getElementById('confetti'), ctx = c.getContext('2d');
+    var dpr = window.devicePixelRatio || 1;
+    c.width = innerWidth * dpr; c.height = innerHeight * dpr;
+    ctx.scale(dpr, dpr);
+    var colors = ['#E2231A', '#5B55E3', '#F2B33D', '#FFFFFF', '#8E8AF0'];
+    var parts = [];
+    for (var i = 0; i < 140; i++) {
+      parts.push({
+        x: innerWidth / 2 + (Math.random() - .5) * 80,
+        y: innerHeight * .42,
+        vx: (Math.random() - .5) * 13,
+        vy: -Math.random() * 13 - 4,
+        w: 5 + Math.random() * 6, h: 8 + Math.random() * 8,
+        r: Math.random() * Math.PI, vr: (Math.random() - .5) * .35,
+        c: colors[i % colors.length]
+      });
+    }
+    var t0 = performance.now();
+    (function frame(t) {
+      var el = t - t0;
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+      parts.forEach(function (p) {
+        p.vy += .32; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, 1 - el / 3200);
+        ctx.translate(p.x, p.y); ctx.rotate(p.r);
+        ctx.fillStyle = p.c;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h * Math.abs(Math.cos(p.r * 2)) + 1);
+        ctx.restore();
+      });
+      if (el < 3200) requestAnimationFrame(frame);
+      else ctx.clearRect(0, 0, innerWidth, innerHeight);
+    })(t0);
+  }
+
+  /* ---------- Démarrage ---------- */
+  load();
+  render(false, 0);
+  lastDone = steps.filter(function (s) { return s.classList.contains('done'); }).length;
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () { document.body.classList.remove('no-anim'); });
+  });
+
+  var hero = document.getElementById('heroCar');
+  hero.classList.add('arrive', 'moving');
+  setTimeout(function () { hero.classList.remove('moving'); }, 1500);
+})();
 </script>
 </body>
 </html>
