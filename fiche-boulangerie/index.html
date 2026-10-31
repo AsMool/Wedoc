@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fiche du matin – Boulangerie</title>
+<style>
+  :root {
+    --bg: #f5f2ed;
+    --card: #ffffff;
+    --text: #1f1a16;
+    --muted: #6f655b;
+    --red: #d2232a;
+    --red-dark: #a8161c;
+    --red-soft: #fdeceb;
+    --ok: #2f7d4f;
+    --ok-soft: #e2f1e7;
+    --border: #e7dfd5;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.45;
+    font-size: 16px;
+  }
+  svg.i { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  svg.i.sm { width: 16px; height: 16px; }
+
+  /* En-tête */
+  .top {
+    background: var(--red);
+    color: #fff;
+    padding: 22px 18px 54px;
+  }
+  .top-inner { max-width: 600px; margin: 0 auto; display: flex; align-items: center; gap: 14px; }
+  .logo { height: 44px; width: auto; background: #fff; border-radius: 8px; padding: 4px 8px; }
+  .top .kicker { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; opacity: .85; margin: 0; }
+  .top h1 { margin: 2px 0 0; font-size: 28px; line-height: 1.1; }
+
+  .wrap { max-width: 600px; margin: -36px auto 0; padding: 0 14px 60px; counter-reset: step; }
+
+  /* Barre de progression collante */
+  .sticky {
+    position: sticky; top: 0; z-index: 5;
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 12px 14px; margin-bottom: 14px;
+    box-shadow: 0 6px 18px rgba(60, 30, 10, .08);
+  }
+  .sticky-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .deadline { display: flex; align-items: center; gap: 8px; font-weight: 700; }
+  .deadline svg { color: var(--red); }
+  .count { font-size: 14px; color: var(--muted); white-space: nowrap; }
+  .bar { height: 6px; background: #f0e8df; border-radius: 99px; margin-top: 10px; overflow: hidden; }
+  .bar > div { height: 100%; width: 0; background: var(--red); border-radius: 99px; transition: width .25s; }
+  /* La 107 qui avance sur la barre */
+  .road { position: relative; padding-top: 22px; margin-top: 4px; }
+  .road .bar { margin-top: 0; background: repeating-linear-gradient(90deg, #e9e1d7 0 10px, #f4eee7 10px 16px); }
+  .road-car {
+    position: absolute; top: 0; left: 0; width: 40px; height: 22px;
+    transition: left .35s ease, transform .35s ease;
+  }
+  .road-car.arrived { animation: hop .5s ease 2; }
+  @keyframes hop { 50% { margin-top: -6px; } }
+
+  .road { padding-right: 26px; }
+  .flag { position: absolute; right: 0; bottom: -6px; font-size: 20px; line-height: 1; }
+  .hint b { color: var(--text); }
+  .mission { margin: 8px 0 0; font-size: 14.5px; line-height: 1.4; opacity: .95; }
+
+  /* La 107 dans l'en-tête */
+  .top-car { width: 92px; height: 50px; margin-left: auto; flex: none; transform: rotate(-3deg); filter: drop-shadow(0 3px 4px rgba(0,0,0,.25)); }
+
+  /* Les 107 en fond */
+  .bg-cars { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .bg-cars svg { position: absolute; opacity: .09; height: auto; }
+  .top, .wrap { position: relative; z-index: 1; }
+  .sticky { z-index: 5; }
+
+  .sticky .hint { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+  /* Sections */
+  section { margin-top: 26px; }
+  .sec-head { display: flex; align-items: center; gap: 10px; margin: 0 0 10px 2px; }
+  .sec-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: var(--red-soft); color: var(--red);
+    display: flex; align-items: center; justify-content: center; flex: none;
+  }
+  .sec-head h2 { font-size: 18px; margin: 0; line-height: 1.2; }
+  .sec-head small { display: block; font-size: 13px; color: var(--muted); font-weight: 400; margin-top: 1px; }
+
+  ol { list-style: none; margin: 0; padding: 0; }
+  li.step {
+    counter-increment: step;
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 13px 14px; margin-bottom: 8px;
+    display: flex; gap: 12px; align-items: flex-start;
+    cursor: pointer; transition: opacity .15s, background .15s, border-color .15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  li.step::before {
+    content: counter(step);
+    flex: 0 0 28px; height: 28px; border-radius: 50%;
+    border: 2px solid var(--red); color: var(--red);
+    font-weight: 700; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  li.step.done { opacity: .55; background: #f1ede7; }
+  li.step.done::before { content: "✓"; background: var(--ok); border-color: var(--ok); color: #fff; font-size: 15px; }
+  li.step.done .t { text-decoration: line-through; }
+  .body { flex: 1; min-width: 0; }
+  .t { font-weight: 600; display: block; }
+  .note { display: block; font-size: 14.5px; color: var(--muted); margin-top: 3px; }
+  .tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 13px; font-weight: 600;
+    padding: 3px 9px; border-radius: 6px; margin-top: 7px;
+  }
+  .tag.ok { background: var(--ok-soft); color: var(--ok); }
+  .tag.info { background: var(--red-soft); color: var(--red-dark); }
+
+  .list { margin: 7px 0 0; padding: 0; list-style: none; font-size: 15px; }
+  .list li { padding: 5px 0; border-top: 1px solid #f1ebe3; display: flex; gap: 10px; }
+  .list li:first-child { border-top: 0; }
+  .list b { min-width: 22px; color: var(--red); }
+
+  .precision {
+    font-size: 14px; color: var(--muted);
+    background: #fbf9f6; border-left: 3px solid var(--red);
+    border-radius: 0 10px 10px 0;
+    padding: 10px 12px; margin: 0 0 10px;
+  }
+  .precision b { color: var(--text); display: block; margin-bottom: 3px; }
+
+  /* Bouton boîtes */
+  details { margin-top: 9px; }
+  summary {
+    display: inline-flex; align-items: center; gap: 6px; cursor: pointer; list-style: none;
+    font-size: 14px; font-weight: 600; color: var(--red);
+    border: 1.5px solid var(--red); border-radius: 8px; padding: 6px 11px;
+  }
+  summary::-webkit-details-marker { display: none; }
+  details[open] summary { background: var(--red); color: #fff; }
+  .boxes { margin-top: 10px; display: grid; gap: 8px; }
+  .box { background: #fbf9f6; border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; font-size: 14.5px; }
+  .box strong { display: block; margin-bottom: 2px; }
+  .box.end { color: var(--muted); font-style: italic; }
+
+  /* Pendant la matinée */
+  .tips {
+    background: #fff8f0; border: 1px solid #f1dcc4; border-radius: 12px;
+    padding: 13px 14px; margin-top: 4px;
+  }
+  .tips h3 { font-size: 15px; margin: 0 0 6px; display: flex; align-items: center; gap: 8px; }
+  .tips h3 svg { color: var(--red); }
+  .tips ul { margin: 0; padding-left: 18px; font-size: 14.5px; }
+  .tips li { margin: 3px 0; }
+
+  .footer { text-align: center; margin-top: 30px; }
+  .done-msg { font-weight: 700; color: var(--ok); display: none; margin-bottom: 8px; }
+  .reset {
+    background: none; border: 1px solid var(--border);
+    color: var(--muted); padding: 7px 14px; border-radius: 8px; font-size: 13px; cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<!-- Icônes -->
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-sunrise" viewBox="0 0 24 24"><path d="M3 19h18"/><path d="M7 19a5 5 0 0 1 10 0"/><path d="M12 5v3"/><path d="M5.6 10.6l1.8 1.8"/><path d="M18.4 10.6l-1.8 1.8"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3c.8 3 4.5 5 4.5 9.5a4.5 4.5 0 0 1-9 0c0-2.2 1-3.6 2.2-4.6.1 1.8 1 2.9 2.1 3.1-.4-2.8-.5-5.3.2-8z"/></symbol>
+  <symbol id="i-bread" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(-45 12 12)"/><path d="M9 12.5l2.5 1"/><path d="M12 9.5l2.5 1"/><path d="M15 6.8l2 .8"/></symbol>
+  <symbol id="i-shelf" viewBox="0 0 24 24"><path d="M3 5h18"/><path d="M3 12h18"/><path d="M3 19h18"/><rect x="5" y="7" width="4" height="5"/><rect x="11" y="8.5" width="5" height="3.5"/><rect x="6" y="14.5" width="6" height="4.5"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></symbol>
+  <symbol id="i-cake" viewBox="0 0 24 24"><path d="M4 20h16v-7.5H4z"/><path d="M4 15.5c1.3.9 2.7.9 4 0s2.7-.9 4 0 2.7.9 4 0 2.7-.9 4 0"/><path d="M12 12.5V9"/><path d="M12 6.8c-.8-.8-.6-1.8 0-2.8.6 1 .8 2 0 2.8z"/></symbol>
+  <symbol id="i-tray" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="1.5"/><circle cx="8" cy="10" r="1"/><circle cx="12" cy="10" r="1"/><circle cx="16" cy="10" r="1"/><circle cx="8" cy="14" r="1"/><circle cx="12" cy="14" r="1"/><circle cx="16" cy="14" r="1"/></symbol>
+  <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M4.2 7.5l15.6 9"/><path d="M19.8 7.5l-15.6 9"/><path d="M9.5 4.5L12 7l2.5-2.5"/><path d="M9.5 19.5L12 17l2.5 2.5"/></symbol>
+  <symbol id="i-broom" viewBox="0 0 24 24"><path d="M19 3l-6.5 8"/><path d="M8.5 10.5l5 4"/><path d="M8.5 10.5c-2.5 1-4.5 4-5.5 9.5 5.5-1 8.5-3 10.5-5.5"/><path d="M6 17l2-2"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3.5 8L12 4l8.5 4v8L12 20l-8.5-4z"/><path d="M3.5 8L12 12l8.5-4"/><path d="M12 12v8"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <!-- La petite 107 bleu-violet -->
+  <symbol id="car" viewBox="0 0 120 64">
+    <path d="M8 46 Q8 37 16 35 L30 32 Q40 14 58 12 L88 12 Q100 12 104 25 L108 41 Q109 49 104 49 L12 49 Q8 49 8 46Z" fill="#5d5ad8"/>
+    <path d="M30 32 Q40 14 58 12 L88 12 Q100 12 104 25 L105 29 L30 33Z" fill="#4f4bc4"/>
+    <path d="M37 31 Q45 19 58 17.5 L67 17.5 L67 31Z" fill="#d7e8f7"/>
+    <path d="M71 17.5 L87 17.5 Q96 17.5 99 29 L99 31 L71 31Z" fill="#d7e8f7"/>
+    <path d="M67.5 34 L67.5 47" stroke="#423eb0" stroke-width="1.2"/>
+    <rect x="58" y="36" width="6" height="1.8" rx=".9" fill="#423eb0"/>
+    <ellipse cx="13" cy="39" rx="3" ry="2.2" fill="#fff6c9"/>
+    <rect x="104.5" y="28" width="3" height="8" rx="1.2" fill="#e5484d"/>
+    <rect x="8" y="44" width="101" height="3" rx="1.5" fill="#3a37a0"/>
+    <circle cx="30" cy="49" r="9" fill="#222"/><circle cx="30" cy="49" r="4" fill="#bbb"/>
+    <circle cx="88" cy="49" r="9" fill="#222"/><circle cx="88" cy="49" r="4" fill="#bbb"/>
+  </symbol>
+</svg>
+
+<div class="top">
+  <div class="top-inner">
+    <!-- Mets le fichier du logo à côté de cette page sous le nom logo.png -->
+    <img class="logo" src="logo.png" alt="" onerror="this.remove()">
+    <div>
+      <p class="kicker">Rayon boulangerie</p>
+      <h1>Fiche du matin</h1>
+      <p class="mission"><b>Ta mission :</b> faire arriver la 107 au bout du trajet. Chaque étape cochée = un bout de route.</p>
+    </div>
+    <svg class="top-car" viewBox="0 0 120 64"><use href="#car"/></svg>
+  </div>
+</div>
+
+<!-- Les 107 en fond -->
+<div class="bg-cars" aria-hidden="true">
+  <svg style="top:14%;left:-6%;width:140px;transform:rotate(-8deg)" viewBox="0 0 120 64"><use href="#car"/></svg>
+  <svg style="top:31%;right:-5%;width:110px;transform:scaleX(-1) rotate(-6deg)" viewBox="0 0 120 64"><use href="#car"/></svg>
+  <svg style="top:52%;left:-4%;width:100px;transform:rotate(7deg)" viewBox="0 0 120 64"><use href="#car"/></svg>
+  <svg style="top:70%;right:-7%;width:150px;transform:scaleX(-1) rotate(5deg)" viewBox="0 0 120 64"><use href="#car"/></svg>
+  <svg style="top:88%;left:-5%;width:120px;transform:rotate(-4deg)" viewBox="0 0 120 64"><use href="#car"/></svg>
+</div>
+
+<div class="wrap">
+
+  <div class="sticky">
+    <div class="sticky-row">
+      <span class="deadline"><svg class="i"><use href="#i-clock"/></svg>Rayon prêt pour 9 h – 9 h 30</span>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="road">
+      <svg class="road-car" id="roadCar" viewBox="0 0 120 64"><use href="#car" transform="translate(120 0) scale(-1 1)"/></svg>
+      <div class="bar"><div id="bar"></div></div>
+      <span class="flag" title="Arrivée">🏁</span>
+    </div>
+    <div class="hint" id="status"></div>
+  </div>
+
+  <section>
+    <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-sunrise"/></svg></div><h2>En arrivant</h2></div>
+    <ol>
+      <li class="step"><div class="body"><span class="t">Tu allumes le four</span></div></li>
+      <li class="step"><div class="body"><span class="t">Tu sors tes viennoiseries et tu éteins la chambre de pousse</span></div></li>
+      <li class="step"><div class="body"><span class="t">Tu mets tes viennoiseries dans le four</span></div></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-flame"/></svg></div><h2>Pendant la cuisson</h2></div>
+    <ol>
+      <li class="step"><div class="body">
+        <span class="t">Tu prends les pains et viennoiseries de la veille à jeter</span>
+        <span class="note">Les viennoiseries, tu peux en faire des « viennoiseries de la veille » par paquets de 10.</span>
+      </div></li>
+      <li class="step"><div class="body">
+        <span class="t">Tu vérifies qu'il n'y a pas de sandwichs de la veille à récupérer</span>
+        <span class="tag ok"><svg class="i sm"><use href="#i-check"/></svg>Déjà regardé ce soir, c'est bon, il n'y a rien</span>
+      </div></li>
+      <li class="step"><div class="body">
+        <span class="t">Tu vérifies les dates des viennoiseries</span>
+        <span class="note">Pour savoir s'il faut les mettre en −30 % ou pas.</span>
+        <span class="tag info"><svg class="i sm"><use href="#i-user"/></svg>Pour te connecter au Zebra, demande à Gaëtan</span>
+      </div></li>
+      <li class="step"><div class="body"><span class="t">Tu nettoies un peu le meuble</span></div></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-bread"/></svg></div><h2>Cuisson du pain</h2></div>
+    <ol>
+      <li class="step"><div class="body">
+        <span class="t">Tu sors tes viennoiseries</span>
+        <span class="note">Tu les laisses refroidir.</span>
+      </div></li>
+      <li class="step"><div class="body"><span class="t">Tu mets un des 3 chariots de pain</span></div></li>
+      <li class="step"><div class="body">
+        <span class="t">Tu enchaînes les 3 chariots et les viennoiseries</span>
+        <span class="note">Tranquille.</span>
+      </div></li>
+      <li class="step"><div class="body">
+        <span class="t">Tu emballes quand ce n'est pas trop chaud</span>
+        <details>
+          <summary><svg class="i sm"><use href="#i-box"/></svg>Voir les boîtes à faire</summary>
+          <div class="boxes">
+            <div class="box">
+              <strong>Croissants et pains au chocolat pur beurre</strong>
+              Une plaque sur le meuble, l'autre plaque en boîtes de 4.
+              <span class="note">+ quelques boîtes d'assortiment pur beurre (2, 3, 4…) : 2 pains au chocolat + 2 croissants.</span>
+            </div>
+            <div class="box">
+              <strong>Croissants et pains au chocolat ordinaires</strong>
+              Que des boîtes de 10.
+            </div>
+            <div class="box">
+              <strong>Pains suisses, triangles, croissants à l'abricot</strong>
+              La moitié dans le meuble, l'autre moitié en boîtes de 2.
+            </div>
+            <div class="box">
+              <strong>Chaussons</strong>
+              Pareil : moitié en rayon, moitié en boîte.
+            </div>
+            <div class="box end">En fait, tu fais un peu comme tu veux, il faut juste que ce soit à peu près équilibré.</div>
+          </div>
+        </details>
+      </div></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-shelf"/></svg></div><h2>Mise en rayon</h2></div>
+    <ol>
+      <li class="step"><div class="body">
+        <span class="t">Tu mets en rayon pour 9 h – 9 h 30</span>
+        <span class="note">(Les pains spéciaux sur la rangée du haut. Fais en sorte qu'ils soient visibles contre la vitre pour les personnes petites.)</span>
+        <span class="note">Fais au mieux, peu importe.</span>
+      </div></li>
+    </ol>
+    <div class="tips">
+      <h3><svg class="i"><use href="#i-eye"/></svg>Pendant la matinée</h3>
+      <ul>
+        <li>Va voir de temps en temps comment les pains se vident.</li>
+        <li>Rapproche les baguettes, fais le facing de tes pains.</li>
+        <li>Tu peux aussi réorganiser le rayon des viennoiseries.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-cake"/></svg></div><h2>Après la mise en rayon</h2></div>
+    <ol>
+      <li class="step"><div class="body"><span class="t">Tu tires</span></div></li>
+      <li class="step"><div class="body">
+        <span class="t">Tu vérifies s'il y a des gâteaux dans le frigo à mettre en rayon</span>
+        <span class="note">N'hésite pas à vérifier les dates des gâteaux.</span>
+      </div></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-tray"/></svg></div>
+      <h2>Plaquage des viennoiseries<small>Pour le lendemain. Tu fais comme tu veux, mais moi je fais comme ça.</small></h2>
+    </div>
+    <div class="precision">
+      <b>C'est pas grave si tu ne respectes pas exactement les quantités, fais au mieux.</b>
+      Il va sûrement te manquer des pains au chocolat ordinaires : fais-en le plus possible, mais en multiples de 10, parce que ce sont des boîtes de 10. Par exemple, si tu as 53 pains au chocolat, tu n'en mets pas 53, tu en mets 50, comme ça on peut faire 5 boîtes de 10.
+    </div>
+    <ol>
+      <li class="step"><div class="body">
+        <span class="t">Tu fais le premier chariot</span>
+        <span class="note">Tu suis la fiche de plaque qu'Enzo a faite.</span>
+      </div></li>
+      <li class="step"><div class="body"><span class="t">Tu fais le deuxième chariot</span></div></li>
+      <li class="step"><div class="body">
+        <span class="t">Tu mets dans la chambre de pousse, tu l'allumes et tu mets 17 h 30 de temps</span>
+        <span class="note">Normalement il faut juste appuyer sur le bouton du temps (là où tu bouges le temps) et ça se lance. Tu verras quand c'est fait.</span>
+        <span class="tag info"><svg class="i sm"><use href="#i-user"/></svg>Si tu n'y arrives pas, demande à Gaëtan</span>
+      </div></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-snow"/></svg></div>
+      <h2>Les 3 chariots de pain<small>Pour le lendemain</small></h2>
+    </div>
+    <ol>
+      <li class="step"><div class="body">
+        <span class="t">Chariot des pains blancs</span>
+        <ul class="list">
+          <li><b>2</b>cartons de parisiens</li>
+          <li><b>1</b>carton de baguettes normales</li>
+        </ul>
+        <span class="note">Tu le mets au congèle.</span>
+      </div></li>
+      <li class="step"><div class="body">
+        <span class="t">Chariot des Constance</span>
+        <ul class="list">
+          <li><b>2</b>Constance normales (nature)</li>
+          <li><b>1</b>Constance céréales</li>
+          <li><b>1</b>carton de Généreuse</li>
+        </ul>
+      </div></li>
+      <li class="step"><div class="body">
+        <span class="t">Les pains spéciaux</span>
+        <span class="note">Conseil : tu peux sortir tous les chariots d'un coup. Comme ça, ils sont tous dehors, tu les remplis tranquillement et après tu les rerentres, ça t'évite de rester dans le froid. Sinon tu les sors un par un, mais tout sortir d'un coup, c'est bien aussi.</span>
+      </div></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="sec-icon"><svg class="i"><use href="#i-broom"/></svg></div><h2>Pour finir</h2></div>
+    <ol>
+      <li class="step"><div class="body">
+        <span class="t">Tu ranges la boulangerie</span>
+        <span class="note">Tu vas chercher le balai dans la réserve, avec la pelle et la balayette. Tu ne te prends pas la tête.</span>
+      </div></li>
+    </ol>
+  </section>
+
+  <div class="footer">
+    <div class="done-msg" id="doneMsg">Tout est fait, merci et bonne route en 107 !</div>
+    <button class="reset" id="reset">Tout décocher</button>
+  </div>
+</div>
+
+<script>
+  const steps = document.querySelectorAll('li.step');
+  const count = document.getElementById('count');
+  const bar = document.getElementById('bar');
+  const doneMsg = document.getElementById('doneMsg');
+  const roadCar = document.getElementById('roadCar');
+  function update() {
+    const done = document.querySelectorAll('li.step.done').length;
+    count.textContent = done + ' / ' + steps.length;
+    const pct = done / steps.length * 100;
+    bar.style.width = pct + '%';
+    roadCar.style.left = pct + '%';
+    roadCar.style.transform = 'translateX(-' + pct + '%)';
+    const finished = done === steps.length;
+    doneMsg.style.display = finished ? 'block' : 'none';
+    roadCar.classList.toggle('arrived', finished);
+    const left = steps.length - done;
+    let msg;
+    if (done === 0) msg = '<b>La 107 est garée, moteur froid.</b> Coche la 1re étape pour mettre le contact.';
+    else if (pct < 25) msg = '<b>Contact ! La 107 démarre.</b> Tranquille, elle chauffe.';
+    else if (pct < 50) msg = '<b>La 107 est lancée.</b> Elle tient la route, continue.';
+    else if (pct < 75) msg = '<b>Mi-parcours !</b> La 107 n\'a jamais roulé aussi loin.';
+    else if (!finished) msg = '<b>Plus que ' + left + ' étape' + (left > 1 ? 's' : '') + ' !</b> On aperçoit déjà l\'arrivée.';
+    else msg = '<b>La 107 est arrivée !</b> Mission réussie.';
+    document.getElementById('status').innerHTML = msg;
+  }
+  steps.forEach(li => li.addEventListener('click', e => {
+    if (e.target.closest('details')) return;
+    li.classList.toggle('done');
+    update();
+  }));
+  document.getElementById('reset').addEventListener('click', () => {
+    steps.forEach(li => li.classList.remove('done'));
+    update();
+  });
+  update();
+</script>
+</body>
+</html>
